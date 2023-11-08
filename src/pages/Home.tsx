@@ -19,10 +19,11 @@ const Home = () => {
   ];
 
   return (
-    <Container
+    <Flex
       as="main"
-      maxWidth={1000}
-      marginTop={300}
+      maxWidth="100wh"
+      height="calc(100vh - 64px)"
+      alignItems="center"
       justifyContent="center"
     >
       <Flex flexDirection="column" gap={3}>
@@ -44,7 +45,7 @@ const Home = () => {
           </Flex>
         </SimpleGrid>
       </Flex>
-    </Container>
+    </Flex>
   );
 };
 
