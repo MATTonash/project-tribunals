@@ -12,8 +12,6 @@ import TaskManager from "./pages/TaskManager";
 import RootLayout from "./layouts/RootLayout";
 import Annotator from "./pages/Annotator";
 
-import { pdfjs } from "react-pdf";
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
@@ -28,11 +26,6 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    "pdfjs-dist/build/pdf.worker.min.js",
-    import.meta.url
-  ).toString();
-
   return <RouterProvider router={router} />;
 }
 
