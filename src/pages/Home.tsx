@@ -21,7 +21,7 @@ const Home = () => {
   return (
     <Flex
       as="main"
-      maxWidth="100wh"
+      maxWidth="100vw"
       height="calc(100vh - 64px)"
       alignItems="center"
       justifyContent="center"

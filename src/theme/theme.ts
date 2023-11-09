@@ -31,6 +31,10 @@ const theme = extendTheme({
       100: "#D6D6D6",
       50: "#F3F3F3",
     },
+    stormGray: {
+      600: "#333333",
+      500: "#3B3B3B",
+    },
   },
   fonts: {
     body: "Inter, sans-serif",
