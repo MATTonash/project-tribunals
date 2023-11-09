@@ -20,12 +20,12 @@ const PdfViewer = () => {
       width="100%"
       flexDirection="column"
       bgColor="stormGray.600"
+      overflowY="clip"
     >
       <Flex height="40px" bgColor="white">
         <Button
           onClick={(event) => {
             setScaleValue("2");
-            useForceUpdate();
           }}
         >
           Change Zoom!
