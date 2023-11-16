@@ -15,15 +15,13 @@ interface Props {
 }
 
 const TaskItem = ({ task, isAlternate }: Props) => {
-  const entryTypeMappings = {
-    label: "Label",
-    text: "Text entry",
-    number: "Numerical entry",
-    multi: "Multi-type entry",
-    default: "Custom entry",
-  };
-  const entryType =
-    entryTypeMappings[task.entryType] || entryTypeMappings.default;
+  // const entryTypeMappings = {
+  //   Drop: "Label",
+  //   text: "Text entry",
+  //   number: "Numerical entry",
+  //   multi: "Multi-type entry",
+  //   default: "Custom entry",
+  // };
 
   return (
     <Flex
@@ -39,14 +37,14 @@ const TaskItem = ({ task, isAlternate }: Props) => {
       </Button>
       <Divider orientation="vertical" borderColor="black" />
       <Text fontSize="lg">
-        {entryType} {`(${task.entryCount})`}
+        {"Entry Type"} {`(Entry Count)`}
       </Text>
       <Spacer />
-      {task.entryCount > 0 ? (
+      {/* {task.entryCount > 0 ? (
         <GoCheckCircle fontSize={32} />
       ) : (
         <GoCircle fontSize={32} />
-      )}
+      )} */}
     </Flex>
   );
 };

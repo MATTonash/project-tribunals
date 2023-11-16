@@ -1,9 +1,8 @@
-// Same concerns here as in AnnotatedDocument
-type Task = {
+interface Task {
   name: string;
-  entryType: "label" | "text" | "number" | "multi";
-  entryCount: number;
+  description: string;
   key: string;
-};
+  entries: TaskEntry[];
+}
 
 export default Task;
