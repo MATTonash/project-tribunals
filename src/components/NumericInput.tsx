@@ -8,7 +8,6 @@ import {
 } from '@chakra-ui/react'
 
 
-
 const NumericInput = () => {
 
   const [storedValue, setStoredValue] = useState('0');
