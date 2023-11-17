@@ -1,4 +1,3 @@
-import { Input } from '@chakra-ui/react'
 import { useState } from 'react';
 import {
   NumberInput,
@@ -12,16 +11,21 @@ import {
 
 const NumericInput = () => {
 
-  const[storedValue, setStoredValue] = useState(0)
+  const [storedValue, setStoredValue] = useState('0');
 
   return (
-      <NumberInput>
-      <NumberInputField />
-      <NumberInputStepper>
-        <NumberIncrementStepper />
-        <NumberDecrementStepper />
-      </NumberInputStepper>
-    </NumberInput>
+
+        <NumberInput 
+        onChange = {(storedValue) => setStoredValue(storedValue)} >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+
+
+   
   )
 }
 
