@@ -1,16 +1,21 @@
 import Task from "../Task";
+import { EntryType } from "../TaskEntry";
 
 export const tasks: Task[] = [
   {
     name: "Judge's Name",
     description: "The name of the judge/s",
-    entries: [{ type: "shortText", data: "" }],
+    entries: [
+      { type: EntryType.ShortText, displayName: "Short text", data: "" },
+    ],
     key: 1,
   },
   {
     name: "Defendant's Name",
     description: "The name of the defendant",
-    entries: [{ type: "shortText", data: "" }],
+    entries: [
+      { type: EntryType.ShortText, displayName: "Short text", data: "" },
+    ],
     key: 2,
   },
   // { name: "Claimant's Name", entryType: "label", entryCount: 0, key: 3 },

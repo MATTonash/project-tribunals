@@ -12,9 +12,10 @@ import Task from "../lib/Task";
 interface Props {
   task: Task;
   isAlternate: boolean;
+  onClick: (task: Task) => void;
 }
 
-const TaskItem = ({ task, isAlternate }: Props) => {
+const TaskItem = (props: Props) => {
   // const entryTypeMappings = {
   //   Drop: "Label",
   //   text: "Text entry",
@@ -29,15 +30,19 @@ const TaskItem = ({ task, isAlternate }: Props) => {
       gap={2}
       alignItems="center"
       p={4}
-      bg={isAlternate === true ? "stoneGray.50" : "white"}
+      bg={props.isAlternate === true ? "stoneGray.50" : "white"}
+      onClick={() => props.onClick(props.task)}
     >
       <Checkbox colorScheme="salmon" />
       <Button variant="link" fontWeight={600} size="lg" colorScheme="black">
-        {task.name}
+        {props.task.name}
       </Button>
       <Divider orientation="vertical" borderColor="black" />
       <Text fontSize="lg">
-        {"Entry Type"} {`(Entry Count)`}
+        {props.task.entries.length === 1
+          ? props.task.entries[0].displayName
+          : "Multi-type entry"}{" "}
+        {`(${props.task.entries.length})`}
       </Text>
       <Spacer />
       {/* {task.entryCount > 0 ? (

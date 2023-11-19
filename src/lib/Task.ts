@@ -1,3 +1,5 @@
+import { TaskEntry } from "./TaskEntry";
+
 interface Task {
   name: string;
   description: string;

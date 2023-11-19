@@ -1,17 +1,18 @@
 import { useState } from "react";
 import Task from "../lib/Task";
-import { Flex } from "@chakra-ui/react";
 import TaskItem from "./TaskItem";
-import { TaskInput } from "./TaskInput";
+import { Button, Flex } from "@chakra-ui/react";
+import { TaskInputs } from "./TaskInputs";
+import { TaskEntry } from "../lib/TaskEntry";
 
 interface Props {
   tasks: Task[];
 }
 
 export const Sidebar = (props: Props) => {
-  const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
-  const handleTaskClick = (task: TaskItem) => {
+  const handleTaskClick = (task: Task) => {
     setSelectedTask(task);
   };
 
@@ -19,26 +20,19 @@ export const Sidebar = (props: Props) => {
     setSelectedTask(null);
   };
 
-  return (
-    <>
-      {props.tasks.map((task, index) => (
-        <TaskItem task={task} key={task.key} isAlternate={index % 2 === 1} />
-      ))}
-    </>
-    // <Flex flexDirection="column" width="30vw" maxWidth="500px">
-    //   {selectedTask ? (
-    //     tasks.map((task, index) => (
-    //       <TaskItem
-    //         task={task}
-    //         key={task.key}
-    //         isAlternate={index % 2 === 1}
-    //         // onClick={handleTaskClick}
-    //       />
-    //     ))
-    //   ) : (
-    //     // <TaskInput />
-    //     <></>
-    //   )}
-    // </Flex>
+  return selectedTask ? (
+    <Flex flexDirection="column" gap={8}>
+      <Button onClick={handleGoBack}>Back</Button>
+      <TaskInputs task={selectedTask} />
+    </Flex>
+  ) : (
+    props.tasks.map((task, index) => (
+      <TaskItem
+        task={task}
+        key={task.key}
+        isAlternate={index % 2 === 1}
+        onClick={handleTaskClick}
+      />
+    ))
   );
 };

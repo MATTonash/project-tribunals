@@ -1,37 +1,50 @@
-interface BaseTaskEntry {
+export enum EntryType {
+  Dropdown = "DROPDOWN",
+  ShortText = "SHORTTEXT",
+  LongText = "LONGTEXT",
+  Radio = "RADIO",
+  Number = "NUMBER",
+}
+
+type BaseTaskEntry = {
   searchQueryRegex?: string;
   validationChecks?: any[];
-}
+};
 
-interface DropDownTaskEntry extends BaseTaskEntry {
-  type: "dropDown";
+type DropdownTaskEntry = BaseTaskEntry & {
+  type: EntryType.Dropdown;
+  displayName: "Drop-down";
   data: unknown;
-}
+};
 
-interface ShortTextTaskEntry extends BaseTaskEntry {
-  type: "shortText";
+type ShortTextTaskEntry = BaseTaskEntry & {
+  type: EntryType.ShortText;
+  displayName: "Short text";
   data: string;
-}
+};
 
-interface LongTextTaskEntry extends BaseTaskEntry {
-  type: "longText";
+type LongTextTaskEntry = BaseTaskEntry & {
+  type: EntryType.LongText;
+  displayName: "Long text";
   data: string;
-}
+};
 
-interface RadioTaskEntry extends BaseTaskEntry {
-  type: "radio";
+type RadioTaskEntry = BaseTaskEntry & {
+  type: EntryType.Radio;
+  displayName: "Radio";
   // Might need to revisit this type
   data: number;
-}
+};
 
 interface NumericTaskEntry extends BaseTaskEntry {
-  type: "numeric";
+  type: EntryType.Number;
+  displayName: "Numeric";
   data: number;
 }
 
 // One input in a Task
-type TaskEntry =
-  | DropDownTaskEntry
+export type TaskEntry =
+  | DropdownTaskEntry
   | ShortTextTaskEntry
   | LongTextTaskEntry
   | RadioTaskEntry
