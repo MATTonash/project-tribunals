@@ -11,6 +11,7 @@ import Settings from "./pages/Settings";
 import TaskManager from "./pages/TaskManager";
 import RootLayout from "./layouts/RootLayout";
 import Annotator from "./pages/Annotator";
+import { tasks } from "./lib/dummyData/tasks";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,7 +21,7 @@ const router = createBrowserRouter(
       <Route path="help" element={<Help />} />
       <Route path="settings" element={<Settings />} />
       <Route path="profile" element={<Profile />} />
-      <Route path="annotator/:key" element={<Annotator />} />
+      <Route path="annotator/:key" element={<Annotator tasks={tasks} />} />
     </Route>
   )
 );

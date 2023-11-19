@@ -7,7 +7,12 @@ export const tasks: Task[] = [
     entries: [{ type: "shortText", data: "" }],
     key: 1,
   },
-  // { name: "Defendant's Name", entryType: "label", entryCount: 0, key: 2 },
+  {
+    name: "Defendant's Name",
+    description: "The name of the defendant",
+    entries: [{ type: "shortText", data: "" }],
+    key: 2,
+  },
   // { name: "Claimant's Name", entryType: "label", entryCount: 0, key: 3 },
   // { name: "Reference Number", entryType: "label", entryCount: 1, key: 4 },
   // { name: "Accusation", entryType: "text", entryCount: 2, key: 5 },
