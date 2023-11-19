@@ -1,7 +1,7 @@
 interface Task {
   name: string;
   description: string;
-  key: string;
+  key: number;
   entries: TaskEntry[];
 }
 
