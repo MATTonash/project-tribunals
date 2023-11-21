@@ -41,7 +41,6 @@ const theme = extendTheme({
     heading: "Space Grotesk, sans-serif",
   },
   components: {
-    Button,
     Input,
   },
 });

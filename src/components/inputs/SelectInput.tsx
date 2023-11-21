@@ -4,9 +4,9 @@ import { Select } from "@chakra-ui/react";
 type Option = {
   id: number;
   value: string;
-}
+};
 
-interface Props {
+export interface Props {
   options: Option[];
   name: string;
   label: string;
@@ -18,8 +18,16 @@ export function SelectInput(props: Props) {
   return (
     <label>
       {props.label}
-      <Select value={selectedOption} onChange={(event) => setSelectedOption(event.target.value)} name={props.name}>
-        {props.options.map((option) => <option value={option.value} key={option.id}>{option.value}</option>)}
+      <Select
+        value={selectedOption}
+        onChange={(event) => setSelectedOption(event.target.value)}
+        name={props.name}
+      >
+        {props.options.map((option) => (
+          <option value={option.value} key={option.id}>
+            {option.value}
+          </option>
+        ))}
       </Select>
     </label>
   );

@@ -3,7 +3,7 @@ import TaskItem from "../components/TaskItem";
 import Task from "../lib/Task";
 
 import examplePDF from "../assets/example.pdf";
-import { Sidebar } from "../components/Sidebar";
+import { Sidebar } from "../components/sidebar/Sidebar";
 // import { PdfLoader } from "react-pdf-highlighter";
 // import PdfViewer from "../components/PdfViewer";
 
