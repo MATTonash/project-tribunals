@@ -1,9 +1,7 @@
-import { Flex, Grid, GridItem, Spacer, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import TaskItem from "../components/TaskItem";
 import Task from "../lib/Task";
 
-import examplePDF from "../assets/example.pdf";
-import { PdfLoader } from "react-pdf-highlighter";
 import PdfViewer from "../components/PdfViewer";
 
 const Annotator = () => {
