@@ -1,13 +1,12 @@
 import { Radio, RadioGroup } from "@chakra-ui/react";
-import { Stack, HStack, VStack } from "@chakra-ui/react";
+import { Stack,} from "@chakra-ui/react";
 import { useState } from "react";
 
 interface RadioButtonInputProps {
   choices: string[];
 }
 
-function RadioButtonInput(RadioButtonInputProps) {
-  const choices = RadioButtonInputProps.choices;
+function RadioButtonInput({choices}: RadioButtonInputProps) {
 
   const [value, setValue] = useState("1");
 
