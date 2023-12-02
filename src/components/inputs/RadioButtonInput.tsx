@@ -4,6 +4,7 @@ import { useState } from "react";
 
 interface RadioButtonInputProps {
   choices: string[];
+  //const choices = [{option: 'HELLO', index: '1'}]
 }
 
 function RadioButtonInput({choices}: RadioButtonInputProps) {
