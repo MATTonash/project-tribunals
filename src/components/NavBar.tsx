@@ -2,7 +2,7 @@ import { Avatar, Button, Flex, Image, Spacer } from "@chakra-ui/react";
 import Logo from "../assets/LogoHeader.svg";
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const Navbar = () => {
   const buttonStyling = {
     variant: "link",
     colorScheme: "stoneGray",
@@ -46,4 +46,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navbar;
