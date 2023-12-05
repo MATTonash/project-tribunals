@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { PdfHighlighter, PdfLoader } from "react-pdf-highlighter-extended";
 
 const PRIMARY_PDF_URL = "https://arxiv.org/pdf/2312.00001.pdf";

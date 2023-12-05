@@ -1,9 +1,19 @@
 import { Divider, Flex } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
+import Task from "../lib/Task";
+import SidebarHeader from "./SidebarHeader";
+import TaskItem from "./TaskItem";
+import { TaskInputs } from "./input/TaskInputs";
 
-const ResizableSidebar = () => {
+interface ResizableSidebarProps {
+  tasks: Array<Task>;
+}
+
+const ResizableSidebar = ({ tasks }: ResizableSidebarProps) => {
   const [isResizing, setIsResizing] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(0);
+
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const dividerRef = useRef<HTMLHRElement | null>(null);
 
@@ -16,7 +26,6 @@ const ResizableSidebar = () => {
   };
 
   const handleMouseMove = (event: MouseEvent) => {
-    console.log("handleMouseMove");
     if (isResizing) {
       setSidebarWidth(event.clientX);
     }
@@ -38,19 +47,45 @@ const ResizableSidebar = () => {
       minHeight="100%"
       minWidth="400px"
       maxWidth={"70%"}
-      //   padding={"4"}
-      backgroundColor="blue.500"
+      overflowY={"auto"}
+      style={{
+        scrollbarWidth: "none",
+        msOverflowStyle: "none",
+        WebkitOverflowScrolling: "touch",
+      }}
+      css={{ "&::-webkit-scrollbar": { display: "none" } }}
     >
-      <Flex minWidth={"calc(100% - 20px)"}>
-        <div>hello</div>
+      <Flex minWidth={"calc(100% - 10px)"} flexDirection="column">
+        <SidebarHeader
+          task={selectedTask}
+          addTask={() => {}}
+          deleteTask={() => {}}
+          goBack={() => setSelectedTask(null)}
+        />
+        {selectedTask ? (
+          <Flex flexDirection="column" gap={4} padding={2}>
+            <TaskInputs task={selectedTask} />
+          </Flex>
+        ) : (
+          tasks.map((task, index) => (
+            <TaskItem
+              task={task}
+              key={task.key}
+              isAlternate={index % 2 === 1}
+              onClick={() => setSelectedTask(task)}
+            />
+          ))
+        )}
       </Flex>
       <Divider
         ref={dividerRef}
         orientation="vertical"
         cursor="ew-resize"
         onMouseDown={handleMouseDown}
-        borderWidth="10px"
+        borderWidth="5px"
         height="auto"
+        opacity={1}
+        borderColor={isResizing ? "stoneGray.900" : "stoneGray.200"}
       />
     </Flex>
   );
