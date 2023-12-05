@@ -25,6 +25,16 @@ const Button = defineStyleConfig({
         bg: `${props.colorScheme}.300`,
       },
     }),
+    naked: (props) => ({
+      fontSize: "24",
+      color: `${props.colorScheme}.500`,
+      _hover: {
+          color: `${props.colorScheme}.700`
+      },
+      _active: {
+          color: `${props.colorScheme}.900`
+      }
+  }),
   },
 });
 
