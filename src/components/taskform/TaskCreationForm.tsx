@@ -37,10 +37,13 @@ const TaskCreationForm = ( ) => {
       <Box 
       p = {'50'}>
       <Flex flexDirection={'column'} gap={'10'}>
+
         <ShortTextInput label = 'Name of Task' name = "hi"></ShortTextInput>
         <LongTextInput label = 'Description'></LongTextInput>
         <TaskInputSelect task = {tasks}></TaskInputSelect>
+        
         <Spacer/>
+        
         <Flex alignItems={"center"} justifyContent={"center"}>
           <Button colorScheme='blue'>Create</Button>
         </Flex>
