@@ -1,7 +1,11 @@
 import { Textarea } from '@chakra-ui/react'
 import { useState } from 'react'
 
-const LongTextInput = () => {
+interface Props {
+  label: string;
+}
+
+const LongTextInput = (props : Props) => {
     let [value, setValue] = useState('')
 
     let handleInputChange = (e) => {
@@ -9,13 +13,15 @@ const LongTextInput = () => {
       setValue(inputValue)
     }
     return (
+      <label>
+        {props.label}
       <>
         <Textarea
           value={value}
           onChange={handleInputChange}
-          placeholder='Long Text Input'
         />
       </>
+      </label>
     )
 }
 
