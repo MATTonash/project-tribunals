@@ -1,18 +1,24 @@
-import { Input } from '@chakra-ui/react'
-import { useState } from 'react'
+import { Input } from "@chakra-ui/react";
+import { useState } from "react";
 
-const ShortTextInput = () => {
-
-  const[shortTextString, setShortTextString] = useState('');
-  
-  const handleChange = (event) => setShortTextString(event.target.shortTextString);
-
-  return (
-    <div><Input placeholder='Short Text Input' 
-    onChange={handleChange}
-    />
-    </div>
-  )
+interface Props {
+  name: string;
+  label: string;
 }
 
-export default ShortTextInput
+const ShortTextInput = (props: Props) => {
+  const [value, setValue] = useState<string>();
+
+  return (
+    <label>
+      {props.label}
+      <Input
+        onChange={(event) => setValue(event.target.value)}
+        value={value}
+        name={props.name}
+      />
+    </label>
+  );
+};
+
+export default ShortTextInput;
