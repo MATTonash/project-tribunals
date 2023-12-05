@@ -2,7 +2,7 @@ import { Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 import HomeButtons from "../components/HomeButtons";
 import SearchBar from "../components/SearchBar";
 import DocumentList from "../components/DocumentList";
-import { documents } from "../lib/dummyData/documents";
+import { documents } from "../lib/dummy-data/documents";
 
 const Home = () => {
   return (

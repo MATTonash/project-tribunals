@@ -1,4 +1,5 @@
-// Same concerns here as in AnnotatedDocument
+import { TaskEntry } from "./TaskEntry";
+
 type Task = {
   name: string;
   description: string;

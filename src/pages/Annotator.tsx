@@ -1,8 +1,8 @@
 import { Flex } from "@chakra-ui/react";
 import TaskItem from "../components/TaskItem";
-import Task from "../lib/Task";
 
 import PdfViewer from "../components/PdfViewer";
+import { tasks } from "../lib/dummy-data/tasks";
 
 const Annotator = () => {
   // const { key } = useParams();
