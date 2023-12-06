@@ -1,14 +1,14 @@
-import { useState } from "react";
 import {
+  NumberDecrementStepper,
+  NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 const NumericInput = () => {
-  const [storedValue, setStoredValue] = useState("0");
+  const [_, setStoredValue] = useState("0");
 
   return (
     <NumberInput onChange={(storedValue) => setStoredValue(storedValue)}>

@@ -1,12 +1,11 @@
 import { Textarea } from "@chakra-ui/react";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 const LongTextInput = () => {
-  let [value, setValue] = useState("");
+  const [value, setValue] = useState("");
 
-  let handleInputChange = (e) => {
-    let inputValue = e.target.value;
-    setValue(inputValue);
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
   };
   return (
     <>

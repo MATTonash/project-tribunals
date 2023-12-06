@@ -1,7 +1,6 @@
 import { Flex } from "@chakra-ui/layout";
 import {
   Button,
-  Heading,
   IconButton,
   Spacer,
   ToastId,

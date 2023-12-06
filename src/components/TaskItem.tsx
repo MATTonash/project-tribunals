@@ -1,15 +1,7 @@
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Flex,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Checkbox, Flex, Spacer } from "@chakra-ui/react";
 import { ChangeEvent, MouseEvent } from "react";
-import { IoMdCheckmark } from "react-icons/io";
-import { Task } from "../lib/Task";
 import { IoCheckmark, IoCheckmarkDoneSharp } from "react-icons/io5";
+import { Task } from "../lib/Task";
 
 interface Props {
   task: Task;

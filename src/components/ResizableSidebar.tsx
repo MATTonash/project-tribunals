@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Divider,
   Flex,
@@ -8,10 +7,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { Task } from "../lib/Task";
 import SidebarHeader from "./SidebarHeader";
 import TaskItem from "./TaskItem";
 import { TaskInputs } from "./input/TaskInputs";
-import { Task } from "../lib/Task";
 
 interface ResizableSidebarProps {
   tasks: Array<Task>;
