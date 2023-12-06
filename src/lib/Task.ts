@@ -1,10 +1,11 @@
 import { TaskEntry } from "./TaskEntry";
 
-type Task = {
+export type Validation = "auto" | "human" | "double"
+
+export type Task = {
   name: string;
   description: string;
-  key: number;
   entries: TaskEntry[];
+  id: string;
+  validation?: Validation;
 };
-
-export default Task;

@@ -11,4 +11,5 @@ export type TaskEntry = {
   validationChecks?: any[];
   type: EntryType;
   data: any;
+  id: string;
 };

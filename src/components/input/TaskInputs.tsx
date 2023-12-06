@@ -1,4 +1,4 @@
-import Task from "../../lib/Task";
+import { Task } from "../../lib/Task";
 import { TaskEntry } from "../../lib/TaskEntry";
 import LongTextInput from "./LongTextInput";
 import NumericInput from "./NumericInput";
@@ -9,17 +9,23 @@ interface Props {
   task: Task;
 }
 
-export const TaskInputs = (props: Props) => {
-  return props.task.entries.map((taskEntry: TaskEntry) => {
-    // TODO: pass props down
+export const TaskInputs = ({ task }: Props) => {
+  return task.entries.map((taskEntry: TaskEntry) => {
     if (taskEntry.type === "dropdown") {
-      return <SelectInput options={[]} name={""} label={props.task.name} />;
+      return (
+        <SelectInput
+          options={[]}
+          name={""}
+          label={task.name}
+          key={taskEntry.id}
+        />
+      );
     } else if (taskEntry.type === "longtext") {
-      return <LongTextInput />;
+      return <LongTextInput key={taskEntry.id} />;
     } else if (taskEntry.type === "shorttext") {
-      return <ShortTextInput name={""} label={props.task.name} />;
+      return <ShortTextInput name={""} label={task.name} key={taskEntry.id} />;
     } else if (taskEntry.type === "number") {
-      return <NumericInput />;
+      return <NumericInput key={taskEntry.id} />;
     }
   });
 };
