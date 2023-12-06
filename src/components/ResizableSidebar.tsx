@@ -1,8 +1,15 @@
 import {
+  Box,
   Button,
   Divider,
   Flex,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  Select,
   Spacer,
+  Textarea,
   ToastId,
   useToast,
 } from "@chakra-ui/react";
@@ -113,8 +120,24 @@ const ResizableSidebar = ({ tasks }: ResizableSidebarProps) => {
           goBack={() => setCurrentTask(null)}
         />
         {currentTask ? (
-          <Flex flexDirection="column" gap={4} padding={2} height={"100%"}>
-            <TaskInputs task={currentTask} />
+          <Flex flexDirection={"column"} height={"100%"} p={2}>
+            <FormControl>
+              <Flex flexDirection={"column"} gap={4}>
+                <Box>
+                  <FormLabel>Country</FormLabel>
+                  <Select placeholder="Select country">
+                    <option>United Arab Emirates</option>
+                    <option>Nigeria</option>
+                  </Select>
+                </Box>
+                <Box>
+                  <FormLabel>Basic Usage</FormLabel>
+                  <Input placeholder="Basic usage" />
+                  <FormHelperText>Some helper text</FormHelperText>
+                </Box>
+                <Textarea placeholder="Here is a sample placeholder" />
+              </Flex>
+            </FormControl>
             <Spacer />
             <Button>Save</Button>
           </Flex>
