@@ -20,7 +20,7 @@ const SidebarHeader = ({
 }: SidebarHeaderProps) => {
   return (
     <Flex
-      h={9}
+      h={"36px"}
       gap={2}
       px={4}
       alignItems={"center"}

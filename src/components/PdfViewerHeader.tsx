@@ -33,7 +33,7 @@ const PdfViewerHeader = ({
 
   return (
     <Flex
-      h={9}
+      h={"36px"}
       px={4}
       alignItems={"center"}
       borderBottom="1px"
