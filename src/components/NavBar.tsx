@@ -24,7 +24,7 @@ const Navbar = () => {
       <Button {...buttonStyling} as={Link} to="annotator/1">
         Document Preview
       </Button>
-      <Button {...buttonStyling} as={Link} to="/">
+      <Button {...buttonStyling} as={Link} to=".">
         Home
       </Button>
       <Button {...buttonStyling} as={Link} to="task-manager">

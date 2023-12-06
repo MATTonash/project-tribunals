@@ -14,7 +14,7 @@ import Annotator from "./pages/Annotator";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
+    <Route path="/project-tribunals/" element={<RootLayout />}>
       <Route index element={<Home />} />
       <Route path="task-manager" element={<TaskManager />} />
       <Route path="help" element={<Help />} />
