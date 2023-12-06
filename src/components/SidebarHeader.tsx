@@ -20,7 +20,8 @@ const SidebarHeader = ({
 }: SidebarHeaderProps) => {
   return (
     <Flex
-      h={8}
+      h={9}
+      gap={2}
       px={4}
       alignItems={"center"}
       //   justifyContent={"space-between"}
@@ -35,7 +36,8 @@ const SidebarHeader = ({
         <IconButton
           aria-label="Cancel task"
           icon={<IoReturnUpBack />}
-          colorScheme="stormGray"
+          size={"sm"}
+          fontSize={"22"}
           variant="naked"
           onClick={goBack}
         />
@@ -44,14 +46,16 @@ const SidebarHeader = ({
           <IconButton
             aria-label="Add Task"
             icon={<AiOutlinePlus />}
-            colorScheme="stormGray"
+            size={"sm"}
+            fontSize={"22"}
             variant="naked"
             onClick={addTask}
           />
           <IconButton
             aria-label="Delete Task"
             icon={<RiDeleteBin7Line />}
-            colorScheme="stormGray"
+            size={"sm"}
+            fontSize={"22"}
             variant="naked"
             onClick={deleteTask}
           />
