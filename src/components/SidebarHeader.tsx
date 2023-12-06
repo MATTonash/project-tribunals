@@ -3,7 +3,7 @@ import { Heading, IconButton, Spacer } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import { IoReturnUpBack } from "react-icons/io5";
-import Task from "../lib/Task";
+import { Task } from "../lib/Task";
 
 interface SidebarHeaderProps {
   task: Task | null;

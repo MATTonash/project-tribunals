@@ -1,4 +1,4 @@
-import Task from "../Task";
+import { Task } from "../Task";
 import { EntryType } from "../TaskEntry";
 
 const entryTypes: EntryType[] = ["dropdown",
@@ -9,63 +9,66 @@ const entryTypes: EntryType[] = ["dropdown",
 
 export const tasks: Task[] = [
   {
-    name: "Judge's Name",
+    name: "Task 1",
     description: "The name of the judge/s",
-    entries: entryTypes.map((entryType) => ({type: entryType, data: ""})),
-    key: 1,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "1",
+    validation: "auto"
   },
   {
     name: "Task 2",
     description: "The name of the judge/s",
-    entries: [{ type: "shorttext", data: "" }],
-    key: 2,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "2",
+    validation: "human"
   },
   {
     name: "Task 3",
     description: "The name of the judge/s",
-    entries: [{ type: "shorttext", data: "" }],
-    key: 3,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "3",
+    validation: "double"
   },
   {
     name: "Task 4",
     description: "The name of the judge/s",
-    entries: [{ type: "shorttext", data: "" }],
-    key: 4,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "4",
   },
   {
     name: "Task 5",
     description: "The name of the judge/s",
-    entries: [{ type: "shorttext", data: "" }],
-    key: 5,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "5",
   },
   {
     name: "Task 6",
     description: "The name of the judge/s",
-    entries: [{ type: "shorttext", data: "" }],
-    key: 6,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "6",
   },
   {
     name: "Task 7",
     description: "The name of the judge/s",
-    entries: [{ type: "shorttext", data: "" }],
-    key: 7,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "7",
   },
   {
     name: "Task 8",
     description: "The name of the judge/s",
-    entries: [{ type: "shorttext", data: "" }],
-    key: 8,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "8",
   },
   {
     name: "Task 9",
     description: "The name of the judge/s",
-    entries: [{ type: "shorttext", data: "" }],
-    key: 9,
+    entries: entryTypes.map((entryType, index) => ({type: entryType, data: "", id: index.toString()})),
+    id: "9",
   },
-  // { name: "Defendant's Name", entryType: "label", entryCount: 0, key: 2 },
-  // { name: "Claimant's Name", entryType: "label", entryCount: 0, key: 3 },
-  // { name: "Reference Number", entryType: "label", entryCount: 1, key: 4 },
-  // { name: "Accusation", entryType: "text", entryCount: 2, key: 5 },
-  // { name: "Task Name", entryType: "multi", entryCount: 3, key: 6 },
-  // { name: "Payout", entryType: "number", entryCount: 1, key: 7 },
+  // { name: "Defendant's Name", entryType: "label", entryCount: 0, id: 2 },
+  // { name: "Claimant's Name", entryType: "label", entryCount: 0, id: 3 },
+  // { name: "Reference Number", entryType: "label", entryCount: 1, id: 4 },
+  // { name: "Accusation", entryType: "text", entryCount: 2, id: 5 },
+  // { name: "Task Name", entryType: "multi", entryCount: 3, id: 6 },
+  // { name: "Payout", entryType: "number", entryCount: 1, id: 7 },
 ];
