@@ -44,7 +44,7 @@ const PdfViewerHeader = ({
         icon={<MdOutlineManageSearch />}
         size={"sm"}
         fontSize={"22"}
-        variant="naked"
+        variant="ghost"
         onClick={() => {
           toastIdRef.current = toast({
             title: "Not implemented yet, sorry :(",
@@ -59,7 +59,7 @@ const PdfViewerHeader = ({
         icon={<PiSquaresFour />}
         size={"sm"}
         fontSize={"22"}
-        variant="naked"
+        variant="ghost"
         onClick={() => {
           toastIdRef.current = toast({
             title: "Not implemented yet, sorry :(",
@@ -74,7 +74,7 @@ const PdfViewerHeader = ({
         icon={<CiZoomIn />}
         size={"sm"}
         fontSize={"22"}
-        variant="naked"
+        variant="ghost"
         onClick={() => {
           if (typeof pdfScaleValue === "number") {
             setPdfScaleValue(Math.min(pdfScaleValue + 0.1, 6));
@@ -88,7 +88,7 @@ const PdfViewerHeader = ({
         icon={<CiZoomOut />}
         size={"sm"}
         fontSize={"22"}
-        variant="naked"
+        variant="ghost"
         onClick={() => {
           if (typeof pdfScaleValue === "number") {
             setPdfScaleValue(Math.max(pdfScaleValue - 0.1, 0.1));
@@ -101,7 +101,7 @@ const PdfViewerHeader = ({
         <MenuButton
           as={Button}
           size={"sm"}
-          variant={"naked"}
+          variant={"ghost"}
           rightIcon={<IoChevronDown />}
         >
           {pdfScaleValue === "auto"
@@ -147,7 +147,7 @@ const PdfViewerHeader = ({
       <Spacer />
       <Button
         size={"sm"}
-        variant={"naked"}
+        variant={"ghost"}
         onClick={() => {
           toastIdRef.current = toast({
             title: "Saved!",
