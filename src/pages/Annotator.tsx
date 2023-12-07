@@ -1,21 +1,38 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 
 import PdfViewer from "../components/PdfViewer";
 import ResizableSidebar from "../components/ResizableSidebar";
-import { tasks } from "../lib/dummy-data/tasks";
+import { tasksDb } from "../lib/dummy-data/tasksDb";
+import { useParams } from "react-router-dom";
+import { documentsDb } from "../lib/dummy-data/documentsDb";
+import TaskList from "../components/TaskList";
+import TaskForm from "../components/TaskForm";
+import TaskListHeader from "../components/TaskListHeader";
+import { useState } from "react";
+import { TaskId } from "../lib/types";
 
 const Annotator = () => {
-  // const { key } = useParams();
+  const { documentId, taskId } = useParams();
+
+  if (documentId === undefined || documentsDb[documentId] === undefined) {
+    return <div>Invalid documentId</div>;
+  }
 
   return (
     <Flex height="calc(100vh - 64px)">
-      <ResizableSidebar tasks={tasks} />
+      <ResizableSidebar>
+        {taskId === undefined ? (
+          <TaskList documentId={documentId} />
+        ) : (
+          <TaskForm />
+        )}
+      </ResizableSidebar>
       {/* <Flex flexDirection="column" width="30vw" maxWidth="500px">
         {tasks.map((task, index) => (
           <TaskItem task={task} key={task.key} isAlternate={index % 2 === 1} />
         ))}
       </Flex> */}
-      <PdfViewer />
+      <PdfViewer documentId={documentId} />
     </Flex>
   );
 };

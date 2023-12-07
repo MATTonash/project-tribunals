@@ -20,7 +20,8 @@ const router = createBrowserRouter(
       <Route path="help" element={<Help />} />
       <Route path="settings" element={<Settings />} />
       <Route path="profile" element={<Profile />} />
-      <Route path="annotator/:key" element={<Annotator />} />
+      <Route path="annotator/:documentId" element={<Annotator />} />
+      <Route path="annotator/:documentId/:taskId" element={<Annotator />} />
     </Route>
   )
 );
