@@ -6,14 +6,17 @@ import {
   PdfScaleValue,
 } from "react-pdf-highlighter-extended";
 import PdfViewerHeader from "./PdfViewerHeader";
-
-const PRIMARY_PDF_URL = "https://arxiv.org/pdf/2312.00001.pdf";
+import { documentsDb } from "../lib/dummy-data/documentsDb";
 
 const HighlightContainer = () => {
   return <></>;
 };
 
-const PdfViewer = () => {
+interface PdfViewerProps {
+  documentId: string;
+}
+
+const PdfViewer = ({ documentId }: PdfViewerProps) => {
   const [pdfScaleValue, setPdfScaleValue] = useState<PdfScaleValue>("auto");
 
   return (
@@ -23,7 +26,7 @@ const PdfViewer = () => {
         setPdfScaleValue={setPdfScaleValue}
       />
       <Flex flexGrow="1" position="relative" overflowY="clip">
-        <PdfLoader document={PRIMARY_PDF_URL}>
+        <PdfLoader document={documentsDb[documentId].url}>
           <PdfHighlighter pdfScaleValue={pdfScaleValue} highlights={[]}>
             <HighlightContainer></HighlightContainer>
           </PdfHighlighter>
