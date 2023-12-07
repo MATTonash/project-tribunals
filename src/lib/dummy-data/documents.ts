@@ -1,14 +1,82 @@
-import AnnotatedDocument from "../AnnotatedDocument";
+import { LabelledDocument } from "../types";
 
-export const documents: AnnotatedDocument[] = [
-  { name: "Daniel v William", caseId: "EA/2023/0813", key: "1" },
-  { name: "John v Kara", caseId: "EA/2023/0822", key: "2" },
-  { name: "Wendy v Karleen", caseId: "EA/2023/0722", key: "3" },
-  { name: "Monash v My Sanity", caseId: "EA/2023/1111", key: "4" },
-  { name: "Daniel v Nestle", caseId: "EA/2023/0813", key: "5" },
-  { name: "Musk v Australia", caseId: "EA/2023/2123", key: "6" },
-  { name: "owo v uwu", caseId: "EA/2023/8999", key: "7" },
-  { name: "No Way v That’s Crazy Bro", caseId: "EA/2023/6541", key: "8" },
-  { name: "I don’t have v any more names", caseId: "EA/2023/0954", key: "9" },
-  { name: "Bob v Bill", caseId: "EA/2023/2121", key: "10" },
-];
+export let documents: { [documentId: string]: LabelledDocument } = {
+  documentId1: {
+    name: "Daniel v Monash",
+    url: "https://arxiv.org/pdf/2312.00001.pdf",
+    creationDate: new Date(2023, 12, 7),
+    lastEdited: new Date(2023, 12, 7),
+    tasks: {
+      taskId1: {
+        status: "incomplete",
+        taskEntries: {
+          entryId1: {
+            input: "Jeff",
+          },
+        },
+      },
+      taskId2: {
+        status: "complete",
+        taskEntries: {
+          entryId1: {
+            //Dropdown
+            input: "Option 1",
+          },
+          entryId2: {
+            //Short text
+            input: "Nice",
+            validation: "auto",
+          },
+          entryId3: {
+            //Long text
+            input: "filler text filler text filler text filler text",
+            validation: "double",
+          },
+          entryId4: {},
+          entryId5: {
+            input: 33,
+            validation: "human",
+          },
+        },
+      },
+      taskId3: {
+        status: "complete",
+        taskEntries: {
+          entryId1: {
+            input: "Option 1",
+          },
+        },
+      },
+      taskId4: {
+        status: "incomplete",
+        taskEntries: {
+          entryId1: {},
+        },
+      },
+      taskId5: {
+        status: "complete",
+        taskEntries: {
+          entryId1: {
+            input: "Filler text, filler text",
+          },
+        },
+      },
+      taskId6: {
+        status: "incomplete",
+        taskEntries: {
+          entryId1: {
+            input: "Option 1",
+          },
+        },
+      },
+      taskId7: {
+        status: "incomplete",
+        taskEntries: {
+          entryId1: {
+            input: 8008,
+          },
+        },
+      },
+    },
+  },
+};

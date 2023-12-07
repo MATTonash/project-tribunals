@@ -17,6 +17,9 @@ export interface TaskEntry {
   /** An optional hint telling the user how to answer the task entry. */
   hint?: string;
 
+  /** Optional parameters for the task entry. Useful for dropdown or radio inputs */
+  options?: string[];
+
   // TODO: Complete validation and autoinput
   searchKey?: unknown;
   validationKey?: unknown;
@@ -77,9 +80,11 @@ export interface Task {
  *   }
  * }
  */
-export interface Document {
+export interface LabelledDocument {
   /** The user chosen name for the document */
   name: string;
+  /** url of the pdf document associated. TODO: Change this */
+  url: string;
   /** The date when the document was created by the user */
   creationDate: Date;
   /** The date when the document was last edited */
@@ -93,7 +98,7 @@ export interface Document {
       status: "complete" | "incomplete";
       taskEntries: {
         [entryId: string]: {
-          input: string | number | boolean;
+          input?: string | number | boolean;
           validation?: "auto" | "human" | "double";
         };
       };

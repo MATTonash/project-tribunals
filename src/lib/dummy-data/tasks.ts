@@ -1,112 +1,96 @@
-import { Task } from "../Task";
-import { EntryType } from "../TaskEntry";
+import { Task } from "../types";
 
-const entryTypes: EntryType[] = [
-  "dropdown",
-  "shorttext",
-  "longtext",
-  "radio",
-  "number",
-];
-
-export const tasks: Task[] = [
-  {
-    name: "Task 1",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "1",
-    validation: "auto",
+export let tasks: { [taskId: string]: Task } = {
+  taskId1: {
+    name: "Label Judge's Name",
+    description: "Find and write down the judge's name",
+    taskEntries: {
+      entryId1: {
+        name: "Judge's name",
+        type: "shorttext",
+      },
+    },
   },
-  {
-    name: "Task 2.2",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "2",
-    validation: "human",
+  taskId2: {
+    name: "MultiModal Task",
+    description: "Answer these multimodal inputs",
+    taskEntries: {
+      entryId1: {
+        name: "Drop down",
+        type: "dropdown",
+        hint: "Select an option",
+        options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+      },
+      entryId2: {
+        name: "Short text",
+        type: "shorttext",
+      },
+      entryId3: {
+        name: "Long text",
+        type: "longtext",
+      },
+      entryId4: {
+        name: "Radio",
+        type: "radio",
+        options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+      },
+      entryId5: {
+        name: "Number",
+        type: "number",
+      },
+    },
   },
-  {
-    name: "Task 3",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "3",
-    validation: "double",
+  taskId3: {
+    name: "Drop Down task",
+    description: "Answer this drop down",
+    taskEntries: {
+      entryId1: {
+        name: "Drop down",
+        type: "dropdown",
+        hint: "Select an option",
+        options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+      },
+    },
   },
-  {
-    name: "Task 4",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "4",
+  taskId4: {
+    name: "Short text Task",
+    description: "Answer this short text",
+    taskEntries: {
+      entryId2: {
+        name: "Short text",
+        type: "shorttext",
+      },
+    },
   },
-  {
-    name: "Task 5",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "5",
+  taskId5: {
+    name: "Long text task",
+    description: "Answer this long text",
+    taskEntries: {
+      entryId3: {
+        name: "Long text",
+        type: "longtext",
+      },
+    },
   },
-  {
-    name: "Task 6",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "6",
+  taskId6: {
+    name: "Radio task",
+    description: "Answer this radio",
+    taskEntries: {
+      entryId4: {
+        name: "Radio",
+        type: "radio",
+        options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+      },
+    },
   },
-  {
-    name: "Task 7",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "7",
+  taskId7: {
+    name: "Number task",
+    description: "Fill this number input",
+    taskEntries: {
+      entryId5: {
+        name: "Number",
+        type: "number",
+      },
+    },
   },
-  {
-    name: "Task 8",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "8",
-  },
-  {
-    name: "Task 9",
-    description: "The name of the judge/s",
-    entries: entryTypes.map((entryType, index) => ({
-      type: entryType,
-      data: "",
-      id: index.toString(),
-    })),
-    id: "9",
-  },
-  // { name: "Defendant's Name", entryType: "label", entryCount: 0, id: 2 },
-  // { name: "Claimant's Name", entryType: "label", entryCount: 0, id: 3 },
-  // { name: "Reference Number", entryType: "label", entryCount: 1, id: 4 },
-  // { name: "Accusation", entryType: "text", entryCount: 2, id: 5 },
-  // { name: "Task Name", entryType: "multi", entryCount: 3, id: 6 },
-  // { name: "Payout", entryType: "number", entryCount: 1, id: 7 },
-];
+};
