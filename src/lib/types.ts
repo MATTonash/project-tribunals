@@ -1,3 +1,5 @@
+import { Highlight } from "react-pdf-highlighter-extended";
+
 export type InputFieldValue = string | number;
 export type InputFieldValidation = "auto" | "human" | "double";
 export type TaskStatus = "complete" | "incomplete";
@@ -58,6 +60,7 @@ export interface LabelledDocument {
       inputFields: {
         [fieldId: FieldId]: {
           input?: InputFieldValue;
+          highlight?: Highlight;
           validation?: InputFieldValidation;
         };
       };
