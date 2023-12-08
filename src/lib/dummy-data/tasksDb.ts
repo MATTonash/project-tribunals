@@ -7,6 +7,7 @@ export let tasksDb: { [taskId: string]: Task } = {
     inputFields: {
       fieldId1: {
         name: "Judge's name",
+        isRequired: true,
         container: "shorttext",
       },
     },
@@ -17,20 +18,24 @@ export let tasksDb: { [taskId: string]: Task } = {
     inputFields: {
       fieldId1: {
         name: "Drop down",
+        isRequired: true,
         container: "dropdown",
         hint: "Select an option",
         options: ["Option 1", "Option 2", "Option 3", "Option 4"],
       },
       fieldId2: {
         name: "Short text",
+        isRequired: false,
         container: "shorttext",
       },
       fieldId3: {
         name: "Long text",
+        isRequired: true,
         container: "longtext",
       },
       fieldId4: {
         name: "Number",
+        isRequired: true,
         container: "number",
         min: 10,
         max: 50,
@@ -43,6 +48,7 @@ export let tasksDb: { [taskId: string]: Task } = {
     inputFields: {
       fieldId1: {
         name: "Drop down",
+        isRequired: false,
         container: "dropdown",
         hint: "Select an option",
         options: ["Option 1", "Option 2", "Option 3", "Option 4"],
@@ -55,6 +61,7 @@ export let tasksDb: { [taskId: string]: Task } = {
     inputFields: {
       fieldId1: {
         name: "Short text",
+        isRequired: false,
         container: "shorttext",
       },
     },
@@ -65,6 +72,7 @@ export let tasksDb: { [taskId: string]: Task } = {
     inputFields: {
       fieldId1: {
         name: "Long text",
+        isRequired: false,
         container: "longtext",
       },
     },
@@ -75,6 +83,7 @@ export let tasksDb: { [taskId: string]: Task } = {
     inputFields: {
       fieldId1: {
         name: "Number",
+        isRequired: false,
         container: "number",
         min: 10,
         max: 50
