@@ -27,12 +27,7 @@ const Annotator = () => {
           <TaskForm documentId={documentId} taskId={taskId} />
         )}
       </ResizableSidebar>
-      {/* <Flex flexDirection="column" width="30vw" maxWidth="500px">
-        {tasks.map((task, index) => (
-          <TaskItem task={task} key={task.key} isAlternate={index % 2 === 1} />
-        ))}
-      </Flex> */}
-      <PdfViewer documentId={documentId} />
+      <PdfViewer documentId={documentId} taskId={taskId} />
     </Flex>
   );
 };
