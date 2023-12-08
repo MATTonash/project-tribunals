@@ -7,6 +7,7 @@ import {
 } from "react-pdf-highlighter-extended";
 import PdfViewerHeader from "./PdfViewerHeader";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
+import { InputSelector } from "./InputSelector";
 
 const HighlightContainer = () => {
   return <></>;
@@ -27,7 +28,11 @@ const PdfViewer = ({ documentId }: PdfViewerProps) => {
       />
       <Flex flexGrow="1" position="relative" overflowY="clip">
         <PdfLoader document={documentsDb[documentId].url}>
-          <PdfHighlighter pdfScaleValue={pdfScaleValue} highlights={[]}>
+          <PdfHighlighter
+            pdfScaleValue={pdfScaleValue}
+            highlights={[]}
+            selectionTip={<InputSelector />}
+          >
             <HighlightContainer></HighlightContainer>
           </PdfHighlighter>
         </PdfLoader>
