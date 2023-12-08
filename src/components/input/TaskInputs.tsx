@@ -9,6 +9,9 @@ interface Props {
   task: Task;
 }
 
+/**
+ * @deprecated Use TaskForm instead
+ */
 export const TaskInputs = ({ task }: Props) => {
   return task.entries.map((taskEntry: TaskEntry) => {
     if (taskEntry.type === "dropdown") {

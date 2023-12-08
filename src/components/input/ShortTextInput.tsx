@@ -6,6 +6,9 @@ interface Props {
   label: string;
 }
 
+/**
+ * @deprecated Use TaskForm instead
+ */
 const ShortTextInput = (props: Props) => {
   const [value, setValue] = useState<string>();
 

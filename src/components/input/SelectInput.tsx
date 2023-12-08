@@ -12,6 +12,9 @@ export interface Props {
   label: string;
 }
 
+/**
+ * @deprecated Use TaskForm instead
+ */
 export function SelectInput(props: Props) {
   const [selectedOption, setSelectedOption] = useState<string>();
 

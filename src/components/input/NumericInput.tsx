@@ -7,6 +7,9 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
+/**
+ * @deprecated Use TaskForm instead
+ */
 const NumericInput = () => {
   const [_, setStoredValue] = useState("0");
 

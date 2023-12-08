@@ -24,7 +24,7 @@ const Annotator = () => {
         {taskId === undefined ? (
           <TaskList documentId={documentId} />
         ) : (
-          <TaskForm />
+          <TaskForm documentId={documentId} taskId={taskId} />
         )}
       </ResizableSidebar>
       {/* <Flex flexDirection="column" width="30vw" maxWidth="500px">
