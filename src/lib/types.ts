@@ -1,4 +1,4 @@
-export type InputFieldValue = string | number | boolean;
+export type InputFieldValue = string | number;
 export type InputFieldValidation = "auto" | "human" | "double";
 export type TaskStatus = "complete" | "incomplete";
 export type TaskId = string;
@@ -6,6 +6,7 @@ export type FieldId = string;
 
 interface BaseInputField {
   name: string;
+  isRequired: boolean;
   hint?: string;
 
   // TODO: Complete validation and autoinput
