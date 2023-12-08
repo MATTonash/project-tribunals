@@ -31,9 +31,6 @@ const Navbar = () => {
     >
       <Image src={Logo} w={200}></Image>
       <Spacer />
-      <Button {...buttonStyling} as={Link} to="annotator/documentId1">
-        Document Preview
-      </Button>
       <Button {...buttonStyling} as={Link} to=".">
         Home
       </Button>
