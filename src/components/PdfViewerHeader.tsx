@@ -144,22 +144,6 @@ const PdfViewerHeader = ({
           <MenuItem onClick={() => setPdfScaleValue(4)}>400%</MenuItem>
         </MenuList>
       </Menu>
-      <Spacer />
-      <Button
-        size={"sm"}
-        variant={"ghost"}
-        onClick={() => {
-          toastIdRef.current = toast({
-            title: "Saved!",
-            position: "bottom-right",
-            status: "success",
-            duration: 1000,
-            isClosable: true,
-          });
-        }}
-      >
-        Save
-      </Button>
     </Flex>
   );
 };
