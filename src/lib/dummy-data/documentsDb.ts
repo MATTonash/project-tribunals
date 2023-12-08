@@ -33,8 +33,7 @@ export let documentsDb: { [documentId: string]: LabelledDocument } = {
             input: "filler text filler text filler text filler text",
             validation: "double",
           },
-          fieldId4: {},
-          fieldId5: {
+          fieldId4: {
             input: 33,
             validation: "human",
           },
@@ -63,14 +62,6 @@ export let documentsDb: { [documentId: string]: LabelledDocument } = {
         },
       },
       taskId6: {
-        status: "incomplete",
-        inputFields: {
-          fieldId1: {
-            input: "Option 1",
-          },
-        },
-      },
-      taskId7: {
         status: "incomplete",
         inputFields: {
           fieldId1: {

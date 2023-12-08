@@ -1,25 +1,38 @@
-export type InputFieldContainer =
-  | "dropdown"
-  | "shorttext"
-  | "longtext"
-  | "radio"
-  | "number";
 export type InputFieldValue = string | number | boolean;
 export type InputFieldValidation = "auto" | "human" | "double";
 export type TaskStatus = "complete" | "incomplete";
 export type TaskId = string;
 export type FieldId = string;
 
-export interface InputField {
+interface BaseInputField {
   name: string;
-  container: InputFieldContainer;
   hint?: string;
-  options?: string[];
 
   // TODO: Complete validation and autoinput
   searchKey?: unknown;
   validationKey?: unknown;
 }
+
+export interface DropdownInputField extends BaseInputField {
+  container: "dropdown";
+  options: string[];
+}
+
+export interface ShorttextInputField extends BaseInputField {
+  container: "shorttext";
+}
+
+export interface LongtextInputField extends BaseInputField {
+  container: "longtext";
+}
+
+export interface NumberInputField extends BaseInputField {
+  container: "number";
+  min: number;
+  max: number;
+}
+
+export type InputField = DropdownInputField | ShorttextInputField | LongtextInputField | NumberInputField
 
 export interface Task {
   name: string;

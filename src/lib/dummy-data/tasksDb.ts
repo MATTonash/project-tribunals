@@ -30,13 +30,10 @@ export let tasksDb: { [taskId: string]: Task } = {
         container: "longtext",
       },
       fieldId4: {
-        name: "Radio",
-        container: "radio",
-        options: ["Option 1", "Option 2", "Option 3", "Option 4"],
-      },
-      fieldId5: {
         name: "Number",
         container: "number",
+        min: 10,
+        max: 50,
       },
     },
   },
@@ -73,23 +70,14 @@ export let tasksDb: { [taskId: string]: Task } = {
     },
   },
   taskId6: {
-    name: "Radio task",
-    description: "Answer this radio",
-    inputFields: {
-      fieldId1: {
-        name: "Radio",
-        container: "radio",
-        options: ["Option 1", "Option 2", "Option 3", "Option 4"],
-      },
-    },
-  },
-  taskId7: {
     name: "Number task",
     description: "Fill this number input",
     inputFields: {
       fieldId1: {
         name: "Number",
         container: "number",
+        min: 10,
+        max: 50
       },
     },
   },
