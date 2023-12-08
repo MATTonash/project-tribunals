@@ -16,11 +16,15 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  ToastId,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { TaskId } from "../lib/types";
+import { FieldId, InputFieldValue, TaskId } from "../lib/types";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
+import TaskFormHeader from "./TaskFormHeader";
+import { useRef } from "react";
 
 interface TaskFormProps {
   taskId: TaskId;
@@ -29,75 +33,106 @@ interface TaskFormProps {
 
 const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
   const task = tasksDb[taskId];
+  const toast = useToast();
+  const toastIdRef = useRef<ToastId | null>(null);
 
   return (
-    <VStack alignItems={"unset"} p={2}>
-      <Text> {task.description}</Text>
-      <Formik
-        initialValues={Object.keys(task.inputFields).reduce(
-          (acc, fieldId) => ({
-            ...acc,
-            [fieldId]:
-              documentsDb[documentId].tasks[taskId].inputFields[fieldId].input,
-          }),
-          {}
-        )}
-        onSubmit={(values, actions) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
-        }}
-      >
-        {(props) => (
-          <Form>
-            {Object.keys(task.inputFields).map((fieldId) => {
-              const inputField = task.inputFields[fieldId];
+    <>
+      <TaskFormHeader name={task.name} documentId={documentId} />
+      <VStack alignItems={"unset"} p={2}>
+        <Text> {task.description}</Text>
+        <Formik
+          initialValues={Object.keys(task.inputFields).reduce(
+            (acc, fieldId) => ({
+              ...acc,
+              [fieldId]:
+                documentsDb[documentId].tasks[taskId].inputFields[fieldId]
+                  .input,
+            }),
+            {}
+          )}
+          onSubmit={(values, actions) => {
+            setTimeout(() => {
+              console.log(values);
+              Object.entries(values).forEach(([fieldId, input]) => {
+                documentsDb[documentId].tasks[taskId].inputFields[
+                  fieldId
+                ].input = input as InputFieldValue;
+              });
+              documentsDb[documentId].tasks[taskId].status = "complete";
+              // alert(JSON.stringify(values, null, 2));
+              actions.setSubmitting(false);
+              toastIdRef.current = toast({
+                title: "Saved!",
+                position: "bottom-left",
+                status: "success",
+                duration: 1000,
+                isClosable: true,
+              });
+            }, 1000);
+          }}
+        >
+          {(props) => (
+            <Form>
+              {Object.keys(task.inputFields).map((fieldId) => {
+                const inputField = task.inputFields[fieldId];
 
-              return (
-                <Field name={fieldId}>
-                  {({ field, form }) => (
-                    <FormControl>
-                      <FormLabel>{inputField.name}</FormLabel>
-                      {inputField.container === "shorttext" ? (
-                        <Input {...field} placeholder={inputField.name} />
-                      ) : inputField.container === "longtext" ? (
-                        <Textarea {...field} placeholder={inputField.name} />
-                      ) : inputField.container === "dropdown" ? (
-                        <Select {...field}>
-                          {inputField.options?.map((value) => (
-                            <option>{value}</option>
-                          ))}
-                        </Select>
-                      ) : inputField.container === "number" ? (
-                        <NumberInput max={inputField.max} min={inputField.min}>
-                          <NumberInputField {...field} />
-                          <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                          </NumberInputStepper>
-                        </NumberInput>
-                      ) : null}
-                      {inputField.hint && (
-                        <FormHelperText>{inputField.hint}</FormHelperText>
-                      )}
-                    </FormControl>
-                  )}
-                </Field>
-              );
-            })}
-            <Button
-              mt={4}
-              colorScheme="teal"
-              isLoading={props.isSubmitting}
-              type="submit"
-            >
-              Submit
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    </VStack>
+                return (
+                  <Field name={fieldId} key={fieldId}>
+                    {({ field, form }) => (
+                      <FormControl
+                        isRequired={inputField.isRequired}
+                        isInvalid={form.errors[fieldId]}
+                      >
+                        <FormLabel>{inputField.name}</FormLabel>
+                        {inputField.container === "shorttext" ? (
+                          <Input {...field} placeholder={inputField.name} />
+                        ) : inputField.container === "longtext" ? (
+                          <Textarea {...field} placeholder={inputField.name} />
+                        ) : inputField.container === "dropdown" ? (
+                          <Select {...field}>
+                            {inputField.options?.map((value, index) => (
+                              <option key={index}>{value}</option>
+                            ))}
+                          </Select>
+                        ) : inputField.container === "number" ? (
+                          <NumberInput
+                            defaultValue={
+                              documentsDb[documentId].tasks[taskId].inputFields[
+                                fieldId
+                              ].input
+                            }
+                            max={inputField.max}
+                            min={inputField.min}
+                          >
+                            <NumberInputField {...field} />
+                            <NumberInputStepper>
+                              <NumberIncrementStepper />
+                              <NumberDecrementStepper />
+                            </NumberInputStepper>
+                          </NumberInput>
+                        ) : null}
+                        {inputField.hint && (
+                          <FormHelperText>{inputField.hint}</FormHelperText>
+                        )}
+                      </FormControl>
+                    )}
+                  </Field>
+                );
+              })}
+              <Button
+                mt={4}
+                width="100%"
+                isLoading={props.isSubmitting}
+                type="submit"
+              >
+                Save
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </VStack>
+    </>
   );
 };
 
