@@ -33,7 +33,11 @@ export interface NumberInputField extends BaseInputField {
   max: number;
 }
 
-export type InputField = DropdownInputField | ShorttextInputField | LongtextInputField | NumberInputField
+export type InputField =
+  | DropdownInputField
+  | ShorttextInputField
+  | LongtextInputField
+  | NumberInputField;
 
 export interface Task {
   name: string;

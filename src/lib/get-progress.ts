@@ -1,7 +1,7 @@
 import { documentsDb } from "./dummy-data/documentsDb";
 
 export const getProgress = (
-  documentId: string
+  documentId: string,
 ): { completedTasks: number; totalTasks: number } => {
   const document = documentsDb[documentId];
 
@@ -12,7 +12,7 @@ export const getProgress = (
   const tasks = Object.values(document.tasks);
   const completedTasks = tasks.reduce(
     (count, task) => count + (task.status === "complete" ? 1 : 0),
-    0
+    0,
   );
 
   return {

@@ -22,8 +22,8 @@ const router = createBrowserRouter(
       <Route path="profile" element={<Profile />} />
       <Route path="annotator/:documentId" element={<Annotator />} />
       <Route path="annotator/:documentId/:taskId" element={<Annotator />} />
-    </Route>
-  )
+    </Route>,
+  ),
 );
 
 function App() {

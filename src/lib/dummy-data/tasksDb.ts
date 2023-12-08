@@ -86,7 +86,7 @@ export let tasksDb: { [taskId: string]: Task } = {
         isRequired: false,
         container: "number",
         min: 10,
-        max: 50
+        max: 50,
       },
     },
   },

@@ -39,12 +39,12 @@ const TaskList = ({ documentId }: TaskListProps) => {
 
   const handleCheckboxChange = (
     event: ChangeEvent<HTMLInputElement>,
-    taskId: TaskId
+    taskId: TaskId,
   ) => {
     setSelectedTasks(
       event.target.checked
         ? selectedTasks.concat(taskId)
-        : selectedTasks.filter((_id) => _id !== taskId)
+        : selectedTasks.filter((_id) => _id !== taskId),
     );
   };
 

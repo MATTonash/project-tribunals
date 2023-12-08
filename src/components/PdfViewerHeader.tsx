@@ -107,14 +107,14 @@ const PdfViewerHeader = ({
           {pdfScaleValue === "auto"
             ? "Automatic Zoom"
             : pdfScaleValue === "page-actual"
-            ? "Actual Size"
-            : pdfScaleValue === "page-fit"
-            ? "Page Fit"
-            : pdfScaleValue === "page-width"
-            ? "Page Width"
-            : pdfScaleValue === "page-height"
-            ? "Page Height"
-            : (pdfScaleValue * 100).toFixed(0) + "%"}
+              ? "Actual Size"
+              : pdfScaleValue === "page-fit"
+                ? "Page Fit"
+                : pdfScaleValue === "page-width"
+                  ? "Page Width"
+                  : pdfScaleValue === "page-height"
+                    ? "Page Height"
+                    : (pdfScaleValue * 100).toFixed(0) + "%"}
         </MenuButton>
         {/** PdfViewer has severl layers making a document. z0 = page, z1 = text, z2 = annotation, z3 = annotation editor*/}
         <MenuList zIndex={"4"}>

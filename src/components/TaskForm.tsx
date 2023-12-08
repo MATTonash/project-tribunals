@@ -49,7 +49,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                 documentsDb[documentId].tasks[taskId].inputFields[fieldId]
                   .input,
             }),
-            {}
+            {},
           )}
           onSubmit={(values, actions) => {
             setTimeout(() => {
