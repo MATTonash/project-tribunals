@@ -2,7 +2,11 @@ import { Button, Card, CardBody, CardHeader, Stack } from "@chakra-ui/react";
 import { FieldId, TaskId } from "../lib/types";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
-import { GhostHighlight, useSelectionUtils, useTipViewerUtils } from "react-pdf-highlighter-extended";
+import {
+  GhostHighlight,
+  useSelectionUtils,
+  useTipViewerUtils,
+} from "react-pdf-highlighter-extended";
 
 interface SelectionTipProps {
   documentId: string;
@@ -10,7 +14,11 @@ interface SelectionTipProps {
   addHighlight: (highlight: GhostHighlight, fieldId: FieldId) => void;
 }
 
-const SelectionTip = ({documentId, taskId, addHighlight}: SelectionTipProps) => {
+const SelectionTip = ({
+  documentId,
+  taskId,
+  addHighlight,
+}: SelectionTipProps) => {
   const {
     selectionPosition,
     selectionContent,
@@ -20,7 +28,6 @@ const SelectionTip = ({documentId, taskId, addHighlight}: SelectionTipProps) => 
 
   const { setTip } = useTipViewerUtils();
 
-
   return (
     <Card>
       <CardHeader paddingBottom="0">
@@ -28,14 +35,24 @@ const SelectionTip = ({documentId, taskId, addHighlight}: SelectionTipProps) => 
       </CardHeader>
       <CardBody>
         <Stack>
-          {Object.entries(documentsDb[documentId].tasks[taskId].inputFields || {}).map(([fieldId, inputField]) => (
-            <Button key={fieldId} onClick={() => {
-              makeGhostHighlight();
-              window.getSelection()?.removeAllRanges();
-              addHighlight({content: selectionContent, position: selectionPosition}, fieldId)
-              removeGhostHighlight();
-              setTip(null);
-            }}>{tasksDb[taskId].inputFields[fieldId].name}</Button>
+          {Object.entries(
+            documentsDb[documentId].tasks[taskId].inputFields || {},
+          ).map(([fieldId, _]) => (
+            <Button
+              key={fieldId}
+              onClick={() => {
+                makeGhostHighlight();
+                window.getSelection()?.removeAllRanges();
+                addHighlight(
+                  { content: selectionContent, position: selectionPosition },
+                  fieldId,
+                );
+                removeGhostHighlight();
+                setTip(null);
+              }}
+            >
+              {tasksDb[taskId].inputFields[fieldId].name}
+            </Button>
           ))}
         </Stack>
       </CardBody>

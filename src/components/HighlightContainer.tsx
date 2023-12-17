@@ -1,27 +1,18 @@
-import { Box, Tooltip } from "@chakra-ui/react";
-import React, { MouseEvent } from "react";
 import {
   AreaHighlight,
-  Highlight,
   MonitoredHighlightContainer,
   TextHighlight,
   Tip,
-  ViewportHighlight,
   useHighlightUtils,
   useTipViewerUtils,
 } from "react-pdf-highlighter-extended";
-import { HighlightContext } from "react-pdf-highlighter-extended/dist/esm/contexts/HighlightContext";
 import HighlightPopup from "./HighlightPopup";
-
-interface HighlightContainerProps {}
 
 const HighlightContainer = () => {
   const {
     highlight,
     key,
     isSelectionInProgress,
-    viewportToScaled,
-    screenshot,
     isScrolledTo,
     highlightBindings,
   } = useHighlightUtils();
@@ -29,7 +20,7 @@ const HighlightContainer = () => {
   const { setTip, toggleEditInProgress } = useTipViewerUtils();
 
   const isTextHighlight = !Boolean(
-    highlight.content && highlight.content.image
+    highlight.content && highlight.content.image,
   );
 
   const component = isTextHighlight ? (
