@@ -1,14 +1,17 @@
 import { MutableRefObject, createContext, useContext } from "react";
 import { FieldId, InputFieldValue } from "../lib/types";
-import { Highlight } from "react-pdf-highlighter-extended";
 
 export interface TaskFormRef {
     setFieldValue: (fieldId: FieldId, value: InputFieldValue) => void;
 }
 
+export interface PdfViewerRef {
+    saveHighlights: () => void;
+}
+
 export interface AnnotatorUtils {
-    taskFormRef: MutableRefObject<TaskFormRef | null>;
-    highlightsRef: MutableRefObject<Array<Highlight>>
+    taskFormRef: MutableRefObject<TaskFormRef | undefined>;
+    highlightsRef: MutableRefObject<PdfViewerRef | undefined>;
 };
 
 export const AnnotatorContext = createContext<AnnotatorUtils | undefined>(

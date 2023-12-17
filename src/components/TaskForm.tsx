@@ -12,12 +12,12 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Field, FieldProps, Form, Formik } from "formik";
-import { Ref, useImperativeHandle, useRef } from "react";
+import { useRef } from "react";
+import { useAnnotatorUtils } from "../context/AnnotatorContext";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
-import { FieldId, InputFieldValue, TaskId } from "../lib/types";
+import { InputFieldValue, TaskId } from "../lib/types";
 import TaskFormHeader from "./TaskFormHeader";
-import { TaskFormRef, useAnnotatorUtils } from "../context/AnnotatorContext";
 
 interface TaskFormProps {
   taskId: TaskId;
@@ -28,7 +28,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
   const task = tasksDb[taskId];
   const toast = useToast();
   const toastIdRef = useRef<ToastId | null>(null);
-  const { taskFormRef } = useAnnotatorUtils();
+  const { taskFormRef, highlightsRef } = useAnnotatorUtils();
 
   return (
     <>
@@ -47,14 +47,14 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
           )}
           onSubmit={(values, actions) => {
             setTimeout(() => {
-              console.log(values);
+              highlightsRef.current?.saveHighlights();
               Object.entries(values).forEach(([fieldId, input]) => {
                 documentsDb[documentId].tasks[taskId].inputFields[
                   fieldId
                 ].input = input as InputFieldValue;
               });
               documentsDb[documentId].tasks[taskId].status = "complete";
-              alert(JSON.stringify(values, null, 2));
+              // alert(JSON.stringify(values, null, 2));
               actions.setSubmitting(false);
               toastIdRef.current = toast({
                 title: "Saved!",
@@ -80,7 +80,6 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                   return (
                     <Field name={fieldId} key={fieldId}>
                       {({ field, form }: FieldProps) => {
-                        console.log(field);
                         return (
                           <FormControl
                             isRequired={inputField.isRequired}

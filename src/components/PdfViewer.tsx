@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { Ref, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   GhostHighlight,
   Highlight,
@@ -7,20 +7,20 @@ import {
   PdfLoader,
   PdfScaleValue,
 } from "react-pdf-highlighter-extended";
-import PdfViewerHeader from "./PdfViewerHeader";
-import { documentsDb } from "../lib/dummy-data/documentsDb";
-import SelectionTip from "./SelectionTip";
-import { FieldId, Task, TaskId } from "../lib/types";
-import HighlightContainer from "./HighlightContainer";
-import { tasksDb } from "../lib/dummy-data/tasksDb";
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
+import { documentsDb } from "../lib/dummy-data/documentsDb";
+import { tasksDb } from "../lib/dummy-data/tasksDb";
+import { FieldId, TaskId } from "../lib/types";
+import HighlightContainer from "./HighlightContainer";
+import PdfViewerHeader from "./PdfViewerHeader";
+import SelectionTip from "./SelectionTip";
 
 interface PdfViewerProps {
   documentId: string;
   taskId?: TaskId;
 }
 
-const getHighlights = (documentId: string, taskId?: TaskId) =>
+const fetchHighlights = (documentId: string, taskId?: TaskId) =>
   taskId
     ? Object.values(
         documentsDb[documentId].tasks[taskId].inputFields || {},
@@ -32,25 +32,37 @@ const getHighlights = (documentId: string, taskId?: TaskId) =>
 const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
   const [pdfScaleValue, setPdfScaleValue] = useState<PdfScaleValue>("auto");
   const [highlights, setHighlights] = useState<Array<Highlight>>(
-    getHighlights(documentId, taskId),
+    fetchHighlights(documentId, taskId),
   );
 
-  const { taskFormRef } = useAnnotatorUtils();
+  const { taskFormRef, highlightsRef } = useAnnotatorUtils();
 
   const addHighlight = (highlight: GhostHighlight, fieldId: FieldId) => {
     console.log("Saving highlight", highlight);
     taskFormRef.current?.setFieldValue(fieldId, highlight.content.text ?? "");
-    documentsDb[documentId].tasks[taskId!].inputFields[fieldId].highlight = {
-      ...highlight,
-      comment: { text: tasksDb[taskId!].inputFields[fieldId].name },
-      id: fieldId,
-    };
+    setHighlights(
+      highlights
+        .filter((h) => h.id !== fieldId)
+        .concat({
+          ...highlight,
+          comment: { text: tasksDb[taskId!].inputFields[fieldId].name },
+          id: fieldId,
+        }),
+    );
+  };
 
-    setHighlights(getHighlights(documentId, taskId));
+  highlightsRef.current = {
+    saveHighlights: () => {
+      highlights.forEach((highlight) => {
+        documentsDb[documentId].tasks[taskId!].inputFields[
+          highlight.id
+        ].highlight = highlight;
+      });
+    },
   };
 
   useEffect(() => {
-    setHighlights(getHighlights(documentId, taskId));
+    setHighlights(fetchHighlights(documentId, taskId));
   }, [documentId, taskId]);
 
   return (
