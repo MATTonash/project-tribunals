@@ -1,62 +1,19 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-  Select,
-  Spacer,
-  Textarea,
-  ToastId,
-  useToast,
-} from "@chakra-ui/react";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Task } from "../lib/Task";
-import SidebarHeader from "./SidebarHeader";
-import TaskItem from "./TaskItem";
-import { TaskInputs } from "./input/TaskInputs";
+import { Divider, Flex } from "@chakra-ui/react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface ResizableSidebarProps {
-  tasks: Array<Task>;
+  minWidth?: string | number;
+  maxWidth?: string | number;
+  children?: ReactNode;
 }
 
-const ResizableSidebar = ({ tasks }: ResizableSidebarProps) => {
+const ResizableSidebar = ({
+  minWidth = "400px",
+  maxWidth = "70%",
+  children,
+}: ResizableSidebarProps) => {
   const [isResizing, setIsResizing] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(0);
-
-  const [currentTask, setCurrentTask] = useState<Task | null>(null);
-  const [selectedTasks, setSelectedTasks] = useState<Array<Task>>([]);
-  const [listedTasks, setListedTasks] = useState<Array<Task>>(tasks);
-
-  const dividerRef = useRef<HTMLHRElement | null>(null);
-  const toast = useToast();
-  const toastIdRef = useRef<ToastId | null>(null);
-
-  useEffect(() => {
-    if (selectedTasks.length > 0 && !toastIdRef.current) {
-      toastIdRef.current = toast({
-        position: "bottom-left",
-        duration: null,
-
-        render: () => <Button>Start tasks</Button>,
-      });
-    } else if (selectedTasks.length === 0 && toastIdRef.current) {
-      toast.close(toastIdRef.current);
-      toastIdRef.current = null;
-    }
-  }, [selectedTasks]);
-
-  useEffect(() => {
-    return () => {
-      if (toastIdRef.current) {
-        toast.close(toastIdRef.current);
-        toastIdRef.current = null;
-      }
-    };
-  }, []);
 
   const handleMouseDown = () => {
     setIsResizing(true);
@@ -69,17 +26,6 @@ const ResizableSidebar = ({ tasks }: ResizableSidebarProps) => {
   const handleMouseMove = (event: MouseEvent) => {
     if (isResizing) {
       setSidebarWidth(event.clientX);
-    }
-  };
-
-  const handleCheckboxChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    task: Task
-  ) => {
-    if (event.target.checked) {
-      setSelectedTasks(selectedTasks.concat(task));
-    } else {
-      setSelectedTasks(selectedTasks.filter((t) => t !== task));
     }
   };
 
@@ -97,8 +43,8 @@ const ResizableSidebar = ({ tasks }: ResizableSidebarProps) => {
     <Flex
       width={sidebarWidth}
       minHeight="100%"
-      minWidth="400px"
-      maxWidth={"70%"}
+      minWidth={minWidth}
+      maxWidth={maxWidth}
       overflowY={"auto"}
       style={{
         scrollbarWidth: "none",
@@ -108,56 +54,9 @@ const ResizableSidebar = ({ tasks }: ResizableSidebarProps) => {
       css={{ "&::-webkit-scrollbar": { display: "none" } }}
     >
       <Flex minWidth={"calc(100% - 10px)"} flexDirection="column">
-        <SidebarHeader
-          task={currentTask}
-          addTask={() => {}}
-          deleteTask={() => {
-            setListedTasks(
-              listedTasks.filter((task) => !selectedTasks.includes(task))
-            );
-            setSelectedTasks([]);
-          }}
-          goBack={() => setCurrentTask(null)}
-        />
-        {currentTask ? (
-          <Flex flexDirection={"column"} height={"100%"} p={2}>
-            <FormControl>
-              <Flex flexDirection={"column"} gap={4}>
-                <Box>
-                  <FormLabel>Country</FormLabel>
-                  <Select placeholder="Select country">
-                    <option>United Arab Emirates</option>
-                    <option>Nigeria</option>
-                  </Select>
-                </Box>
-                <Box>
-                  <FormLabel>Basic Usage</FormLabel>
-                  <Input placeholder="Basic usage" />
-                  <FormHelperText>Some helper text</FormHelperText>
-                </Box>
-                <Textarea placeholder="Here is a sample placeholder" />
-              </Flex>
-            </FormControl>
-            <Spacer />
-            <Button>Save</Button>
-          </Flex>
-        ) : (
-          listedTasks.map((task, index) => (
-            <TaskItem
-              task={task}
-              key={task.id}
-              isAlternate={index % 2 === 1}
-              onClick={() => {
-                setSelectedTasks([]);
-                setCurrentTask(task);
-              }}
-              onCheckboxChange={(event) => handleCheckboxChange(event, task)}
-            />
-          ))
-        )}
+        {children}
       </Flex>
       <Divider
-        ref={dividerRef}
         orientation="vertical"
         cursor="ew-resize"
         onMouseDown={handleMouseDown}

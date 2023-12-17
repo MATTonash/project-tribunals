@@ -5,6 +5,9 @@ interface RadioButtonInputProps {
   choices: string[];
 }
 
+/**
+ * @deprecated Use TaskForm instead
+ */
 function RadioButtonInput({}: RadioButtonInputProps) {
   const [value, setValue] = useState("1");
 

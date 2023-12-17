@@ -1,8 +1,7 @@
 import { Flex, Heading, SimpleGrid } from "@chakra-ui/react";
+import DocumentList from "../components/DocumentList";
 import HomeButtons from "../components/HomeButtons";
 import SearchBar from "../components/SearchBar";
-import DocumentList from "../components/DocumentList";
-import { documents } from "../lib/dummy-data/documents";
 
 const Home = () => {
   return (
@@ -28,7 +27,7 @@ const Home = () => {
               onChange={() => {}}
               onRefresh={() => {}}
             ></SearchBar>
-            <DocumentList documents={documents} />
+            <DocumentList />
           </Flex>
         </SimpleGrid>
       </Flex>

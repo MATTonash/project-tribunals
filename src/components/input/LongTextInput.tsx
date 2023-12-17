@@ -1,6 +1,9 @@
 import { Textarea } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 
+/**
+ * @deprecated Use TaskForm instead
+ */
 const LongTextInput = () => {
   const [value, setValue] = useState("");
 

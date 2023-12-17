@@ -3,7 +3,7 @@ import { Heading, IconButton, Spacer } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import { IoReturnUpBack } from "react-icons/io5";
-import { Task } from "../lib/Task";
+import { Task } from "../lib/types";
 
 interface SidebarHeaderProps {
   task: Task | null;
@@ -12,6 +12,9 @@ interface SidebarHeaderProps {
   goBack: () => void;
 }
 
+/**
+ * @deprecated Please use headers for TaskList and TaskForm
+ */
 const SidebarHeader = ({
   task,
   addTask,
@@ -38,7 +41,7 @@ const SidebarHeader = ({
           icon={<IoReturnUpBack />}
           size={"sm"}
           fontSize={"22"}
-          variant="naked"
+          variant="ghost"
           onClick={goBack}
         />
       ) : (
@@ -48,7 +51,7 @@ const SidebarHeader = ({
             icon={<AiOutlinePlus />}
             size={"sm"}
             fontSize={"22"}
-            variant="naked"
+            variant="ghost"
             onClick={addTask}
           />
           <IconButton
@@ -56,7 +59,7 @@ const SidebarHeader = ({
             icon={<RiDeleteBin7Line />}
             size={"sm"}
             fontSize={"22"}
-            variant="naked"
+            variant="ghost"
             onClick={deleteTask}
           />
         </>

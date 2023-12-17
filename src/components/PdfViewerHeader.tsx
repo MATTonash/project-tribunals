@@ -7,7 +7,6 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  Spacer,
   ToastId,
   useToast,
 } from "@chakra-ui/react";
@@ -44,7 +43,7 @@ const PdfViewerHeader = ({
         icon={<MdOutlineManageSearch />}
         size={"sm"}
         fontSize={"22"}
-        variant="naked"
+        variant="ghost"
         onClick={() => {
           toastIdRef.current = toast({
             title: "Not implemented yet, sorry :(",
@@ -59,7 +58,7 @@ const PdfViewerHeader = ({
         icon={<PiSquaresFour />}
         size={"sm"}
         fontSize={"22"}
-        variant="naked"
+        variant="ghost"
         onClick={() => {
           toastIdRef.current = toast({
             title: "Not implemented yet, sorry :(",
@@ -74,7 +73,7 @@ const PdfViewerHeader = ({
         icon={<CiZoomIn />}
         size={"sm"}
         fontSize={"22"}
-        variant="naked"
+        variant="ghost"
         onClick={() => {
           if (typeof pdfScaleValue === "number") {
             setPdfScaleValue(Math.min(pdfScaleValue + 0.1, 6));
@@ -88,7 +87,7 @@ const PdfViewerHeader = ({
         icon={<CiZoomOut />}
         size={"sm"}
         fontSize={"22"}
-        variant="naked"
+        variant="ghost"
         onClick={() => {
           if (typeof pdfScaleValue === "number") {
             setPdfScaleValue(Math.max(pdfScaleValue - 0.1, 0.1));
@@ -101,20 +100,20 @@ const PdfViewerHeader = ({
         <MenuButton
           as={Button}
           size={"sm"}
-          variant={"naked"}
+          variant={"ghost"}
           rightIcon={<IoChevronDown />}
         >
           {pdfScaleValue === "auto"
             ? "Automatic Zoom"
             : pdfScaleValue === "page-actual"
-            ? "Actual Size"
-            : pdfScaleValue === "page-fit"
-            ? "Page Fit"
-            : pdfScaleValue === "page-width"
-            ? "Page Width"
-            : pdfScaleValue === "page-height"
-            ? "Page Height"
-            : (pdfScaleValue * 100).toFixed(0) + "%"}
+              ? "Actual Size"
+              : pdfScaleValue === "page-fit"
+                ? "Page Fit"
+                : pdfScaleValue === "page-width"
+                  ? "Page Width"
+                  : pdfScaleValue === "page-height"
+                    ? "Page Height"
+                    : (pdfScaleValue * 100).toFixed(0) + "%"}
         </MenuButton>
         {/** PdfViewer has severl layers making a document. z0 = page, z1 = text, z2 = annotation, z3 = annotation editor*/}
         <MenuList zIndex={"4"}>
@@ -144,22 +143,6 @@ const PdfViewerHeader = ({
           <MenuItem onClick={() => setPdfScaleValue(4)}>400%</MenuItem>
         </MenuList>
       </Menu>
-      <Spacer />
-      <Button
-        size={"sm"}
-        variant={"naked"}
-        onClick={() => {
-          toastIdRef.current = toast({
-            title: "Saved!",
-            position: "bottom-right",
-            status: "success",
-            duration: 1000,
-            isClosable: true,
-          });
-        }}
-      >
-        Save
-      </Button>
     </Flex>
   );
 };

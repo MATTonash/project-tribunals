@@ -1,23 +1,33 @@
 import { Button, Checkbox, Flex, Spacer } from "@chakra-ui/react";
 import { ChangeEvent, MouseEvent } from "react";
-import { IoCheckmark, IoCheckmarkDoneSharp } from "react-icons/io5";
-import { Task } from "../lib/Task";
+import { IoCheckmark } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import { documentsDb } from "../lib/dummy-data/documentsDb";
+import { tasksDb } from "../lib/dummy-data/tasksDb";
+import { TaskId } from "../lib/types";
 
 interface Props {
-  task: Task;
-  isAlternate: boolean;
+  documentId: string;
+  taskId: TaskId;
+  index: number;
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   onCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const TaskItem = ({ task, isAlternate, onClick, onCheckboxChange }: Props) => {
+const TaskItem = ({
+  documentId,
+  taskId,
+  index,
+  onClick,
+  onCheckboxChange,
+}: Props) => {
   return (
     <Flex
       height="70px"
       gap={2}
       alignItems="center"
       p={4}
-      bg={isAlternate === true ? "stoneGray.50" : "white"}
+      bg={index % 2 === 1 ? "stoneGray.50" : "white"}
     >
       <Checkbox colorScheme="salmon" onChange={onCheckboxChange} />
       <Button
@@ -26,17 +36,15 @@ const TaskItem = ({ task, isAlternate, onClick, onCheckboxChange }: Props) => {
         size="lg"
         colorScheme="black"
         onClick={onClick}
+        as={Link}
+        to={taskId}
       >
-        {task.name}
+        {tasksDb[taskId].name}
       </Button>
       <Spacer />
-      {task.validation === "auto" ? (
-        <IoCheckmark fontSize={24} />
-      ) : task.validation === "human" ? (
+      {documentsDb[documentId].tasks[taskId].status === "complete" && (
         <IoCheckmark fontSize={24} color={"green"} />
-      ) : task.validation === "double" ? (
-        <IoCheckmarkDoneSharp fontSize={24} color={"green"} />
-      ) : null}
+      )}
     </Flex>
   );
 };

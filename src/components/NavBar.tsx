@@ -1,6 +1,6 @@
 import { Avatar, Button, Flex, Image, Spacer } from "@chakra-ui/react";
-import Logo from "../assets/LogoHeader.svg";
 import { Link } from "react-router-dom";
+import Logo from "../assets/LogoHeader.svg";
 
 const Navbar = () => {
   const buttonStyling = {
@@ -10,6 +10,7 @@ const Navbar = () => {
     fontWeight: 700,
     size: "lg",
   };
+
   return (
     <Flex
       borderBottom="2px solid #D6D6D6"
@@ -21,9 +22,6 @@ const Navbar = () => {
     >
       <Image src={Logo} w={200}></Image>
       <Spacer />
-      <Button {...buttonStyling} as={Link} to="annotator/1">
-        Document Preview
-      </Button>
       <Button {...buttonStyling} as={Link} to=".">
         Home
       </Button>
