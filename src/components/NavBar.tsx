@@ -1,15 +1,6 @@
-import {
-  Avatar,
-  Button,
-  Flex,
-  Image,
-  Spacer,
-  ToastId,
-  useToast,
-} from "@chakra-ui/react";
-import Logo from "../assets/LogoHeader.svg";
+import { Avatar, Button, Flex, Image, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import Logo from "../assets/LogoHeader.svg";
 
 const Navbar = () => {
   const buttonStyling = {

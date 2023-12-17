@@ -1,7 +1,4 @@
 import { Flex, Heading, IconButton, Spacer } from "@chakra-ui/react";
-import { AiOutlinePlus } from "react-icons/ai";
-import { RiDeleteBin7Line } from "react-icons/ri";
-import { getProgress } from "../lib/get-progress";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 

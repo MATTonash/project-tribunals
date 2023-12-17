@@ -7,7 +7,6 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  Spacer,
   ToastId,
   useToast,
 } from "@chakra-ui/react";
