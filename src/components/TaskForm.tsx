@@ -18,6 +18,7 @@ import {
   NumberInputStepper,
   ToastId,
   useToast,
+  Spacer,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { FieldId, InputFieldValue, TaskId } from "../lib/types";
@@ -60,7 +61,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                 ].input = input as InputFieldValue;
               });
               documentsDb[documentId].tasks[taskId].status = "complete";
-              // alert(JSON.stringify(values, null, 2));
+              alert(JSON.stringify(values, null, 2));
               actions.setSubmitting(false);
               toastIdRef.current = toast({
                 title: "Saved!",
@@ -79,8 +80,9 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
 
                 return (
                   <Field name={fieldId} key={fieldId}>
-                    {({ field, form }) => (
-                      <FormControl
+                    {({ field, form }) => {
+                      console.log(field);
+                      return <FormControl
                         isRequired={inputField.isRequired}
                         isInvalid={form.errors[fieldId]}
                       >
@@ -96,27 +98,32 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                             ))}
                           </Select>
                         ) : inputField.container === "number" ? (
-                          <NumberInput
-                            defaultValue={
-                              documentsDb[documentId].tasks[taskId].inputFields[
-                                fieldId
-                              ].input
-                            }
-                            max={inputField.max}
-                            min={inputField.min}
-                          >
-                            <NumberInputField {...field} />
-                            <NumberInputStepper>
-                              <NumberIncrementStepper />
-                              <NumberDecrementStepper />
-                            </NumberInputStepper>
-                          </NumberInput>
+                          // <NumberInput
+                          //   defaultValue={
+                          //     documentsDb[documentId].tasks[taskId].inputFields[
+                          //       fieldId
+                          //     ].input
+                          //   }
+                          //   max={inputField.max}
+                          //   min={inputField.min}
+                          //   onChange={(_, valueAsNumber) => {
+                          //     console.log("Called!")
+                          //     form.handleChange();
+                          //   }}
+                          // >
+                          //   <NumberInputField {...field} />
+                          //   <NumberInputStepper>
+                          //     <NumberIncrementStepper />
+                          //     <NumberDecrementStepper />
+                          //   </NumberInputStepper>
+                          // </NumberInput>
+                          <div>Number Input broken at the moment</div>
                         ) : null}
                         {inputField.hint && (
                           <FormHelperText>{inputField.hint}</FormHelperText>
                         )}
                       </FormControl>
-                    )}
+              }}
                   </Field>
                 );
               })}
