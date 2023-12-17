@@ -1,31 +1,23 @@
 import {
-  Box,
   Button,
-  Flex,
   FormControl,
-  FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Input,
-  VStack,
-  Text,
-  FormHelperText,
-  Textarea,
   Select,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
+  Text,
+  Textarea,
   ToastId,
+  VStack,
   useToast,
-  Spacer,
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
-import { FieldId, InputFieldValue, TaskId } from "../lib/types";
-import { tasksDb } from "../lib/dummy-data/tasksDb";
+import { Field, FieldProps, Form, Formik } from "formik";
+import { Ref, useImperativeHandle, useRef } from "react";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
+import { tasksDb } from "../lib/dummy-data/tasksDb";
+import { FieldId, InputFieldValue, TaskId } from "../lib/types";
 import TaskFormHeader from "./TaskFormHeader";
-import { useRef } from "react";
+import { TaskFormRef, useAnnotatorUtils } from "../context/AnnotatorContext";
 
 interface TaskFormProps {
   taskId: TaskId;
@@ -36,6 +28,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
   const task = tasksDb[taskId];
   const toast = useToast();
   const toastIdRef = useRef<ToastId | null>(null);
+  const { taskFormRef } = useAnnotatorUtils();
 
   return (
     <>
@@ -73,70 +66,63 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
             }, 1000);
           }}
         >
-          {(props) => (
-            <Form>
-              {Object.keys(task.inputFields).map((fieldId) => {
-                const inputField = task.inputFields[fieldId];
+          {(props) => {
+            taskFormRef.current = {
+              setFieldValue: (fieldId, value) =>
+                props.setFieldValue(fieldId, value),
+            };
 
-                return (
-                  <Field name={fieldId} key={fieldId}>
-                    {({ field, form }) => {
-                      console.log(field);
-                      return <FormControl
-                        isRequired={inputField.isRequired}
-                        isInvalid={form.errors[fieldId]}
-                      >
-                        <FormLabel>{inputField.name}</FormLabel>
-                        {inputField.container === "shorttext" ? (
-                          <Input {...field} placeholder={inputField.name} />
-                        ) : inputField.container === "longtext" ? (
-                          <Textarea {...field} placeholder={inputField.name} />
-                        ) : inputField.container === "dropdown" ? (
-                          <Select {...field}>
-                            {inputField.options?.map((value, index) => (
-                              <option key={index}>{value}</option>
-                            ))}
-                          </Select>
-                        ) : inputField.container === "number" ? (
-                          // <NumberInput
-                          //   defaultValue={
-                          //     documentsDb[documentId].tasks[taskId].inputFields[
-                          //       fieldId
-                          //     ].input
-                          //   }
-                          //   max={inputField.max}
-                          //   min={inputField.min}
-                          //   onChange={(_, valueAsNumber) => {
-                          //     console.log("Called!")
-                          //     form.handleChange();
-                          //   }}
-                          // >
-                          //   <NumberInputField {...field} />
-                          //   <NumberInputStepper>
-                          //     <NumberIncrementStepper />
-                          //     <NumberDecrementStepper />
-                          //   </NumberInputStepper>
-                          // </NumberInput>
-                          <div>Number Input broken at the moment</div>
-                        ) : null}
-                        {inputField.hint && (
-                          <FormHelperText>{inputField.hint}</FormHelperText>
-                        )}
-                      </FormControl>
-              }}
-                  </Field>
-                );
-              })}
-              <Button
-                mt={4}
-                width="100%"
-                isLoading={props.isSubmitting}
-                type="submit"
-              >
-                Save
-              </Button>
-            </Form>
-          )}
+            return (
+              <Form>
+                {Object.keys(task.inputFields).map((fieldId) => {
+                  const inputField = task.inputFields[fieldId];
+
+                  return (
+                    <Field name={fieldId} key={fieldId}>
+                      {({ field, form }: FieldProps) => {
+                        console.log(field);
+                        return (
+                          <FormControl
+                            isRequired={inputField.isRequired}
+                            isInvalid={Boolean(form.errors[fieldId])}
+                          >
+                            <FormLabel>{inputField.name}</FormLabel>
+                            {inputField.container === "shorttext" ? (
+                              <Input {...field} placeholder={inputField.name} />
+                            ) : inputField.container === "longtext" ? (
+                              <Textarea
+                                {...field}
+                                placeholder={inputField.name}
+                              />
+                            ) : inputField.container === "dropdown" ? (
+                              <Select {...field}>
+                                {inputField.options?.map((value, index) => (
+                                  <option key={index}>{value}</option>
+                                ))}
+                              </Select>
+                            ) : inputField.container === "number" ? (
+                              <div>Number Input broken at the moment</div>
+                            ) : null}
+                            {inputField.hint && (
+                              <FormHelperText>{inputField.hint}</FormHelperText>
+                            )}
+                          </FormControl>
+                        );
+                      }}
+                    </Field>
+                  );
+                })}
+                <Button
+                  mt={4}
+                  width="100%"
+                  isLoading={props.isSubmitting}
+                  type="submit"
+                >
+                  Save
+                </Button>
+              </Form>
+            );
+          }}
         </Formik>
       </VStack>
     </>
