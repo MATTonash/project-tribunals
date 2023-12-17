@@ -12,7 +12,7 @@ export let documentsDb: { [documentId: string]: LabelledDocument } = {
         status: "incomplete",
         inputFields: {
           fieldId1: {
-            input: "Jeff",
+            input: "",
             highlight: {
               content: {
                 text: "This fuels a fast edit-refresh cycle, whichpromises an immersive coding experience that is quite appealing to creative developers.",
@@ -106,6 +106,19 @@ export let documentsDb: { [documentId: string]: LabelledDocument } = {
         inputFields: {
           fieldId1: {
             input: 8008,
+          },
+        },
+      },
+      taskId7: {
+        status: "incomplete",
+        inputFields: {
+          fieldId1: {
+          },
+          fieldId2: {
+          },
+          fieldId3: {
+          },
+          fieldId4: {
           },
         },
       },

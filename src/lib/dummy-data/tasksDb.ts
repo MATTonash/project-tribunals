@@ -90,4 +90,34 @@ export let tasksDb: { [taskId: string]: Task } = {
       },
     },
   },
+  taskId7: {
+    name: "MultiModal Task 2",
+    description: "Answer these multimodal inputs",
+    inputFields: {
+      fieldId1: {
+        name: "Drop down",
+        isRequired: true,
+        container: "dropdown",
+        hint: "Select an option",
+        options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+      },
+      fieldId2: {
+        name: "Short text",
+        isRequired: false,
+        container: "shorttext",
+      },
+      fieldId3: {
+        name: "Long text",
+        isRequired: true,
+        container: "longtext",
+      },
+      fieldId4: {
+        name: "Number",
+        isRequired: true,
+        container: "number",
+        min: 10,
+        max: 50,
+      },
+    },
+  },
 };
