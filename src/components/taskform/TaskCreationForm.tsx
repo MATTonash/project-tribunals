@@ -32,7 +32,6 @@ const TaskCreationForm = ( ) => {
           <h1>
             <b>Create a Task</b>
           </h1>
-          <CloseButton></CloseButton>
         </Flex>
       <Box 
       p = {'50'}>

@@ -15,7 +15,7 @@ export const TaskInputs = (props: Props) => {
     if (taskEntry.type === EntryType.Dropdown) {
       return <SelectInput options={[]} name={""} label={props.task.name} />;
     } else if (taskEntry.type === EntryType.LongText) {
-      return <LongTextInput />;
+      return <LongTextInput label={props.task.name}/>;
     } else if (taskEntry.type === EntryType.ShortText) {
       return <ShortTextInput name={""} label={props.task.name} />;
     } else if (taskEntry.type === EntryType.Number) {

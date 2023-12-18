@@ -19,6 +19,9 @@ const TaskManagerComponent = (props : Props) => {
       bg={'gray.100'}
       height={'70'}
       w = {'full'}
+      flexDirection={'row'}
+      p={'2'}
+      gap={'3'}
     >
       <h1>
       {props.name}

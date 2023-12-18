@@ -6,12 +6,31 @@ import { Spacer } from "@chakra-ui/layout"
 import { IconButton } from '@chakra-ui/react'
 import { SpinnerIcon } from '@chakra-ui/icons'
 import { Divider } from '@chakra-ui/react'
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+  } from '@chakra-ui/react'
+
 import TaskCreationForm from "../taskform/TaskCreationForm"
+import { useDisclosure } from '@chakra-ui/react'
+import { useState } from "react"
 
 const TaskManagerHeader = () => {
+    
+    const handleOnClick = () => {
+        
+    }
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+  return (
 
     
-  return (
     <Flex flexDirection={"column"}>
         <Flex 
             height={'50'}
@@ -28,7 +47,28 @@ const TaskManagerHeader = () => {
                 <option value='option2'>Option 2</option>
                 <option value='option3'>Option 3</option>
             </Select>
-            <Button> Add Task</Button>
+
+
+            <Button onClick={onOpen}> Add Task</Button>
+
+            <Modal isOpen={isOpen} onClose={onClose} isCentered = {true} size={"6xl"}>
+                <ModalOverlay />
+                <ModalContent>
+                <ModalHeader></ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <TaskCreationForm></TaskCreationForm>
+                </ModalBody>
+
+                <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                    Close
+                    </Button>
+                    <Button variant='ghost'>Secondary Action</Button>
+                </ModalFooter>
+                </ModalContent>
+            </Modal>
+
             <Spacer/>
             <Input placeholder={'Search your tasks'} w={'300'}/>
             <IconButton aria-label = 'Reload Page' icon={<SpinnerIcon />} />
