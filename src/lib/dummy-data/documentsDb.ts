@@ -11,8 +11,8 @@ export let documentsDb: { [documentId: string]: LabelledDocument } = {
       taskId1: {
         status: "incomplete",
         inputFields: {
-          fieldTypeId1: ["nothing", "something", "woah"],
-          fieldTypeId2: ["empty"]
+          fieldTypeId1: [{value: "nothing", fieldId: "fieldId1"}, {value: "something", fieldId: "fieldId2"}, {value: "woah", fieldId: "fieldId3"}],
+          fieldTypeId2: [{value: "empty", fieldId: "fieldId4"}]
       },
       highlights: [
         {
@@ -53,7 +53,7 @@ export let documentsDb: { [documentId: string]: LabelledDocument } = {
           comment: {
             text: "Judge's name",
           },
-          id: "fieldTypeId1.1",
+          id: "fieldId1",
         },
       ]
     },

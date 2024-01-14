@@ -57,7 +57,10 @@ export interface LabelledDocument {
     [taskId: string]: {
       status: TaskStatus;
       inputFields: {
-        [fieldTypeId: string]: Array<InputFieldValue>;
+        [fieldTypeId: string]: Array<{
+          fieldId: string;
+          value: InputFieldValue;
+        }>;
       };
       highlights: Array<Highlight>
     };
