@@ -41,17 +41,17 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
           initialValues={inputFields}
           onSubmit={(values, actions) => {
             setTimeout(() => {
-              // highlightsRef.current?.saveHighlights();
-              // Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
-              //   inputFields[fieldTypeId] = fieldArray;
-              // });
+              highlightsRef.current?.saveHighlights();
+              Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
+                inputFields[fieldTypeId] = fieldArray;
+              });
               console.log(JSON.stringify(values, null, 2));
-              // const isTaskComplete = Object.keys(inputFields).every(
-              //   (fieldTypeId) => inputFields[fieldTypeId].length > 0,
-              // );
-              // documentsDb[documentId].tasks[taskId].status = isTaskComplete
-              //   ? "complete"
-              //   : "incomplete";
+              const isTaskComplete = Object.keys(inputFields).every(
+                (fieldTypeId) => inputFields[fieldTypeId].length > 0,
+              );
+              documentsDb[documentId].tasks[taskId].status = isTaskComplete
+                ? "complete"
+                : "incomplete";
               actions.setSubmitting(false);
               toastIdRef.current = toast({
                 title: "Saved!",
@@ -82,7 +82,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                         <FormLabel>
                           {task.fieldTypes[fieldTypeId].name}
                         </FormLabel>
-                        {props.values[fieldTypeId].map((field, index) => (
+                        {props.values[fieldTypeId].map((inputField, index) => (
                           <Field
                             name={`${fieldTypeId}.${index}.value`}
                             key={index}
@@ -94,16 +94,21 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                                 }
                               >
                                 <Input {...field} />
-                                <Button
-                                  variant="link"
-                                  colorScheme="red"
-                                  size={"sm"}
-                                  onClick={() => {
-                                    arrayHelpers.remove(index);
-                                  }}
-                                >
-                                  Remove field
-                                </Button>
+                                {props.values[fieldTypeId].length > 1 && (
+                                  <Button
+                                    variant="link"
+                                    colorScheme="red"
+                                    size={"sm"}
+                                    onClick={() => {
+                                      highlightsRef.current?.removeHighlight(
+                                        inputField.fieldId,
+                                      );
+                                      arrayHelpers.remove(index);
+                                    }}
+                                  >
+                                    Remove field
+                                  </Button>
+                                )}
                               </FormControl>
                             )}
                           </Field>

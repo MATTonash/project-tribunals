@@ -1,11 +1,12 @@
 import { Flex } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import {
   GhostHighlight,
   Highlight,
   PdfHighlighter,
   PdfLoader,
   PdfScaleValue,
+  ViewportHighlight,
 } from "react-pdf-highlighter-extended";
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
@@ -13,6 +14,7 @@ import { tasksDb } from "../lib/dummy-data/tasksDb";
 import HighlightContainer from "./HighlightContainer";
 import PdfViewerHeader from "./PdfViewerHeader";
 import SelectionTip from "./SelectionTip";
+import ContextMenu, { ContextMenuProps } from "./ContextMenu";
 
 interface PdfViewerProps {
   documentId: string;
@@ -24,10 +26,40 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
     taskId ? documentsDb[documentId].tasks[taskId].highlights : [];
 
   const [pdfScaleValue, setPdfScaleValue] = useState<PdfScaleValue>("auto");
+  const [contextMenu, setContextMenu] = useState<ContextMenuProps | null>(null);
   const [highlights, setHighlights] =
     useState<Array<Highlight>>(fetchHighlights());
 
   const { taskFormRef, highlightsRef } = useAnnotatorUtils();
+
+  useEffect(() => {
+    const handleClick = () => {
+      if (contextMenu) {
+        setContextMenu(null);
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [contextMenu]);
+
+  const handleContextMenu = (
+    event: MouseEvent<HTMLDivElement>,
+    highlight: ViewportHighlight,
+  ) => {
+    event.preventDefault();
+
+    setContextMenu({
+      xPos: event.clientX,
+      yPos: event.clientY,
+      removeHighlight: () => {
+        highlightsRef.current?.removeHighlight(highlight.id);
+      },
+    });
+  };
 
   const addHighlight = (
     highlight: GhostHighlight,
@@ -44,8 +76,6 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
       highlight.content.text ?? "",
     );
 
-    // console.log(taskFormRef.current.values[fieldTypeId]);
-
     setHighlights(
       highlights.concat({
         ...highlight,
@@ -55,10 +85,15 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
     );
   };
 
+  const removeHighlight = (fieldId: string) => {
+    setHighlights(highlights.filter((highlight) => highlight.id != fieldId));
+  };
+
   highlightsRef.current = {
     saveHighlights: () => {
       documentsDb[documentId].tasks[taskId!].highlights = highlights;
     },
+    removeHighlight,
   };
 
   useEffect(() => {
@@ -66,31 +101,34 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
   }, [documentId, taskId]);
 
   return (
-    <Flex flexDirection={"column"} flexGrow={"1"}>
-      <PdfViewerHeader
-        pdfScaleValue={pdfScaleValue}
-        setPdfScaleValue={setPdfScaleValue}
-      />
-      <Flex flexGrow="1" position="relative" overflowY="clip">
-        <PdfLoader document={documentsDb[documentId].url}>
-          <PdfHighlighter
-            pdfScaleValue={pdfScaleValue}
-            highlights={highlights}
-            selectionTip={
-              taskId ? (
-                <SelectionTip
-                  documentId={documentId}
-                  taskId={taskId}
-                  addHighlight={addHighlight}
-                />
-              ) : undefined
-            }
-          >
-            <HighlightContainer />
-          </PdfHighlighter>
-        </PdfLoader>
+    <>
+      <Flex flexDirection={"column"} flexGrow={"1"}>
+        <PdfViewerHeader
+          pdfScaleValue={pdfScaleValue}
+          setPdfScaleValue={setPdfScaleValue}
+        />
+        <Flex flexGrow="1" position="relative" overflowY="clip">
+          <PdfLoader document={documentsDb[documentId].url}>
+            <PdfHighlighter
+              pdfScaleValue={pdfScaleValue}
+              highlights={highlights}
+              selectionTip={
+                taskId ? (
+                  <SelectionTip
+                    documentId={documentId}
+                    taskId={taskId}
+                    addHighlight={addHighlight}
+                  />
+                ) : undefined
+              }
+            >
+              <HighlightContainer onContextMenu={handleContextMenu} />
+            </PdfHighlighter>
+          </PdfLoader>
+        </Flex>
       </Flex>
-    </Flex>
+      {contextMenu && <ContextMenu {...contextMenu} />}
+    </>
   );
 };
 

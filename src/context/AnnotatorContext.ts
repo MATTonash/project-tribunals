@@ -7,6 +7,7 @@ export interface TaskFormRef {
 
 export interface PdfViewerRef {
     saveHighlights: () => void;
+    removeHighlight: (fieldId: string) => void;
 }
 
 export interface AnnotatorUtils {
