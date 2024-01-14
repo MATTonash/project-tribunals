@@ -3,6 +3,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Input,
   Select,
   Text,
@@ -11,20 +12,21 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { Field, FieldProps, Form, Formik } from "formik";
+import { Field, FieldArray, FieldProps, Form, Formik } from "formik";
 import { useRef } from "react";
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
-import { InputFieldValue, TaskId } from "../lib/types";
 import TaskFormHeader from "./TaskFormHeader";
+import { InputFieldValue } from "../lib/types";
 
 interface TaskFormProps {
-  taskId: TaskId;
+  taskId: string;
   documentId: string;
 }
 
 const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
+  let inputFields = documentsDb[documentId].tasks[taskId].inputFields;
   const task = tasksDb[taskId];
   const toast = useToast();
   const toastIdRef = useRef<ToastId | null>(null);
@@ -36,25 +38,20 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
       <VStack alignItems={"unset"} p={2}>
         <Text> {task.description}</Text>
         <Formik
-          initialValues={Object.keys(task.inputFields).reduce(
-            (acc, fieldId) => ({
-              ...acc,
-              [fieldId]:
-                documentsDb[documentId].tasks[taskId].inputFields[fieldId]
-                  .input,
-            }),
-            {},
-          )}
+          initialValues={inputFields}
           onSubmit={(values, actions) => {
             setTimeout(() => {
-              highlightsRef.current?.saveHighlights();
-              Object.entries(values).forEach(([fieldId, input]) => {
-                documentsDb[documentId].tasks[taskId].inputFields[
-                  fieldId
-                ].input = input as InputFieldValue;
+              // highlightsRef.current?.saveHighlights();
+              Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
+                inputFields[fieldTypeId] = fieldArray;
               });
-              documentsDb[documentId].tasks[taskId].status = "complete";
-              // alert(JSON.stringify(values, null, 2));
+              console.log(JSON.stringify(values, null, 2));
+              const isTaskComplete = Object.keys(inputFields).every(
+                (fieldTypeId) => inputFields[fieldTypeId].length > 0,
+              );
+              documentsDb[documentId].tasks[taskId].status = isTaskComplete
+                ? "complete"
+                : "incomplete";
               actions.setSubmitting(false);
               toastIdRef.current = toast({
                 title: "Saved!",
@@ -74,43 +71,55 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
 
             return (
               <Form>
-                {Object.keys(task.inputFields).map((fieldId) => {
-                  const inputField = task.inputFields[fieldId];
-
-                  return (
-                    <Field name={fieldId} key={fieldId}>
-                      {({ field, form }: FieldProps) => {
-                        return (
-                          <FormControl
-                            isRequired={inputField.isRequired}
-                            isInvalid={Boolean(form.errors[fieldId])}
-                          >
-                            <FormLabel>{inputField.name}</FormLabel>
-                            {inputField.container === "shorttext" ? (
-                              <Input {...field} placeholder={inputField.name} />
-                            ) : inputField.container === "longtext" ? (
-                              <Textarea
-                                {...field}
-                                placeholder={inputField.name}
-                              />
-                            ) : inputField.container === "dropdown" ? (
-                              <Select {...field}>
-                                {inputField.options?.map((value, index) => (
-                                  <option key={index}>{value}</option>
-                                ))}
-                              </Select>
-                            ) : inputField.container === "number" ? (
-                              <div>Number Input broken at the moment</div>
-                            ) : null}
-                            {inputField.hint && (
-                              <FormHelperText>{inputField.hint}</FormHelperText>
+                {Object.keys(props.values).map((fieldTypeId) => (
+                  <FieldArray
+                    name={fieldTypeId}
+                    key={fieldTypeId}
+                    render={(arrayHelpers) => (
+                      <>
+                        <FormLabel>
+                          {task.fieldTypes[fieldTypeId].name}
+                        </FormLabel>
+                        {props.values[fieldTypeId].map((val, index) => (
+                          <Field name={`${fieldTypeId}.${index}`} key={index}>
+                            {({ field, form }: FieldProps) => (
+                              <FormControl
+                                isRequired={
+                                  task.fieldTypes[fieldTypeId].isRequired
+                                }
+                              >
+                                <Input {...field} />
+                                <Button
+                                  variant="link"
+                                  colorScheme="red"
+                                  size={"sm"}
+                                  onClick={() => {
+                                    arrayHelpers.remove(index);
+                                  }}
+                                >
+                                  Remove field
+                                </Button>
+                              </FormControl>
                             )}
-                          </FormControl>
-                        );
-                      }}
-                    </Field>
-                  );
-                })}
+                          </Field>
+                        ))}
+                        <Button
+                          variant="link"
+                          colorScheme="green"
+                          size={"sm"}
+                          onClick={() => {
+                            arrayHelpers.insert(
+                              props.values[fieldTypeId].length,
+                              "",
+                            );
+                          }}
+                        >
+                          Add field
+                        </Button>
+                      </>
+                    )}
+                  />
+                ))}
                 <Button
                   mt={4}
                   width="100%"
