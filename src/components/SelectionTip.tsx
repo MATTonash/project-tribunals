@@ -1,5 +1,4 @@
 import { Button, Card, CardBody, CardHeader, Stack } from "@chakra-ui/react";
-import { FieldId, TaskId } from "../lib/types";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
 import {
@@ -10,8 +9,8 @@ import {
 
 interface SelectionTipProps {
   documentId: string;
-  taskId: TaskId;
-  addHighlight: (highlight: GhostHighlight, fieldId: FieldId) => void;
+  taskId: string;
+  addHighlight: (highlight: GhostHighlight, fieldId: string) => void;
 }
 
 const SelectionTip = ({
@@ -51,7 +50,7 @@ const SelectionTip = ({
                 setTip(null);
               }}
             >
-              {tasksDb[taskId].inputFields[fieldId].name}
+              {tasksDb[taskId].fieldTypes[fieldId].name}
             </Button>
           ))}
         </Stack>
