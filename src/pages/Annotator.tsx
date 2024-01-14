@@ -32,7 +32,7 @@ const Annotator = () => {
             <TaskForm documentId={documentId} taskId={taskId} />
           )}
         </ResizableSidebar>
-        {/* <PdfViewer documentId={documentId} taskId={taskId} /> */}
+        <PdfViewer documentId={documentId} taskId={taskId} />
       </AnnotatorContext.Provider>
     </Flex>
   );

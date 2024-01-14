@@ -42,16 +42,16 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
           onSubmit={(values, actions) => {
             setTimeout(() => {
               // highlightsRef.current?.saveHighlights();
-              Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
-                inputFields[fieldTypeId] = fieldArray;
-              });
+              // Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
+              //   inputFields[fieldTypeId] = fieldArray;
+              // });
               console.log(JSON.stringify(values, null, 2));
-              const isTaskComplete = Object.keys(inputFields).every(
-                (fieldTypeId) => inputFields[fieldTypeId].length > 0,
-              );
-              documentsDb[documentId].tasks[taskId].status = isTaskComplete
-                ? "complete"
-                : "incomplete";
+              // const isTaskComplete = Object.keys(inputFields).every(
+              //   (fieldTypeId) => inputFields[fieldTypeId].length > 0,
+              // );
+              // documentsDb[documentId].tasks[taskId].status = isTaskComplete
+              //   ? "complete"
+              //   : "incomplete";
               actions.setSubmitting(false);
               toastIdRef.current = toast({
                 title: "Saved!",
@@ -64,9 +64,11 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
           }}
         >
           {(props) => {
+            props.values["fieldTypeId1"].length;
+            // props.setFieldValue
             taskFormRef.current = {
-              setFieldValue: (fieldId, value) =>
-                props.setFieldValue(fieldId, value),
+              values: props.values,
+              setFieldValue: props.setFieldValue,
             };
 
             return (
@@ -80,8 +82,11 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                         <FormLabel>
                           {task.fieldTypes[fieldTypeId].name}
                         </FormLabel>
-                        {props.values[fieldTypeId].map((val, index) => (
-                          <Field name={`${fieldTypeId}.${index}`} key={index}>
+                        {props.values[fieldTypeId].map((field, index) => (
+                          <Field
+                            name={`${fieldTypeId}.${index}.value`}
+                            key={index}
+                          >
                             {({ field, form }: FieldProps) => (
                               <FormControl
                                 isRequired={
@@ -110,7 +115,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                           onClick={() => {
                             arrayHelpers.insert(
                               props.values[fieldTypeId].length,
-                              "",
+                              { value: "", fieldId: "fieldIdExtra" },
                             );
                           }}
                         >

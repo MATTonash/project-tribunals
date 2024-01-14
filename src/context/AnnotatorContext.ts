@@ -1,8 +1,8 @@
 import { MutableRefObject, createContext, useContext } from "react";
-import { FieldId, InputFieldValue } from "../lib/types";
+import { FormikValues } from "formik";
 
 export interface TaskFormRef {
-    setFieldValue: (fieldId: FieldId, value: InputFieldValue) => void;
+  values: FormikValues;
 }
 
 export interface PdfViewerRef {

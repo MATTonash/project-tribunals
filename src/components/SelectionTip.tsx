@@ -34,23 +34,23 @@ const SelectionTip = ({
       </CardHeader>
       <CardBody>
         <Stack>
-          {Object.entries(
+          {Object.keys(
             documentsDb[documentId].tasks[taskId].inputFields || {},
-          ).map(([fieldId, _]) => (
+          ).map((fieldTypeId) => (
             <Button
-              key={fieldId}
+              key={fieldTypeId}
               onClick={() => {
                 makeGhostHighlight();
                 window.getSelection()?.removeAllRanges();
                 addHighlight(
                   { content: selectionContent, position: selectionPosition },
-                  fieldId,
+                  fieldTypeId,
                 );
                 removeGhostHighlight();
                 setTip(null);
               }}
             >
-              {tasksDb[taskId].fieldTypes[fieldId].name}
+              {tasksDb[taskId].fieldTypes[fieldTypeId].name}
             </Button>
           ))}
         </Stack>
