@@ -10,17 +10,16 @@ import {
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
-import { FieldId, TaskId } from "../lib/types";
 import HighlightContainer from "./HighlightContainer";
 import PdfViewerHeader from "./PdfViewerHeader";
 import SelectionTip from "./SelectionTip";
 
 interface PdfViewerProps {
   documentId: string;
-  taskId?: TaskId;
+  taskId?: string;
 }
 
-const fetchHighlights = (documentId: string, taskId?: TaskId) =>
+const fetchHighlights = (documentId: string, taskId?: string) =>
   taskId
     ? Object.values(
         documentsDb[documentId].tasks[taskId].inputFields || {},
