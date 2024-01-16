@@ -1,7 +1,6 @@
 import { Button, ToastId, useToast } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
-import { TaskId } from "../lib/types";
 import TaskItem from "./TaskItem";
 import TaskListHeader from "./TaskListHeader";
 
@@ -10,7 +9,7 @@ interface TaskListProps {
 }
 
 const TaskList = ({ documentId }: TaskListProps) => {
-  const [selectedTasks, setSelectedTasks] = useState<Array<TaskId>>([]);
+  const [selectedTasks, setSelectedTasks] = useState<Array<string>>([]);
   const tasks = Object.keys(documentsDb[documentId].tasks);
 
   const toast = useToast();
@@ -39,7 +38,7 @@ const TaskList = ({ documentId }: TaskListProps) => {
 
   const handleCheckboxChange = (
     event: ChangeEvent<HTMLInputElement>,
-    taskId: TaskId,
+    taskId: string,
   ) => {
     setSelectedTasks(
       event.target.checked
