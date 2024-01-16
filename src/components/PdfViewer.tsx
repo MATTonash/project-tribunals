@@ -11,10 +11,10 @@ import {
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
+import ContextMenu, { ContextMenuProps } from "./ContextMenu";
 import HighlightContainer from "./HighlightContainer";
 import PdfViewerHeader from "./PdfViewerHeader";
 import SelectionTip from "./SelectionTip";
-import ContextMenu, { ContextMenuProps } from "./ContextMenu";
 
 interface PdfViewerProps {
   documentId: string;
@@ -32,19 +32,15 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
 
   const { taskFormRef, highlightsRef } = useAnnotatorUtils();
 
-  useEffect(() => {
-    const handleClick = () => {
-      if (contextMenu) {
-        setContextMenu(null);
-      }
-    };
-
-    document.addEventListener("click", handleClick);
-
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, [contextMenu]);
+  const handleClick = (event: MouseEvent) => {
+    // @ts-ignore
+    if (event.target.type !== "button") {
+      highlightsRef.current!.setHighlightPicker(false);
+    }
+    if (contextMenu) {
+      setContextMenu(null);
+    }
+  };
 
   const handleContextMenu = (
     event: MouseEvent<HTMLDivElement>,
@@ -89,7 +85,9 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
     setHighlights(highlights.filter((highlight) => highlight.id != fieldId));
   };
 
+  // @ts-ignore
   highlightsRef.current = {
+    ...highlightsRef.current,
     saveHighlights: () => {
       documentsDb[documentId].tasks[taskId!].highlights = highlights;
     },
@@ -98,11 +96,13 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
 
   useEffect(() => {
     setHighlights(fetchHighlights());
+    highlightsRef.current?.removeGhostHighlight &&
+      highlightsRef.current?.removeGhostHighlight();
   }, [documentId, taskId]);
 
   return (
     <>
-      <Flex flexDirection={"column"} flexGrow={"1"}>
+      <Flex flexDirection={"column"} flexGrow={"1"} onClick={handleClick}>
         <PdfViewerHeader
           pdfScaleValue={pdfScaleValue}
           setPdfScaleValue={setPdfScaleValue}
@@ -126,8 +126,8 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
             </PdfHighlighter>
           </PdfLoader>
         </Flex>
+        {contextMenu && <ContextMenu {...contextMenu} />}
       </Flex>
-      {contextMenu && <ContextMenu {...contextMenu} />}
     </>
   );
 };
