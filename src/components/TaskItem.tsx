@@ -4,11 +4,10 @@ import { IoCheckmark } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
-import { TaskId } from "../lib/types";
 
 interface Props {
   documentId: string;
-  taskId: TaskId;
+  taskId: string;
   index: number;
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   onCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void;

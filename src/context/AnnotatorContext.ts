@@ -1,12 +1,17 @@
+import { FormikValues } from "formik";
 import { MutableRefObject, createContext, useContext } from "react";
-import { FieldId, InputFieldValue } from "../lib/types";
 
 export interface TaskFormRef {
-    setFieldValue: (fieldId: FieldId, value: InputFieldValue) => void;
+  values: FormikValues;
+  setFieldValue: (fieldId: string, value: string) => void;
 }
 
 export interface PdfViewerRef {
     saveHighlights: () => void;
+    removeHighlight: (fieldId: string) => void;
+    setHighlightPicker: (fieldTypeId: string | null) => void;
+    removeGhostHighlight: () => void;
+    addGhostHighlight: (index: number) => void;
 }
 
 export interface AnnotatorUtils {

@@ -3,8 +3,6 @@ import { Highlight } from "react-pdf-highlighter-extended";
 export type InputFieldValue = string | number;
 export type InputFieldValidation = "auto" | "human" | "double";
 export type TaskStatus = "complete" | "incomplete";
-export type TaskId = string;
-export type FieldId = string;
 
 interface BaseInputField {
   name: string;
@@ -44,8 +42,9 @@ export type InputField =
 export interface Task {
   name: string;
   description: string;
-  inputFields: { [fieldId: FieldId]: InputField };
+  fieldTypes: { [fieldTypeId: string]: InputField };
 }
+
 
 export interface LabelledDocument {
   name: string;
@@ -55,15 +54,15 @@ export interface LabelledDocument {
   creationDate: Date;
   lastEdited: Date;
   tasks: {
-    [taskId: TaskId]: {
+    [taskId: string]: {
       status: TaskStatus;
       inputFields: {
-        [fieldId: FieldId]: {
-          input?: InputFieldValue;
-          highlight?: Highlight;
-          validation?: InputFieldValidation;
-        };
+        [fieldTypeId: string]: Array<{
+          fieldId: string;
+          value: InputFieldValue;
+        }>;
       };
+      highlights: Array<Highlight>
     };
   };
 }
