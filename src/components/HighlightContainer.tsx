@@ -1,5 +1,5 @@
+import { MouseEvent } from "react";
 import {
-  AreaHighlight,
   MonitoredHighlightContainer,
   TextHighlight,
   Tip,
@@ -8,7 +8,6 @@ import {
   useTipViewerUtils,
 } from "react-pdf-highlighter-extended";
 import HighlightPopup from "./HighlightPopup";
-import { MouseEvent } from "react";
 
 export interface HighlightContainerProps {
   onContextMenu?: (
@@ -18,15 +17,10 @@ export interface HighlightContainerProps {
 }
 
 const HighlightContainer = ({ onContextMenu }: HighlightContainerProps) => {
-  const {
-    highlight,
-    key,
-    isSelectionInProgress,
-    isScrolledTo,
-    highlightBindings,
-  } = useHighlightUtils();
+  const { highlight, key, isSelectionInProgress, isScrolledTo } =
+    useHighlightUtils();
 
-  const { setTip, toggleEditInProgress } = useTipViewerUtils();
+  const { setTip } = useTipViewerUtils();
 
   const component = (
     <TextHighlight

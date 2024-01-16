@@ -1,13 +1,17 @@
-import { MutableRefObject, createContext, useContext } from "react";
 import { FormikValues } from "formik";
+import { MutableRefObject, createContext, useContext } from "react";
 
 export interface TaskFormRef {
   values: FormikValues;
+  setFieldValue: (fieldId: string, value: string) => void;
 }
 
 export interface PdfViewerRef {
     saveHighlights: () => void;
     removeHighlight: (fieldId: string) => void;
+    setHighlightPicker: (state: boolean) => void;
+    removeGhostHighlight: () => void;
+    addGhostHighlight: (index: number) => void;
 }
 
 export interface AnnotatorUtils {
