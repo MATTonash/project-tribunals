@@ -1,7 +1,4 @@
-import React from "react";
-import "./ContextMenu.css";
-import { Card, CardHeader, CardBody, Text, Button } from "@chakra-ui/react";
-import { useAnnotatorUtils } from "../context/AnnotatorContext";
+import { Button, Card, CardBody, CardHeader } from "@chakra-ui/react";
 
 export interface ContextMenuProps {
   xPos: any;
@@ -11,9 +8,21 @@ export interface ContextMenuProps {
 
 const ContextMenu = ({ xPos, yPos, removeHighlight }: ContextMenuProps) => {
   return (
-    <div className="context-menu" style={{ top: yPos + 2, left: xPos + 2 }}>
-      <Button onClick={removeHighlight}>Remove Highlight</Button>
-    </div>
+    <Card
+      style={{
+        position: "absolute",
+        zIndex: 1000,
+        top: yPos + 2,
+        left: xPos + 2,
+      }}
+    >
+      <CardHeader paddingBottom="0">
+        <strong>Select an input</strong>
+      </CardHeader>
+      <CardBody>
+        <Button onClick={removeHighlight}>Remove Highlight</Button>
+      </CardBody>
+    </Card>
   );
 };
 
