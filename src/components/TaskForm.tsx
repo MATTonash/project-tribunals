@@ -22,7 +22,7 @@ interface TaskFormProps {
 }
 
 const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
-  const [highlightPicker, setHighlightPicker] = useState(false);
+  const [highlightPicker, setHighlightPicker] = useState<string | null>(null);
   let inputFields = documentsDb[documentId].tasks[taskId].inputFields;
   const task = tasksDb[taskId];
   const toast = useToast();
@@ -111,13 +111,13 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                                       Remove field
                                     </Button>
                                   )}
-                                  {highlightPicker && (
+                                  {highlightPicker === fieldTypeId && (
                                     <Button
                                       variant="link"
                                       colorScheme="yellow"
                                       size={"sm"}
                                       onClick={() => {
-                                        setHighlightPicker(false);
+                                        setHighlightPicker(null);
                                         highlightsRef.current?.addGhostHighlight(
                                           index,
                                         );

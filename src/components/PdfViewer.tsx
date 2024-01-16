@@ -35,7 +35,7 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
   const handleClick = (event: MouseEvent) => {
     // @ts-ignore
     if (event.target.type !== "button") {
-      highlightsRef.current!.setHighlightPicker(false);
+      highlightsRef.current!.setHighlightPicker(null);
     }
     if (contextMenu) {
       setContextMenu(null);

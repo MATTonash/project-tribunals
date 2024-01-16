@@ -49,7 +49,7 @@ const SelectionTip = ({
                 if (event.altKey) {
                   makeGhostHighlight();
                   window.getSelection()?.removeAllRanges();
-                  highlightsRef.current?.setHighlightPicker(true);
+                  highlightsRef.current?.setHighlightPicker(fieldTypeId);
                   highlightsRef.current!.removeGhostHighlight =
                     removeGhostHighlight;
                   highlightsRef.current!.addGhostHighlight = (index) => {

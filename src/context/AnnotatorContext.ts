@@ -9,7 +9,7 @@ export interface TaskFormRef {
 export interface PdfViewerRef {
     saveHighlights: () => void;
     removeHighlight: (fieldId: string) => void;
-    setHighlightPicker: (state: boolean) => void;
+    setHighlightPicker: (fieldTypeId: string | null) => void;
     removeGhostHighlight: () => void;
     addGhostHighlight: (index: number) => void;
 }
