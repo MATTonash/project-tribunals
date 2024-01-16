@@ -1,24 +1,20 @@
 import {
   Button,
   FormControl,
-  FormHelperText,
   FormLabel,
-  Heading,
+  HStack,
   Input,
-  Select,
   Text,
-  Textarea,
   ToastId,
   VStack,
   useToast,
 } from "@chakra-ui/react";
 import { Field, FieldArray, FieldProps, Form, Formik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
 import { tasksDb } from "../lib/dummy-data/tasksDb";
 import TaskFormHeader from "./TaskFormHeader";
-import { InputFieldValue } from "../lib/types";
 
 interface TaskFormProps {
   taskId: string;
@@ -26,11 +22,16 @@ interface TaskFormProps {
 }
 
 const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
+  const [highlightPicker, setHighlightPicker] = useState(false);
   let inputFields = documentsDb[documentId].tasks[taskId].inputFields;
   const task = tasksDb[taskId];
   const toast = useToast();
   const toastIdRef = useRef<ToastId | null>(null);
   const { taskFormRef, highlightsRef } = useAnnotatorUtils();
+
+  if (highlightsRef.current) {
+    highlightsRef.current.setHighlightPicker = setHighlightPicker;
+  }
 
   return (
     <>
@@ -65,7 +66,6 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
         >
           {(props) => {
             props.values["fieldTypeId1"].length;
-            // props.setFieldValue
             taskFormRef.current = {
               values: props.values,
               setFieldValue: props.setFieldValue,
@@ -87,28 +87,46 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                             name={`${fieldTypeId}.${index}.value`}
                             key={index}
                           >
-                            {({ field, form }: FieldProps) => (
+                            {({ field }: FieldProps) => (
                               <FormControl
                                 isRequired={
                                   task.fieldTypes[fieldTypeId].isRequired
                                 }
                               >
                                 <Input {...field} />
-                                {props.values[fieldTypeId].length > 1 && (
-                                  <Button
-                                    variant="link"
-                                    colorScheme="red"
-                                    size={"sm"}
-                                    onClick={() => {
-                                      highlightsRef.current?.removeHighlight(
-                                        inputField.fieldId,
-                                      );
-                                      arrayHelpers.remove(index);
-                                    }}
-                                  >
-                                    Remove field
-                                  </Button>
-                                )}
+                                <HStack>
+                                  {" "}
+                                  {props.values[fieldTypeId].length > 1 && (
+                                    <Button
+                                      variant="link"
+                                      colorScheme="red"
+                                      size={"sm"}
+                                      onClick={() => {
+                                        highlightsRef.current?.removeHighlight(
+                                          inputField.fieldId,
+                                        );
+                                        arrayHelpers.remove(index);
+                                      }}
+                                    >
+                                      Remove field
+                                    </Button>
+                                  )}
+                                  {highlightPicker && (
+                                    <Button
+                                      variant="link"
+                                      colorScheme="yellow"
+                                      size={"sm"}
+                                      onClick={() => {
+                                        setHighlightPicker(false);
+                                        highlightsRef.current?.addGhostHighlight(
+                                          index,
+                                        );
+                                      }}
+                                    >
+                                      Link Highlight
+                                    </Button>
+                                  )}
+                                </HStack>
                               </FormControl>
                             )}
                           </Field>

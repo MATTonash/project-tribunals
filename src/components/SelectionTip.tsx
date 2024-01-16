@@ -6,11 +6,16 @@ import {
   useSelectionUtils,
   useTipViewerUtils,
 } from "react-pdf-highlighter-extended";
+import { useAnnotatorUtils } from "../context/AnnotatorContext";
 
 interface SelectionTipProps {
   documentId: string;
   taskId: string;
-  addHighlight: (highlight: GhostHighlight, fieldId: string) => void;
+  addHighlight: (
+    highlight: GhostHighlight,
+    fieldId: string,
+    index?: number,
+  ) => void;
 }
 
 const SelectionTip = ({
@@ -26,9 +31,10 @@ const SelectionTip = ({
   } = useSelectionUtils();
 
   const { setTip } = useTipViewerUtils();
+  const { highlightsRef } = useAnnotatorUtils();
 
   return (
-    <Card>
+    <Card className="selectionTip">
       <CardHeader paddingBottom="0">
         <strong>Select an input</strong>
       </CardHeader>
@@ -39,14 +45,33 @@ const SelectionTip = ({
           ).map((fieldTypeId) => (
             <Button
               key={fieldTypeId}
-              onClick={() => {
-                makeGhostHighlight();
-                window.getSelection()?.removeAllRanges();
-                addHighlight(
-                  { content: selectionContent, position: selectionPosition },
-                  fieldTypeId,
-                );
-                removeGhostHighlight();
+              onClick={(event) => {
+                if (event.altKey) {
+                  makeGhostHighlight();
+                  window.getSelection()?.removeAllRanges();
+                  highlightsRef.current?.setHighlightPicker(true);
+                  highlightsRef.current!.removeGhostHighlight =
+                    removeGhostHighlight;
+                  highlightsRef.current!.addGhostHighlight = (index) => {
+                    addHighlight(
+                      {
+                        content: selectionContent,
+                        position: selectionPosition,
+                      },
+                      fieldTypeId,
+                      index,
+                    );
+                    removeGhostHighlight();
+                  };
+                } else {
+                  makeGhostHighlight();
+                  window.getSelection()?.removeAllRanges();
+                  addHighlight(
+                    { content: selectionContent, position: selectionPosition },
+                    fieldTypeId,
+                  );
+                  removeGhostHighlight();
+                }
                 setTip(null);
               }}
             >
