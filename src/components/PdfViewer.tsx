@@ -33,8 +33,11 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
   const { taskFormRef, highlightsRef } = useAnnotatorUtils();
 
   const handleClick = (event: MouseEvent) => {
-    // @ts-ignore
-    if (event.target.type !== "button") {
+    if (
+      // @ts-ignore
+      event.target.type !== "button" &&
+      highlightsRef.current?.setHighlightPicker
+    ) {
       highlightsRef.current!.setHighlightPicker(null);
     }
     if (contextMenu) {
