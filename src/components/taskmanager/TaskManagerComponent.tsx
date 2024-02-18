@@ -1,5 +1,6 @@
 import { Flex } from "@chakra-ui/layout";
 import { EntryType } from "../../lib/TaskEntry";
+import { Avatar, Button, Image, Spacer } from "@chakra-ui/react";
 
 interface Props {
   name: string;
@@ -22,13 +23,18 @@ const TaskManagerComponent = (props : Props) => {
       flexDirection={'row'}
       p={'2'}
       gap={'3'}
+      align={'Center'}
     >
-      <h1>
-      {props.name}
-      {props.author}
-      {props.type}
-      {props.description}
-      </h1>
+      <Flex
+          flexDirection = {'row'}
+          gap = {'4'}
+      >   
+        <h1>{props.name}</h1>
+        <Avatar></Avatar>
+        <h1>{props.author}</h1>
+        <h1>{props.type}</h1>
+        <h1>{props.description}</h1>
+      </Flex>
     </Flex>
   )
 }

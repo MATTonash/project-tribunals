@@ -12,6 +12,7 @@ import { Spacer } from "@chakra-ui/react";
 
 const TaskCreationForm = ( ) => {
 
+
   const tasks = [
     'hi'
   ];
@@ -22,7 +23,7 @@ const TaskCreationForm = ( ) => {
   return (
     <Flex flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>
       <Box 
-        w = {"70%"}
+        w = {"100%"}
         borderWidth='1px' 
         borderColor={'black'} 
         overflow='hidden' 
@@ -40,6 +41,7 @@ const TaskCreationForm = ( ) => {
         <ShortTextInput label = 'Name of Task' name = "hi"></ShortTextInput>
         <LongTextInput label = 'Description'></LongTextInput>
         <TaskInputSelect task = {tasks}></TaskInputSelect>
+        
         
         <Spacer/>
         

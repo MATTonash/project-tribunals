@@ -19,6 +19,12 @@ import {
 import TaskCreationForm from "../taskform/TaskCreationForm"
 import { useDisclosure } from '@chakra-ui/react'
 import { useState } from "react"
+import { Grid, GridItem } from '@chakra-ui/react'
+import { RiGridFill } from "react-icons/ri"
+import Annotator from "../../pages/Annotator"
+import { Link } from '@chakra-ui/react'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
+
 
 const TaskManagerHeader = () => {
     
@@ -61,10 +67,6 @@ const TaskManagerHeader = () => {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button colorScheme='blue' mr={3} onClick={onClose}>
-                    Close
-                    </Button>
-                    <Button variant='ghost'>Secondary Action</Button>
                 </ModalFooter>
                 </ModalContent>
             </Modal>
@@ -78,13 +80,34 @@ const TaskManagerHeader = () => {
         <Flex 
             flexDirection={'row'}
             p={'2'}
-            gap={'3'}
+            gap={'4'}
         >
-            <h1>Name</h1>
-            <Divider orientation="vertical" borderColor="blackAlpha"/>
-            <h1>Name</h1>
-            <Divider orientation="vertical" borderColor="black" />
-            <h1>Name</h1>
+            <Flex
+                flexDirection = {'row'}
+                gap = {'4'}
+            >   
+                    <h1>Name</h1>
+                   
+                    <Divider orientation="vertical"/>
+
+                    <h1>Author</h1>
+                    <Divider orientation="vertical"/>
+                    <h1>Type</h1>
+                    <Divider orientation="vertical"/>
+                    <h1>Description</h1>
+                    <Spacer/>
+                    <Divider orientation="vertical"/>
+                    <h1>Auto-Complete</h1>
+                    <Divider orientation="vertical"/>
+
+                    <h1>Auto-Validation</h1>
+                    <Divider orientation="vertical"/>
+
+                    <h1>ID</h1>
+       
+
+              
+            </Flex>
         </Flex>
     </Flex>
   )
