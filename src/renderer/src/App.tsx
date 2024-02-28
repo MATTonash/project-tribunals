@@ -4,14 +4,14 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Help from "./renderer/src/pages/Help";
-import Home from "./renderer/src/pages/Home";
-import Profile from "./renderer/src/pages/Profile";
-import Settings from "./renderer/src/pages/Settings";
-import TaskManager from "./renderer/src/pages/TaskManager";
+import Help from "./pages/Help";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import TaskManager from "./pages/TaskManager";
 import RootLayout from "./layouts/RootLayout";
-import Annotator from "./renderer/src/pages/Annotator";
-import { tasks } from "./lib/dummyData/tasks";
+import Annotator from "./pages/Annotator";
+import { tasks } from "../../lib/dummyData/tasks";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
