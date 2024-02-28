@@ -11,7 +11,7 @@ import Settings from "./pages/Settings";
 import TaskManager from "./pages/TaskManager";
 import RootLayout from "./layouts/RootLayout";
 import Annotator from "./pages/Annotator";
-import { tasks } from "../../lib/dummyData/tasks";
+import { tasks } from "./lib/dummyData/tasks";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
