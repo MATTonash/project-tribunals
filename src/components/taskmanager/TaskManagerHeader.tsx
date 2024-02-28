@@ -21,7 +21,7 @@ import { useDisclosure } from '@chakra-ui/react'
 import { useState } from "react"
 import { Grid, GridItem } from '@chakra-ui/react'
 import { RiGridFill } from "react-icons/ri"
-import Annotator from "../../pages/Annotator"
+import Annotator from "../../renderer/src/pages/Annotator"
 import { Link } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 
