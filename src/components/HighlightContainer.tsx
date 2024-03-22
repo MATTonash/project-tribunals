@@ -2,10 +2,8 @@ import { MouseEvent } from "react";
 import {
   MonitoredHighlightContainer,
   TextHighlight,
-  Tip,
   ViewportHighlight,
-  useHighlightUtils,
-  useTipViewerUtils,
+  useHighlightContainerContext,
 } from "react-pdf-highlighter-extended";
 import HighlightPopup from "./HighlightPopup";
 
@@ -17,10 +15,7 @@ export interface HighlightContainerProps {
 }
 
 const HighlightContainer = ({ onContextMenu }: HighlightContainerProps) => {
-  const { highlight, key, isSelectionInProgress, isScrolledTo } =
-    useHighlightUtils();
-
-  const { setTip } = useTipViewerUtils();
+  const { highlight, isScrolledTo } = useHighlightContainerContext();
 
   const component = (
     <TextHighlight
@@ -34,20 +29,11 @@ const HighlightContainer = ({ onContextMenu }: HighlightContainerProps) => {
 
   return (
     <MonitoredHighlightContainer
-      popupContent={<HighlightPopup comment={highlight.comment} />}
-      onMouseOver={(popupContent) => {
-        if (isSelectionInProgress()) return;
-
-        const popupTip: Tip = {
-          position: highlight.position,
-          content: popupContent,
-        };
-        setTip(popupTip);
+      highlightTip={{
+        position: highlight.position,
+        content: <HighlightPopup />,
       }}
-      onMouseOut={() => {
-        setTip(null);
-      }}
-      key={key}
+      key={highlight.id}
       children={component}
     />
   );

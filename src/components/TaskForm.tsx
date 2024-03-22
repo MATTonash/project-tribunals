@@ -27,7 +27,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
   const task = tasksDb[taskId];
   const toast = useToast();
   const toastIdRef = useRef<ToastId | null>(null);
-  const { taskFormRef, highlightsRef } = useAnnotatorUtils();
+  const { taskFormRef, highlightsRef, saveHighlights } = useAnnotatorUtils();
 
   if (highlightsRef.current) {
     highlightsRef.current.setHighlightPicker = setHighlightPicker;
@@ -42,7 +42,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
           initialValues={inputFields}
           onSubmit={(values, actions) => {
             setTimeout(() => {
-              highlightsRef.current?.saveHighlights();
+              saveHighlights();
               Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
                 inputFields[fieldTypeId] = fieldArray;
               });

@@ -22,23 +22,23 @@ interface PdfViewerProps {
 }
 
 const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
-  const fetchHighlights = () =>
-    taskId ? documentsDb[documentId].tasks[taskId].highlights : [];
-
   const [pdfScaleValue, setPdfScaleValue] = useState<PdfScaleValue>("auto");
   const [contextMenu, setContextMenu] = useState<ContextMenuProps | null>(null);
-  const [highlights, setHighlights] =
-    useState<Array<Highlight>>(fetchHighlights());
 
-  const { taskFormRef, highlightsRef } = useAnnotatorUtils();
+  const {
+    taskFormRef,
+    addHighlight,
+    removeHighlight,
+    highlights,
+    setHighlightPicker,
+  } = useAnnotatorUtils();
 
   const handleClick = (event: MouseEvent) => {
     if (
       // @ts-ignore
-      event.target.type !== "button" &&
-      highlightsRef.current?.setHighlightPicker
+      event.target.type !== "button"
     ) {
-      highlightsRef.current!.setHighlightPicker(null);
+      setHighlightPicker(null);
     }
     if (contextMenu) {
       setContextMenu(null);
@@ -54,54 +54,9 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
     setContextMenu({
       xPos: event.clientX,
       yPos: event.clientY,
-      removeHighlight: () => {
-        highlightsRef.current?.removeHighlight(highlight.id);
-      },
+      removeHighlight: () => removeHighlight(highlight.id),
     });
   };
-
-  const addHighlight = (
-    highlight: GhostHighlight,
-    fieldTypeId: string,
-    index?: number,
-  ) => {
-    console.log("Saving highlight", highlight);
-    if (index === undefined) {
-      index = taskFormRef.current!.values[fieldTypeId].length - 1;
-    }
-
-    taskFormRef.current?.setFieldValue(
-      `${fieldTypeId}.${index}.value`,
-      highlight.content.text ?? "",
-    );
-
-    setHighlights(
-      highlights.concat({
-        ...highlight,
-        comment: { text: tasksDb[taskId!].fieldTypes[fieldTypeId].name },
-        id: taskFormRef.current!.values[fieldTypeId][index!].fieldId,
-      }),
-    );
-  };
-
-  const removeHighlight = (fieldId: string) => {
-    setHighlights(highlights.filter((highlight) => highlight.id != fieldId));
-  };
-
-  // @ts-ignore
-  highlightsRef.current = {
-    ...highlightsRef.current,
-    saveHighlights: () => {
-      documentsDb[documentId].tasks[taskId!].highlights = highlights;
-    },
-    removeHighlight,
-  };
-
-  useEffect(() => {
-    setHighlights(fetchHighlights());
-    highlightsRef.current?.removeGhostHighlight &&
-      highlightsRef.current?.removeGhostHighlight();
-  }, [documentId, taskId]);
 
   return (
     <>
@@ -112,21 +67,25 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
         />
         <Flex flexGrow="1" position="relative" overflowY="clip">
           <PdfLoader document={documentsDb[documentId].url}>
-            <PdfHighlighter
-              pdfScaleValue={pdfScaleValue}
-              highlights={highlights}
-              selectionTip={
-                taskId ? (
-                  <SelectionTip
-                    documentId={documentId}
-                    taskId={taskId}
-                    addHighlight={addHighlight}
-                  />
-                ) : undefined
-              }
-            >
-              <HighlightContainer onContextMenu={handleContextMenu} />
-            </PdfHighlighter>
+            {(pdfDocument) => (
+              <PdfHighlighter
+                pdfDocument={pdfDocument}
+                pdfScaleValue={pdfScaleValue}
+                highlights={highlights}
+                selectionTip={
+                  taskId ? (
+                    <SelectionTip
+                      documentId={documentId}
+                      taskId={taskId}
+                      addHighlight={addHighlight}
+                    />
+                  ) : undefined
+                }
+                utilsRef={() => {}}
+              >
+                <HighlightContainer onContextMenu={handleContextMenu} />
+              </PdfHighlighter>
+            )}
           </PdfLoader>
         </Flex>
         {contextMenu && <ContextMenu {...contextMenu} />}

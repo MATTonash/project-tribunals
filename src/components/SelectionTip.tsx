@@ -1,8 +1,7 @@
 import { Button, Card, CardBody, CardHeader, Stack } from "@chakra-ui/react";
 import {
   GhostHighlight,
-  useSelectionUtils,
-  useTipViewerUtils,
+  usePdfHighlighterContext,
 } from "react-pdf-highlighter-extended";
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
@@ -23,14 +22,9 @@ const SelectionTip = ({
   taskId,
   addHighlight,
 }: SelectionTipProps) => {
-  const {
-    selectionPosition,
-    selectionContent,
-    makeGhostHighlight,
-    removeGhostHighlight,
-  } = useSelectionUtils();
+  const { getCurrentSelection, removeGhostHighlight, setTip } =
+    usePdfHighlighterContext();
 
-  const { setTip } = useTipViewerUtils();
   const { highlightsRef } = useAnnotatorUtils();
 
   return (
@@ -46,17 +40,18 @@ const SelectionTip = ({
             <Button
               key={fieldTypeId}
               onClick={(event) => {
+                const ghostHighlight =
+                  getCurrentSelection()!.makeGhostHighlight();
                 if (event.altKey) {
-                  makeGhostHighlight();
-                  window.getSelection()?.removeAllRanges();
+                  // window.getSelection()?.removeAllRanges();
                   highlightsRef.current?.setHighlightPicker(fieldTypeId);
                   highlightsRef.current!.removeGhostHighlight =
                     removeGhostHighlight;
                   highlightsRef.current!.addGhostHighlight = (index) => {
                     addHighlight(
                       {
-                        content: selectionContent,
-                        position: selectionPosition,
+                        content: ghostHighlight!.content,
+                        position: ghostHighlight!.position,
                       },
                       fieldTypeId,
                       index,
@@ -64,10 +59,12 @@ const SelectionTip = ({
                     removeGhostHighlight();
                   };
                 } else {
-                  makeGhostHighlight();
-                  window.getSelection()?.removeAllRanges();
+                  // window.getSelection()?.removeAllRanges();
                   addHighlight(
-                    { content: selectionContent, position: selectionPosition },
+                    {
+                      content: ghostHighlight!.content,
+                      position: ghostHighlight!.position,
+                    },
                     fieldTypeId,
                   );
                   removeGhostHighlight();
