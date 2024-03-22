@@ -22,6 +22,7 @@ export interface AnnotatorUtils {
   highlights: Array<Highlight>;
   saveHighlights: () => void;
   pdfHighlighterUtilsRef: MutableRefObject<PdfHighlighterUtils | undefined>;
+  highlightPicker: string | null;
   setHighlightPicker: (fieldTypeId: string | null) => void;
 }
 

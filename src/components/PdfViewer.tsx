@@ -31,6 +31,7 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
     removeHighlight,
     highlights,
     setHighlightPicker,
+    pdfHighlighterUtilsRef,
   } = useAnnotatorUtils();
 
   const handleClick = (event: MouseEvent) => {
@@ -81,7 +82,9 @@ const PdfViewer = ({ documentId, taskId }: PdfViewerProps) => {
                     />
                   ) : undefined
                 }
-                utilsRef={() => {}}
+                utilsRef={(pdfHighlighterUtils) => {
+                  pdfHighlighterUtilsRef.current = pdfHighlighterUtils;
+                }}
               >
                 <HighlightContainer onContextMenu={handleContextMenu} />
               </PdfHighlighter>

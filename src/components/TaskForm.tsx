@@ -22,16 +22,19 @@ interface TaskFormProps {
 }
 
 const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
-  const [highlightPicker, setHighlightPicker] = useState<string | null>(null);
   let inputFields = documentsDb[documentId].tasks[taskId].inputFields;
   const task = tasksDb[taskId];
   const toast = useToast();
   const toastIdRef = useRef<ToastId | null>(null);
-  const { taskFormRef, highlightsRef, saveHighlights } = useAnnotatorUtils();
-
-  if (highlightsRef.current) {
-    highlightsRef.current.setHighlightPicker = setHighlightPicker;
-  }
+  const {
+    taskFormRef,
+    saveHighlights,
+    addHighlight,
+    removeHighlight,
+    highlightPicker,
+    setHighlightPicker,
+    pdfHighlighterUtilsRef,
+  } = useAnnotatorUtils();
 
   return (
     <>
@@ -102,9 +105,7 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                                       colorScheme="red"
                                       size={"sm"}
                                       onClick={() => {
-                                        highlightsRef.current?.removeHighlight(
-                                          inputField.fieldId,
-                                        );
+                                        removeHighlight(inputField.fieldId);
                                         arrayHelpers.remove(index);
                                       }}
                                     >
@@ -118,7 +119,14 @@ const TaskForm = ({ taskId, documentId }: TaskFormProps) => {
                                       size={"sm"}
                                       onClick={() => {
                                         setHighlightPicker(null);
-                                        highlightsRef.current?.addGhostHighlight(
+                                        const ghostHighlight =
+                                          pdfHighlighterUtilsRef.current?.getGhostHighlight();
+                                        addHighlight(
+                                          {
+                                            content: ghostHighlight!.content,
+                                            position: ghostHighlight!.position,
+                                          },
+                                          fieldTypeId,
                                           index,
                                         );
                                       }}

@@ -25,7 +25,7 @@ const SelectionTip = ({
   const { getCurrentSelection, removeGhostHighlight, setTip } =
     usePdfHighlighterContext();
 
-  const { highlightsRef } = useAnnotatorUtils();
+  const { setHighlightPicker } = useAnnotatorUtils();
 
   return (
     <Card className="selectionTip">
@@ -43,23 +43,8 @@ const SelectionTip = ({
                 const ghostHighlight =
                   getCurrentSelection()!.makeGhostHighlight();
                 if (event.altKey) {
-                  // window.getSelection()?.removeAllRanges();
-                  highlightsRef.current?.setHighlightPicker(fieldTypeId);
-                  highlightsRef.current!.removeGhostHighlight =
-                    removeGhostHighlight;
-                  highlightsRef.current!.addGhostHighlight = (index) => {
-                    addHighlight(
-                      {
-                        content: ghostHighlight!.content,
-                        position: ghostHighlight!.position,
-                      },
-                      fieldTypeId,
-                      index,
-                    );
-                    removeGhostHighlight();
-                  };
+                  setHighlightPicker(fieldTypeId);
                 } else {
-                  // window.getSelection()?.removeAllRanges();
                   addHighlight(
                     {
                       content: ghostHighlight!.content,
@@ -67,7 +52,7 @@ const SelectionTip = ({
                     },
                     fieldTypeId,
                   );
-                  removeGhostHighlight();
+                  // removeGhostHighlight();
                 }
                 setTip(null);
               }}

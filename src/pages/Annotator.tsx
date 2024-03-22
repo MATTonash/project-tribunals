@@ -8,7 +8,11 @@ import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
 import { AnnotatorContext, TaskFormRef } from "../context/AnnotatorContext";
 import { documentsDb } from "../lib/dummy-data/documentsDb";
-import { GhostHighlight, Highlight } from "react-pdf-highlighter-extended";
+import {
+  GhostHighlight,
+  Highlight,
+  PdfHighlighterUtils,
+} from "react-pdf-highlighter-extended";
 
 const Annotator = () => {
   const { documentId, taskId } = useParams();
@@ -18,6 +22,9 @@ const Annotator = () => {
 
   const [highlights, setHighlights] =
     useState<Array<Highlight>>(fetchHighlights());
+
+  const [highlightPicker, setHighlightPicker] = useState<string | null>(null); // What fieldtype should be linked to the current ghosthighlight
+  const pdfHighlighterUtilsRef = useRef<PdfHighlighterUtils | undefined>();
 
   const taskFormRef = useRef<TaskFormRef | undefined>(undefined);
 
@@ -40,6 +47,8 @@ const Annotator = () => {
       highlight.content.text ?? "",
     );
 
+    pdfHighlighterUtilsRef.current?.removeGhostHighlight();
+
     setHighlights(
       highlights.concat({
         ...highlight,
@@ -58,8 +67,9 @@ const Annotator = () => {
 
   useEffect(() => {
     setHighlights(fetchHighlights());
-    highlightsRef.current?.removeGhostHighlight &&
-      highlightsRef.current?.removeGhostHighlight();
+
+    // highlightsRef.current?.removeGhostHighlight &&
+    //   highlightsRef.current?.removeGhostHighlight();
   }, [documentId, taskId]);
 
   return (
@@ -71,6 +81,8 @@ const Annotator = () => {
           removeHighlight,
           highlights,
           saveHighlights,
+          pdfHighlighterUtilsRef,
+          highlightPicker,
           setHighlightPicker,
         }}
       >
