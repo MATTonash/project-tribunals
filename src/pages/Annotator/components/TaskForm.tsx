@@ -12,8 +12,8 @@ import {
 import { Field, FieldArray, FieldProps, Form, Formik } from "formik";
 import { useRef, useState } from "react";
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
-import { documentsDb } from "../lib/dummy-data/documentsDb";
-import { tasksDb } from "../lib/dummy-data/tasksDb";
+import { documentsDb } from "../../../lib/dummy-data/documentsDb";
+import { tasksDb } from "../../../lib/dummy-data/tasksDb";
 import TaskFormHeader from "./TaskFormHeader";
 
 interface TaskFormProps {

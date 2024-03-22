@@ -1,6 +1,6 @@
 import { Button, ToastId, useToast } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { documentsDb } from "../lib/dummy-data/documentsDb";
+import { documentsDb } from "../../../lib/dummy-data/documentsDb";
 import TaskItem from "./TaskItem";
 import TaskListHeader from "./TaskListHeader";
 

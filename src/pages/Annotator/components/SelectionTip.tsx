@@ -4,8 +4,8 @@ import {
   usePdfHighlighterContext,
 } from "react-pdf-highlighter-extended";
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
-import { documentsDb } from "../lib/dummy-data/documentsDb";
-import { tasksDb } from "../lib/dummy-data/tasksDb";
+import { documentsDb } from "../../../lib/dummy-data/documentsDb";
+import { tasksDb } from "../../../lib/dummy-data/tasksDb";
 
 interface SelectionTipProps {
   documentId: string;

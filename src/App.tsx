@@ -5,12 +5,12 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Help from "./pages/Help";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import TaskManager from "./pages/TaskManager";
 import RootLayout from "./layouts/RootLayout";
-import Annotator from "./pages/Annotator";
+import Annotator from "./pages/Annotator/Annotator";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

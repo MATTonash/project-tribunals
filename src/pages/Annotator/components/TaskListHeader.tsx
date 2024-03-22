@@ -1,7 +1,7 @@
 import { Flex, Heading, IconButton, Spacer } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiDeleteBin7Line } from "react-icons/ri";
-import { getProgress } from "../lib/get-progress";
+import { getProgress } from "../../../lib/get-progress";
 
 interface TaskListHeaderProps {
   documentId: string;

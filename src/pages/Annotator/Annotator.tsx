@@ -2,12 +2,12 @@ import { Flex } from "@chakra-ui/react";
 
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import PdfViewer from "../components/PdfViewer";
-import ResizableSidebar from "../components/ResizableSidebar";
-import TaskForm from "../components/TaskForm";
-import TaskList from "../components/TaskList";
-import { AnnotatorContext, TaskFormRef } from "../context/AnnotatorContext";
-import { documentsDb } from "../lib/dummy-data/documentsDb";
+import PdfViewer from "./components/PdfViewer";
+import ResizableSidebar from "../../components/ResizableSidebar";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
+import { AnnotatorContext, TaskFormRef } from "./context/AnnotatorContext";
+import { documentsDb } from "../../lib/dummy-data/documentsDb";
 import {
   GhostHighlight,
   Highlight,

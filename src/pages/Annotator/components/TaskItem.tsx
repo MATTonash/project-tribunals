@@ -2,8 +2,8 @@ import { Button, Checkbox, Flex, Spacer } from "@chakra-ui/react";
 import { ChangeEvent, MouseEvent } from "react";
 import { IoCheckmark } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { documentsDb } from "../lib/dummy-data/documentsDb";
-import { tasksDb } from "../lib/dummy-data/tasksDb";
+import { documentsDb } from "../../../lib/dummy-data/documentsDb";
+import { tasksDb } from "../../../lib/dummy-data/tasksDb";
 
 interface Props {
   documentId: string;

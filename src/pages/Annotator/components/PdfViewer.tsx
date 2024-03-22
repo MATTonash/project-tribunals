@@ -1,16 +1,13 @@
 import { Flex } from "@chakra-ui/react";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useState } from "react";
 import {
-  GhostHighlight,
-  Highlight,
   PdfHighlighter,
   PdfLoader,
   PdfScaleValue,
   ViewportHighlight,
 } from "react-pdf-highlighter-extended";
+import { documentsDb } from "../../../lib/dummy-data/documentsDb";
 import { useAnnotatorUtils } from "../context/AnnotatorContext";
-import { documentsDb } from "../lib/dummy-data/documentsDb";
-import { tasksDb } from "../lib/dummy-data/tasksDb";
 import ContextMenu, { ContextMenuProps } from "./ContextMenu";
 import HighlightContainer from "./HighlightContainer";
 import PdfViewerHeader from "./PdfViewerHeader";

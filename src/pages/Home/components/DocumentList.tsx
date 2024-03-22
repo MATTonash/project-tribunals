@@ -1,5 +1,5 @@
 import { Button, Flex, Spacer, Text } from "@chakra-ui/react";
-import { documentsDb } from "../lib/dummy-data/documentsDb";
+import { documentsDb } from "../../../lib/dummy-data/documentsDb";
 import { AiOutlineFileText } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
