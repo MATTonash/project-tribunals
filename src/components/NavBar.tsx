@@ -20,7 +20,9 @@ const Navbar = () => {
       gap={5}
       height={16}
     >
-      <Image src={Logo} w={200}></Image>
+      <Link to=".">
+        <Image src={Logo} w={200}></Image>
+      </Link>
       <Spacer />
       <Button {...buttonStyling} as={Link} to=".">
         Home

@@ -2,10 +2,6 @@
 
 <p align="center">A robust and highly customisable labelling client for legal documents.</p>
 
-<a href="https://github.com/DanielArnould/project-tribunals/actions/workflows/nodejs.yml">
-<p align="center"><img src="https://github.com/DanielArnould/project-tribunals/actions/workflows/nodejs.yml/badge.svg?branch=main" alt="Build Status" />
-</a>
-
 ## Description
 
 **NOTE:** ⚠ This application is still under heavy development and not ready for production use ⚠!

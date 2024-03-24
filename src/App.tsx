@@ -4,17 +4,17 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+import RootLayout from "./layouts/RootLayout";
+import Annotator from "./pages/Annotator/Annotator";
 import Help from "./pages/Help";
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import TaskManager from "./pages/TaskManager";
-import RootLayout from "./layouts/RootLayout";
-import Annotator from "./pages/Annotator/Annotator";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/project-tribunals/" element={<RootLayout />}>
+    <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
       <Route path="task-manager" element={<TaskManager />} />
       <Route path="help" element={<Help />} />
@@ -22,8 +22,8 @@ const router = createBrowserRouter(
       <Route path="profile" element={<Profile />} />
       <Route path="annotator/:documentId" element={<Annotator />} />
       <Route path="annotator/:documentId/:taskId" element={<Annotator />} />
-    </Route>,
-  ),
+    </Route>
+  )
 );
 
 function App() {

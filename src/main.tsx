@@ -9,5 +9,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
+
+// Use contextBridge
+window.ipcRenderer.on("main-process-message", (_event, message) => {
+  console.log(message);
+});

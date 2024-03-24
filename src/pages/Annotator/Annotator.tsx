@@ -67,9 +67,6 @@ const Annotator = () => {
 
   useEffect(() => {
     setHighlights(fetchHighlights());
-
-    // highlightsRef.current?.removeGhostHighlight &&
-    //   highlightsRef.current?.removeGhostHighlight();
   }, [documentId, taskId]);
 
   return (
