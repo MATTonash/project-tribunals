@@ -6,11 +6,11 @@ import {
 } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 import Annotator from "./pages/Annotator/Annotator";
-import Help from "./pages/Help";
+import Help from "./pages/Help/Help";
 import Home from "./pages/Home/Home";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
-import TaskManager from "./pages/TaskManager";
+import Profile from "./pages/Profile/Profile";
+import Settings from "./pages/Settings/Settings";
+import TaskManager from "./pages/TaskManager/TaskManager";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

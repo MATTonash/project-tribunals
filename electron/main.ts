@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
+import { registerIpcHandlers } from "./IPC/IPCHandlers";
 
 // The built directory structure
 //
@@ -24,14 +25,7 @@ function createWindow() {
     icon: path.join(process.env.VITE_PUBLIC, "favicon.svg"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
-      nodeIntegration: true,
-      contextIsolation: false,
     },
-  });
-
-  // Test active push message to Renderer-process.
-  win.webContents.on("did-finish-load", () => {
-    win?.webContents.send("main-process-message", new Date().toLocaleString());
   });
 
   if (VITE_DEV_SERVER_URL) {
@@ -41,7 +35,7 @@ function createWindow() {
     win.loadFile(path.join(process.env.DIST, "index.html"));
   }
 
-  win.removeMenu();
+  // win.removeMenu();
   win.setMinimumSize(1366, 768);
 }
 
@@ -63,4 +57,7 @@ app.on("activate", () => {
   }
 });
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  registerIpcHandlers();
+  createWindow();
+});
