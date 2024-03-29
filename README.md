@@ -1,9 +1,34 @@
-<p align="center"><img src ="https://raw.githubusercontent.com/DanielArnould/project-tribunals/main/src/assets/GradientHeader.svg"/></p>
+# project-tribunals
 
-<p align="center">A robust and highly customisable labelling client for legal documents.</p>
+An Electron application with React and TypeScript
 
-## Description
+## Recommended IDE Setup
 
-**NOTE:** ⚠ This application is still under heavy development and not ready for production use ⚠!
+- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-This is a React-based WIP labelling client for legal documents. This software aims to help you extract and organise the information you need from legal literature to perform any kind of data analysis or machine learning tasks.
+## Project Setup
+
+### Install
+
+```bash
+$ npm install
+```
+
+### Development
+
+```bash
+$ npm run dev
+```
+
+### Build
+
+```bash
+# For windows
+$ npm run build:win
+
+# For macOS
+$ npm run build:mac
+
+# For Linux
+$ npm run build:linux
+```
