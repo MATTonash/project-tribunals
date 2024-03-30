@@ -2,11 +2,25 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { IPC_ACTIONS } from '../main/IPC/IPCActions'
 import { IPCAPI } from './IPCAPI'
-
-const { PING } = IPC_ACTIONS.TEST
+import { AnnotatedDocument, RevTag, Task, TaskInstance } from '../common/types'
 
 const ipc: IPCAPI = {
-  ping: () => ipcRenderer.send(PING)
+  ping: () => ipcRenderer.invoke(IPC_ACTIONS.TEST.PING),
+  putTask: (task: Task) => ipcRenderer.invoke(IPC_ACTIONS.TASKS.PUT, task),
+  getTask: (taskId: string) => ipcRenderer.invoke(IPC_ACTIONS.TASKS.GET, taskId),
+  removeTask: (task: Task & RevTag) => ipcRenderer.invoke(IPC_ACTIONS.TASKS.REMOVE, task),
+  putAnnotatedDocument: (annotatedDoc: AnnotatedDocument) =>
+    ipcRenderer.invoke(IPC_ACTIONS.ANNOTATED_DOCS.PUT, annotatedDoc),
+  getAnnotatedDocument: (annotatedDocId: string) =>
+    ipcRenderer.invoke(IPC_ACTIONS.ANNOTATED_DOCS.GET, annotatedDocId),
+  removeDocument: (annotatedDoc: AnnotatedDocument & RevTag) =>
+    ipcRenderer.invoke(IPC_ACTIONS.ANNOTATED_DOCS.REMOVE, annotatedDoc),
+  putTaskInstance: (taskInstance: TaskInstance) =>
+    ipcRenderer.invoke(IPC_ACTIONS.TASK_INSTANCES.PUT, taskInstance),
+  getTaskInstance: (taskInstanceId: string) =>
+    ipcRenderer.invoke(IPC_ACTIONS.TASK_INSTANCES.PUT, taskInstanceId),
+  removeTaskInstance: (taskInstance: TaskInstance & RevTag) =>
+    ipcRenderer.invoke(IPC_ACTIONS.TASK_INSTANCES.PUT, taskInstance)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
