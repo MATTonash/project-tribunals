@@ -1,3 +1,5 @@
+import { Highlight } from 'react-pdf-highlighter-extended'
+
 export type RevTag = { _rev: string }
 
 export interface Task {
@@ -17,21 +19,26 @@ export interface FieldValue {
   value: string
 }
 
+export interface TaskHighlight extends Highlight {
+  fieldTypeName: string
+}
+
 export interface TaskInstance {
   _id: string
   status: string
   inputFields: { [fieldTypeId: string]: FieldValue[] }
-  highlights: string[]
+  highlights: TaskHighlight[]
 }
 
 export interface AnnotatedDocument {
   _id: string
-  _attachments: {
-    [filename: string]: {
-      content_type: 'application/pdf'
-      data: string
-    }
-  }
+  // _attachments: {
+  //   [filename: string]: {
+  //     content_type: 'application/pdf'
+  //     data: string
+  //   }
+  // }
+  pdfPath: string
   name: string
   caseId: string
   createdDate: Date
