@@ -1,9 +1,8 @@
-import { Button, ToastId, useToast } from '@chakra-ui/react'
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { RevTag, Task } from 'src/common/types'
+import { useAnnotatorUtils } from '../context/AnnotatorContext'
 import TaskItem from './TaskItem'
 import TaskListHeader from './TaskListHeader'
-import { useAnnotatorUtils } from '../context/AnnotatorContext'
-import { RevTag, Task } from 'src/common/types'
 
 const TaskList = () => {
   const { document, saveDocument } = useAnnotatorUtils()
@@ -19,30 +18,6 @@ const TaskList = () => {
   useEffect(() => {
     fetchTasks()
   }, [])
-
-  const toast = useToast()
-  const toastIdRef = useRef<ToastId | null>(null)
-
-  const resetToast = () => {
-    if (toastIdRef.current) {
-      toast.close(toastIdRef.current)
-      toastIdRef.current = null
-    }
-  }
-
-  useEffect(() => {
-    if (selectedTasks.length > 0 && !toastIdRef.current) {
-      toastIdRef.current = toast({
-        position: 'bottom-left',
-        duration: null,
-        render: () => <Button>Start tasks</Button>
-      })
-    } else if (selectedTasks.length === 0) {
-      resetToast()
-    }
-  }, [selectedTasks])
-
-  useEffect(() => resetToast, [])
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, taskId: string) => {
     setSelectedTasks(
