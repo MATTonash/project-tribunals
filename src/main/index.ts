@@ -4,8 +4,6 @@ import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 import { registerIpcHandlers } from './IPC/IPCHandlers'
 import { insertDummyData } from './databases/dummyData'
-import { putAnnotatedDocument } from './databases/annotatedDocsDB'
-import { AnnotatedDocument } from '../common/types'
 
 function createWindow(): void {
   // Create the browser window.
@@ -57,7 +55,7 @@ app.whenReady().then(() => {
   createWindow()
   registerIpcHandlers()
 
-  // This will error as there is duplicate data
+  // This will error as db is not cleared on application launch resulting in duplicate documents
   insertDummyData()
 
   app.on('activate', function () {

@@ -36,19 +36,6 @@ const DocumentList = () => {
             </Button>
           )
         })}
-
-        <Button
-          variant="ghost"
-          size="md"
-          justifyContent="left"
-          key={'dummyDocument'}
-          leftIcon={<AiOutlineFileText />}
-          as={Link}
-          to={`annotator/dummyDocument`}
-        >
-          <Text>Dummy Document 2</Text>
-          <Spacer />
-        </Button>
       </Flex>
     </>
   )
