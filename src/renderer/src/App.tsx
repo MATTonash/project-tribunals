@@ -27,7 +27,6 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  window.ipc.ping()
   return <RouterProvider router={router} />
 }
 
