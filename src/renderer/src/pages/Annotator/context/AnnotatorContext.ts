@@ -1,7 +1,7 @@
 import { FormikValues } from 'formik'
 import { MutableRefObject, createContext, useContext } from 'react'
-import { GhostHighlight, Highlight, PdfHighlighterUtils } from 'react-pdf-highlighter-extended'
-import { AnnotatedDocument, FieldValue, Task, TaskHighlight, TaskInstance } from 'src/common/types'
+import { GhostHighlight, PdfHighlighterUtils } from 'react-pdf-highlighter-extended'
+import { AnnotatedDocument, Task, TaskHighlight, TaskInstance } from 'src/common/types'
 
 export interface TaskFormRef {
   values: FormikValues
@@ -16,7 +16,8 @@ export interface AnnotatorUtils {
   pdfHighlighterUtilsRef: MutableRefObject<PdfHighlighterUtils | undefined>
   highlightPicker: string | null
   setHighlightPicker: (fieldTypeId: string | null) => void
-  saveForm: (values: { [fieldTypeId: string]: FieldValue[] }) => void
+  saveTaskInstance: () => void
+  saveDocument: () => void
   document: AnnotatedDocument
   taskInstance?: TaskInstance
   task?: Task

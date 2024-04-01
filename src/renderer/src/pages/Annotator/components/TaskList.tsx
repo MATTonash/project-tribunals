@@ -6,14 +6,18 @@ import { useAnnotatorUtils } from '../context/AnnotatorContext'
 import { RevTag, Task } from 'src/common/types'
 
 const TaskList = () => {
-  const { document } = useAnnotatorUtils()
+  const { document, saveDocument } = useAnnotatorUtils()
   const [selectedTasks, setSelectedTasks] = useState<Array<string>>([])
   const [tasks, setTasks] = useState<Array<Task & RevTag>>([])
 
-  useEffect(() => {
+  const fetchTasks = () => {
     window.ipc.getTasks(Object.keys(document.tasks)).then((newTasks) => {
       setTasks(newTasks)
     })
+  }
+
+  useEffect(() => {
+    fetchTasks()
   }, [])
 
   const toast = useToast()
@@ -53,10 +57,12 @@ const TaskList = () => {
       <TaskListHeader
         addTask={() => {}}
         deleteTasks={() => {
-          // selectedTasks.forEach((taskId) => {
-          //   delete documentsDb[documentId].tasks[taskId]
-          // })
-          // setSelectedTasks([])
+          selectedTasks.forEach((taskId) => {
+            delete document.tasks[taskId]
+          })
+          saveDocument()
+          setSelectedTasks([])
+          fetchTasks()
         }}
       />
       {tasks.map((task, index) => (

@@ -1,8 +1,6 @@
 import { Button, Checkbox, Flex, Spacer } from '@chakra-ui/react'
 import { ChangeEvent, MouseEvent } from 'react'
-import { IoCheckmark } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
-import { useAnnotatorUtils } from '../context/AnnotatorContext'
 import { Task } from 'src/common/types'
 
 interface Props {
