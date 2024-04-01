@@ -77,13 +77,13 @@ const dummyTaskInstance: TaskInstance = {
 }
 
 const dummyDocument: AnnotatedDocument = {
-  _id: Math.random().toString(16).slice(2),
+  _id: 'dummyDocument',
   pdfPath: 'https://arxiv.org/pdf/1708.08021.pdf',
   name: 'Daniel v Monash',
   caseId: 'EA23/24/35',
   createdDate: new Date(2023, 12, 7),
   editedDate: new Date(),
-  tasks: [{ taskId: 'task1', taskInstanceId: '12345' }]
+  tasks: { task1: '12345' }
 }
 
 export function insertDummyData() {

@@ -31,6 +31,27 @@ function getTask(taskId: string): Promise<Task & RevTag> {
     })
 }
 
+// Shit implementation. Should use allDocs and Mango selectors
+// Works for now
+function getTasks(taskIds: string[]): Promise<Array<Task & RevTag>> {
+  let tasks: Array<Task & RevTag> = []
+
+  return Promise.all(
+    taskIds.map((taskId) => {
+      return getTask(taskId)
+        .then((task) => {
+          tasks.push(task)
+        })
+        .catch((error) => {
+          console.error(`Error getting task with ID ${taskId}:`, error)
+          throw error
+        })
+    })
+  ).then(() => {
+    return tasks
+  })
+}
+
 function removeTask(task: Task & RevTag): Promise<void> {
   return tasks
     .remove(task)

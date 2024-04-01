@@ -44,7 +44,6 @@ export interface AnnotatedDocument {
   createdDate: Date
   editedDate: Date
   tasks: {
-    taskId: string
-    taskInstanceId: string
-  }[]
+    [taskId: string]: string
+  }
 }
