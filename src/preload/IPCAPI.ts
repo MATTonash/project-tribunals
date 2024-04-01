@@ -5,11 +5,14 @@ export interface IPCAPI {
   putTask: (task: Task) => Promise<void>
   getTask: (taskId: string) => Promise<Task & RevTag>
   getTasks: (taskIds: string[]) => Promise<Array<Task & RevTag>>
+  getAllTasks: () => Promise<Array<Task & RevTag>>
   removeTask: (task: Task & RevTag) => Promise<void>
   putAnnotatedDocument: (annotatedDoc: AnnotatedDocument) => Promise<void>
   getAnnotatedDocument: (annotatedDocId: string) => Promise<AnnotatedDocument & RevTag>
+  getAllDocuments: () => Promise<Array<AnnotatedDocument & RevTag>>
   removeDocument: (annotatedDoc: AnnotatedDocument & RevTag) => Promise<void>
   putTaskInstance: (taskInstance: TaskInstance) => Promise<void>
   getTaskInstance: (taskInstanceId: string) => Promise<TaskInstance & RevTag>
+  getAllTaskInstances: () => Promise<Array<TaskInstance & RevTag>>
   removeTaskInstance: (taskInstance: TaskInstance & RevTag) => Promise<void>
 }

@@ -31,6 +31,18 @@ function getAnnotatedDocument(annotatedDocId: string): Promise<AnnotatedDocument
     })
 }
 
+function getAllDocuments(): Promise<Array<AnnotatedDocument & RevTag>> {
+  return annotatedDocs
+    .allDocs({ include_docs: true })
+    .then((response) => {
+      return response.rows.map((row) => row.doc)
+    })
+    .catch((error) => {
+      console.error('Error getting all documents!')
+      throw error
+    }) as Promise<Array<AnnotatedDocument & RevTag>>
+}
+
 function removeAnnotatedDocument(annotatedDoc: AnnotatedDocument & RevTag): Promise<void> {
   return annotatedDocs
     .remove(annotatedDoc)
@@ -42,4 +54,4 @@ function removeAnnotatedDocument(annotatedDoc: AnnotatedDocument & RevTag): Prom
     })
 }
 
-export { putAnnotatedDocument, getAnnotatedDocument, removeAnnotatedDocument }
+export { putAnnotatedDocument, getAnnotatedDocument, getAllDocuments, removeAnnotatedDocument }
