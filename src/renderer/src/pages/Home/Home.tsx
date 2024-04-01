@@ -5,25 +5,19 @@ import SearchBar from './components/SearchBar'
 
 const Home = () => {
   return (
-    <Flex
-      as="main"
-      maxWidth="100vw"
-      height="calc(100vh - 64px)"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Flex flexDirection="column" gap={3}>
+    <Flex as="main" paddingTop={'11%'} justifyContent="center">
+      <Flex flexDirection="column" gap={2}>
         <Heading as="h1" size="2xl">
-          Let's start labelling
+          Let's label.
         </Heading>
-        <Heading as="h2" size="md" fontWeight={500}>
+        <Heading as="h2" size="md" fontWeight={500} opacity={'85%'} fontSize={16}>
           Select or create a document to start labelling
         </Heading>
-        <SimpleGrid columns={2} spacing={15}>
+        <SimpleGrid columns={2} spacing={20} marginTop={4}>
           <HomeButtons />
           <Flex flexDirection="column" gap={1}>
             <SearchBar
-              placeholder={'Search your documents'}
+              placeholder={'Search your documents...'}
               onChange={() => {}}
               onRefresh={() => {}}
             ></SearchBar>

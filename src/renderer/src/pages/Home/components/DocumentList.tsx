@@ -16,28 +16,25 @@ const DocumentList = () => {
   }, [])
 
   return (
-    <>
-      <Text fontWeight={600}>Your documents</Text>
+    <Flex flexDirection="column">
       {/* Use a flex and not ButtonGroup as ButtonGroup doesn't take up width of parent */}
-      <Flex flexDirection="column">
-        {documents.map((document) => {
-          return (
-            <Button
-              variant="ghost"
-              size="md"
-              justifyContent="left"
-              key={document._id}
-              leftIcon={<AiOutlineFileText />}
-              as={Link}
-              to={`annotator/${document._id}`}
-            >
-              <Text>{document.name}</Text>
-              <Spacer />
-            </Button>
-          )
-        })}
-      </Flex>
-    </>
+      {documents.map((document) => {
+        return (
+          <Button
+            variant="ghost"
+            size="md"
+            justifyContent="left"
+            key={document._id}
+            leftIcon={<AiOutlineFileText />}
+            as={Link}
+            to={`annotator/${document._id}`}
+          >
+            <Text opacity={0.9}>{document.name}</Text>
+            <Spacer />
+          </Button>
+        )
+      })}
+    </Flex>
   )
 }
 

@@ -1,28 +1,28 @@
-import { InputGroup, Input, IconButton, Flex } from "@chakra-ui/react";
-import React from "react";
-import { AiOutlineReload } from "react-icons/ai";
+import { InputGroup, Input, IconButton, Flex } from '@chakra-ui/react'
+import React from 'react'
+import { AiOutlineReload } from 'react-icons/ai'
 
 interface Props {
-  onChange: (value: string) => void;
-  onRefresh: (value: string) => void;
-  placeholder?: string;
+  onChange: (value: string) => void
+  onRefresh: (value: string) => void
+  placeholder?: string
 }
 
 const SearchBar = ({ onChange, onRefresh, placeholder }: Props) => {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState('')
   const handleChange = (value: string) => {
-    setValue(value);
-    onChange(value);
-  };
+    setValue(value)
+    onChange(value)
+  }
 
   return (
     <Flex gap={3}>
       <InputGroup size="sm">
         <Input
-          type={"text"}
+          type={'text'}
           placeholder={placeholder}
           value={value}
-          variant="solid"
+          variant="outline"
           colorScheme="salmon"
           onChange={(event) => handleChange(event.target.value)}
           borderRadius={6}
@@ -36,7 +36,7 @@ const SearchBar = ({ onChange, onRefresh, placeholder }: Props) => {
         onClick={() => onRefresh(value)}
       />
     </Flex>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar

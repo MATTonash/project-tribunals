@@ -1,31 +1,34 @@
-import { defineStyleConfig } from "@chakra-ui/react";
+import { defineStyleConfig } from '@chakra-ui/react'
 
 const Button = defineStyleConfig({
+  baseStyle: {
+    fontcolor: '#121212'
+  },
   sizes: {
     xl: {
-      fontSize: "xl",
+      fontSize: 'md',
       py: 4,
       px: 15,
-      justifyContent: "left",
-    },
+      justifyContent: 'left'
+    }
   },
   variants: {
     outline: {
-      border: "2px solid",
-      borderColor: "<color>",
+      // border: "2px solid",
+      // borderColor: '<color>'
     },
     solid: (props) => ({
-      border: "2px solid",
+      // border: '2px solid',
       bg: `${props.colorScheme}.100`,
       color: `${props.colorScheme}.900`,
       _hover: {
-        bg: `${props.colorScheme}.200`,
+        bg: `${props.colorScheme}.200`
       },
       _active: {
-        bg: `${props.colorScheme}.300`,
-      },
-    }),
-  },
-});
+        bg: `${props.colorScheme}.300`
+      }
+    })
+  }
+})
 
-export default Button;
+export default Button
