@@ -1,6 +1,4 @@
 node_modules
-data
 dist
 out
-.DS_Store
-*.log*
+.gitignore
