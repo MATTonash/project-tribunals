@@ -1,31 +1,11 @@
-import { Button, Card, CardBody, CardHeader, Stack } from "@chakra-ui/react";
-import {
-  GhostHighlight,
-  usePdfHighlighterContext,
-} from "react-pdf-highlighter-extended";
-import { useAnnotatorUtils } from "../context/AnnotatorContext";
-import { documentsDb } from "../../../lib/dummy-data/documentsDb";
-import { tasksDb } from "../../../lib/dummy-data/tasksDb";
+import { Button, Card, CardBody, CardHeader, Stack } from '@chakra-ui/react'
+import { usePdfHighlighterContext } from 'react-pdf-highlighter-extended'
+import { useAnnotatorUtils } from '../context/AnnotatorContext'
 
-interface SelectionTipProps {
-  documentId: string;
-  taskId: string;
-  addHighlight: (
-    highlight: GhostHighlight,
-    fieldId: string,
-    index?: number,
-  ) => void;
-}
+const SelectionTip = () => {
+  const { getCurrentSelection, removeGhostHighlight, setTip } = usePdfHighlighterContext()
 
-const SelectionTip = ({
-  documentId,
-  taskId,
-  addHighlight,
-}: SelectionTipProps) => {
-  const { getCurrentSelection, removeGhostHighlight, setTip } =
-    usePdfHighlighterContext();
-
-  const { setHighlightPicker } = useAnnotatorUtils();
+  const { setHighlightPicker, task, addHighlight } = useAnnotatorUtils()
 
   return (
     <Card className="selectionTip">
@@ -34,36 +14,33 @@ const SelectionTip = ({
       </CardHeader>
       <CardBody>
         <Stack>
-          {Object.keys(
-            documentsDb[documentId].tasks[taskId].inputFields || {},
-          ).map((fieldTypeId) => (
+          {Object.keys(task!.fieldTypes || {}).map((fieldTypeId) => (
             <Button
               key={fieldTypeId}
               onClick={(event) => {
-                const ghostHighlight =
-                  getCurrentSelection()!.makeGhostHighlight();
+                const ghostHighlight = getCurrentSelection()!.makeGhostHighlight()
                 if (event.altKey) {
-                  setHighlightPicker(fieldTypeId);
+                  setHighlightPicker(fieldTypeId)
                 } else {
                   addHighlight(
                     {
                       content: ghostHighlight!.content,
-                      position: ghostHighlight!.position,
+                      position: ghostHighlight!.position
                     },
-                    fieldTypeId,
-                  );
-                  // removeGhostHighlight();
+                    fieldTypeId
+                  )
+                  removeGhostHighlight()
                 }
-                setTip(null);
+                setTip(null)
               }}
             >
-              {tasksDb[taskId].fieldTypes[fieldTypeId].name}
+              {task!.fieldTypes[fieldTypeId].name}
             </Button>
           ))}
         </Stack>
       </CardBody>
     </Card>
-  );
-};
+  )
+}
 
-export default SelectionTip;
+export default SelectionTip

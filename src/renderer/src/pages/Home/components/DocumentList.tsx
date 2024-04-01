@@ -1,7 +1,6 @@
-import { Button, Flex, Spacer, Text } from "@chakra-ui/react";
-import { documentsDb } from "../../../lib/dummy-data/documentsDb";
-import { AiOutlineFileText } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Button, Flex, Spacer, Text } from '@chakra-ui/react'
+import { AiOutlineFileText } from 'react-icons/ai'
+import { Link } from 'react-router-dom'
 
 const DocumentList = () => {
   return (
@@ -9,7 +8,7 @@ const DocumentList = () => {
       <Text fontWeight={600}>Your documents</Text>
       {/* Use a flex and not ButtonGroup as ButtonGroup doesn't take up width of parent */}
       <Flex flexDirection="column">
-        {Object.keys(documentsDb).map((documentId) => {
+        {/* {Object.keys(documentsDb).map((documentId) => {
           return (
             <Button
               variant="ghost"
@@ -25,10 +24,23 @@ const DocumentList = () => {
               <Text fontWeight={400}>{documentsDb[documentId].name}</Text>
             </Button>
           );
-        })}
+        })} */}
+        <Button
+          variant="ghost"
+          size="md"
+          justifyContent="left"
+          key={'dummyDocument'}
+          leftIcon={<AiOutlineFileText />}
+          as={Link}
+          to={`annotator/dummyDocument`}
+        >
+          <Text>Dummy Document</Text>
+          <Spacer />
+          <Text fontWeight={400}>Shit</Text>
+        </Button>
       </Flex>
     </>
-  );
-};
+  )
+}
 
-export default DocumentList;
+export default DocumentList

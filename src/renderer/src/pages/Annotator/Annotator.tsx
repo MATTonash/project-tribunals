@@ -1,99 +1,141 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex } from '@chakra-ui/react'
 
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import PdfViewer from "./components/PdfViewer";
-import ResizableSidebar from "../../components/ResizableSidebar";
-import TaskForm from "./components/TaskForm";
-import TaskList from "./components/TaskList";
-import { AnnotatorContext, TaskFormRef } from "./context/AnnotatorContext";
-import { documentsDb } from "../../lib/dummy-data/documentsDb";
+import { useEffect, useRef, useState } from 'react'
+import { GhostHighlight, PdfHighlighterUtils } from 'react-pdf-highlighter-extended'
+import { useParams } from 'react-router-dom'
 import {
-  GhostHighlight,
-  Highlight,
-  PdfHighlighterUtils,
-} from "react-pdf-highlighter-extended";
+  AnnotatedDocument,
+  FieldValue,
+  RevTag,
+  Task,
+  TaskHighlight,
+  TaskInstance
+} from 'src/common/types'
+import ResizableSidebar from '../../components/ResizableSidebar'
+import PdfViewer from './components/PdfViewer'
+import TaskForm from './components/TaskForm'
+import TaskList from './components/TaskList'
+import { AnnotatorContext, TaskFormRef } from './context/AnnotatorContext'
 
 const Annotator = () => {
-  const { documentId, taskId } = useParams();
+  const { documentId, taskId } = useParams()
 
-  const fetchHighlights = () =>
-    taskId ? documentsDb[documentId!].tasks[taskId].highlights : [];
+  const [document, setDocument] = useState<(AnnotatedDocument & RevTag) | undefined>(undefined)
+  const [taskInstance, setTaskInstance] = useState<(TaskInstance & RevTag) | undefined>(undefined)
+  const [task, setTask] = useState<(Task & RevTag) | undefined>(undefined)
 
-  const [highlights, setHighlights] =
-    useState<Array<Highlight>>(fetchHighlights());
+  const [highlights, setHighlights] = useState<TaskHighlight[]>([])
 
-  const [highlightPicker, setHighlightPicker] = useState<string | null>(null); // What fieldtype should be linked to the current ghosthighlight
-  const pdfHighlighterUtilsRef = useRef<PdfHighlighterUtils | undefined>();
+  // What fieldtype should be linked to the current ghosthighlight
+  const [highlightPicker, setHighlightPicker] = useState<string | null>(null)
 
-  const taskFormRef = useRef<TaskFormRef | undefined>(undefined);
+  const pdfHighlighterUtilsRef = useRef<PdfHighlighterUtils | undefined>()
+  const taskFormRef = useRef<TaskFormRef | undefined>(undefined)
 
-  if (documentId === undefined || documentsDb[documentId] === undefined) {
-    return <div>Invalid documentId</div>;
+  const fetchDocument = () => {
+    if (documentId) {
+      window.ipc.getAnnotatedDocument(documentId).then((annotatedDoc) => {
+        setDocument(annotatedDoc)
+      })
+    }
   }
 
-  const addHighlight = (
-    highlight: GhostHighlight,
-    fieldTypeId: string,
-    index?: number,
-  ) => {
-    console.log("Saving highlight", highlight);
+  const fetchTask = () => {
+    if (taskId && document) {
+      window.ipc.getTaskInstance(document.tasks[taskId]).then((newTaskInstance) => {
+        setTaskInstance(newTaskInstance)
+        setHighlights(newTaskInstance.highlights)
+      })
+
+      window.ipc.getTask(taskId).then((newTask) => {
+        setTask(newTask)
+      })
+    }
+  }
+
+  useEffect(() => {
+    fetchDocument()
+
+    return () => {
+      setDocument(undefined)
+    }
+  }, [documentId])
+
+  useEffect(() => {
+    fetchTask()
+
+    return () => {
+      setTask(undefined)
+      setTaskInstance(undefined)
+      setHighlights([])
+      pdfHighlighterUtilsRef.current?.removeGhostHighlight()
+      setHighlightPicker(null)
+    }
+  }, [taskId])
+
+  const addHighlight = (highlight: GhostHighlight, fieldTypeId: string, index?: number) => {
+    console.log('Saving highlight', highlight)
     if (index === undefined) {
-      index = taskFormRef.current!.values[fieldTypeId].length - 1;
+      index = taskFormRef.current!.values[fieldTypeId].length - 1
     }
 
     taskFormRef.current?.setFieldValue(
       `${fieldTypeId}.${index}.value`,
-      highlight.content.text ?? "",
-    );
+      highlight.content.text ?? ''
+    )
 
-    pdfHighlighterUtilsRef.current?.removeGhostHighlight();
+    pdfHighlighterUtilsRef.current?.removeGhostHighlight()
 
     setHighlights(
       highlights.concat({
         ...highlight,
-        id: taskFormRef.current!.values[fieldTypeId][index!].fieldId,
-      }),
-    );
-  };
+        fieldTypeName: task!.fieldTypes[fieldTypeId].name,
+        id: taskFormRef.current!.values[fieldTypeId][index!].fieldId
+      })
+    )
+  }
 
   const removeHighlight = (fieldId: string) => {
-    setHighlights(highlights.filter((highlight) => highlight.id != fieldId));
-  };
+    setHighlights(highlights.filter((highlight) => highlight.id != fieldId))
+  }
 
-  const saveHighlights = () => {
-    documentsDb[documentId].tasks[taskId!].highlights = highlights;
-  };
+  const saveForm = (values: { [fieldTypeId: string]: FieldValue[] }) => {
+    Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
+      taskInstance!.inputFields[fieldTypeId] = fieldArray
+    })
 
-  useEffect(() => {
-    setHighlights(fetchHighlights());
-  }, [documentId, taskId]);
+    console.log(JSON.stringify(values, null, 2))
+
+    taskInstance!.highlights = highlights
+    window.ipc.putTaskInstance(taskInstance!).then(() => {
+      fetchTask()
+    })
+  }
 
   return (
     <Flex height="calc(100vh - 64px)">
-      <AnnotatorContext.Provider
-        value={{
-          taskFormRef,
-          addHighlight,
-          removeHighlight,
-          highlights,
-          saveHighlights,
-          pdfHighlighterUtilsRef,
-          highlightPicker,
-          setHighlightPicker,
-        }}
-      >
-        <ResizableSidebar>
-          {taskId === undefined ? (
-            <TaskList documentId={documentId} />
-          ) : (
-            <TaskForm documentId={documentId} taskId={taskId} />
-          )}
-        </ResizableSidebar>
-        <PdfViewer documentId={documentId} taskId={taskId} />
-      </AnnotatorContext.Provider>
+      {document && (
+        <AnnotatorContext.Provider
+          value={{
+            taskFormRef,
+            addHighlight,
+            removeHighlight,
+            highlights,
+            pdfHighlighterUtilsRef,
+            highlightPicker,
+            setHighlightPicker,
+            saveForm,
+            document,
+            task,
+            taskInstance
+          }}
+        >
+          <ResizableSidebar>{taskId === undefined ? <TaskList /> : <TaskForm />}</ResizableSidebar>
+          <PdfViewer />
+        </AnnotatorContext.Provider>
+      )}
     </Flex>
-  );
-};
+  )
+}
 
-export default Annotator;
+export default Annotator

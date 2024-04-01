@@ -1,78 +1,77 @@
-import { Button, ToastId, useToast } from "@chakra-ui/react";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { documentsDb } from "../../../lib/dummy-data/documentsDb";
-import TaskItem from "./TaskItem";
-import TaskListHeader from "./TaskListHeader";
+import { Button, ToastId, useToast } from '@chakra-ui/react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import TaskItem from './TaskItem'
+import TaskListHeader from './TaskListHeader'
+import { useAnnotatorUtils } from '../context/AnnotatorContext'
+import { RevTag, Task } from 'src/common/types'
 
-interface TaskListProps {
-  documentId: string;
-}
+const TaskList = () => {
+  const { document } = useAnnotatorUtils()
+  const [selectedTasks, setSelectedTasks] = useState<Array<string>>([])
+  const [tasks, setTasks] = useState<Array<Task & RevTag>>([])
 
-const TaskList = ({ documentId }: TaskListProps) => {
-  const [selectedTasks, setSelectedTasks] = useState<Array<string>>([]);
-  const tasks = Object.keys(documentsDb[documentId].tasks);
+  useEffect(() => {
+    window.ipc.getTasks(Object.keys(document.tasks)).then((newTasks) => {
+      setTasks(newTasks)
+    })
+  }, [])
 
-  const toast = useToast();
-  const toastIdRef = useRef<ToastId | null>(null);
+  const toast = useToast()
+  const toastIdRef = useRef<ToastId | null>(null)
 
   const resetToast = () => {
     if (toastIdRef.current) {
-      toast.close(toastIdRef.current);
-      toastIdRef.current = null;
+      toast.close(toastIdRef.current)
+      toastIdRef.current = null
     }
-  };
+  }
 
   useEffect(() => {
     if (selectedTasks.length > 0 && !toastIdRef.current) {
       toastIdRef.current = toast({
-        position: "bottom-left",
+        position: 'bottom-left',
         duration: null,
-        render: () => <Button>Start tasks</Button>,
-      });
+        render: () => <Button>Start tasks</Button>
+      })
     } else if (selectedTasks.length === 0) {
-      resetToast();
+      resetToast()
     }
-  }, [selectedTasks]);
+  }, [selectedTasks])
 
-  useEffect(() => resetToast, []);
+  useEffect(() => resetToast, [])
 
-  const handleCheckboxChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    taskId: string,
-  ) => {
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, taskId: string) => {
     setSelectedTasks(
       event.target.checked
         ? selectedTasks.concat(taskId)
-        : selectedTasks.filter((_id) => _id !== taskId),
-    );
-  };
+        : selectedTasks.filter((_id) => _id !== taskId)
+    )
+  }
 
   return (
     <>
       <TaskListHeader
-        documentId={documentId}
         addTask={() => {}}
         deleteTasks={() => {
-          selectedTasks.forEach((taskId) => {
-            delete documentsDb[documentId].tasks[taskId];
-          });
-          setSelectedTasks([]);
+          // selectedTasks.forEach((taskId) => {
+          //   delete documentsDb[documentId].tasks[taskId]
+          // })
+          // setSelectedTasks([])
         }}
       />
-      {tasks.map((taskId, index) => (
+      {tasks.map((task, index) => (
         <TaskItem
-          documentId={documentId}
-          taskId={taskId}
-          key={taskId}
+          task={task}
+          key={task._id}
           index={index}
           onClick={() => {
-            setSelectedTasks([]);
+            setSelectedTasks([])
           }}
-          onCheckboxChange={(event) => handleCheckboxChange(event, taskId)}
+          onCheckboxChange={(event) => handleCheckboxChange(event, task._id)}
         />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default TaskList;
+export default TaskList

@@ -1,37 +1,35 @@
-import { Flex, Heading, IconButton, Spacer } from "@chakra-ui/react";
-import { IoArrowBackCircleOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Flex, Heading, IconButton, Spacer } from '@chakra-ui/react'
+import { IoArrowBackCircleOutline } from 'react-icons/io5'
+import { Link } from 'react-router-dom'
+import { useAnnotatorUtils } from '../context/AnnotatorContext'
 
-interface TaskFormHeaderProps {
-  name: string;
-  documentId: string;
-}
+const TaskFormHeader = () => {
+  const { document, task } = useAnnotatorUtils()
 
-const TaskFormHeader = ({ name, documentId }: TaskFormHeaderProps) => {
   return (
     <Flex
-      h={"36px"}
+      h={'36px'}
       gap={2}
       px={4}
-      alignItems={"center"}
+      alignItems={'center'}
       borderBottom="1px"
       borderBottomColor="stoneGray.200"
     >
       <Heading as="h2" size="md">
-        <b>{name}</b>
+        <b>{task?.name}</b>
       </Heading>
       <Spacer />
       <IconButton
         aria-label="Return to Task List"
         icon={<IoArrowBackCircleOutline />}
-        size={"sm"}
-        fontSize={"22"}
+        size={'sm'}
+        fontSize={'22'}
         variant="ghost"
         as={Link}
-        to={`../annotator/${documentId}`}
+        to={`../annotator/${document._id}`}
       />
     </Flex>
-  );
-};
+  )
+}
 
-export default TaskFormHeader;
+export default TaskFormHeader

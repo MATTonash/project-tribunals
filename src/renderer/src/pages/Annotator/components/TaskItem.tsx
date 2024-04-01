@@ -1,32 +1,25 @@
-import { Button, Checkbox, Flex, Spacer } from "@chakra-ui/react";
-import { ChangeEvent, MouseEvent } from "react";
-import { IoCheckmark } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { documentsDb } from "../../../lib/dummy-data/documentsDb";
-import { tasksDb } from "../../../lib/dummy-data/tasksDb";
+import { Button, Checkbox, Flex, Spacer } from '@chakra-ui/react'
+import { ChangeEvent, MouseEvent } from 'react'
+import { IoCheckmark } from 'react-icons/io5'
+import { Link } from 'react-router-dom'
+import { useAnnotatorUtils } from '../context/AnnotatorContext'
+import { Task } from 'src/common/types'
 
 interface Props {
-  documentId: string;
-  taskId: string;
-  index: number;
-  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
-  onCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  task: Task
+  index: number
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void
+  onCheckboxChange: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-const TaskItem = ({
-  documentId,
-  taskId,
-  index,
-  onClick,
-  onCheckboxChange,
-}: Props) => {
+const TaskItem = ({ task, index, onClick, onCheckboxChange }: Props) => {
   return (
     <Flex
       height="70px"
       gap={2}
       alignItems="center"
       p={4}
-      bg={index % 2 === 1 ? "stoneGray.50" : "white"}
+      bg={index % 2 === 1 ? 'stoneGray.50' : 'white'}
     >
       <Checkbox colorScheme="salmon" onChange={onCheckboxChange} />
       <Button
@@ -36,16 +29,16 @@ const TaskItem = ({
         colorScheme="black"
         onClick={onClick}
         as={Link}
-        to={taskId}
+        to={task._id}
       >
-        {tasksDb[taskId].name}
+        {task.name}
       </Button>
       <Spacer />
-      {documentsDb[documentId].tasks[taskId].status === "complete" && (
-        <IoCheckmark fontSize={24} color={"green"} />
-      )}
+      {/* {documentsDb[documentId].tasks[taskId].status === 'complete' && (
+        <IoCheckmark fontSize={24} color={'green'} />
+      )} */}
     </Flex>
-  );
-};
+  )
+}
 
-export default TaskItem;
+export default TaskItem
