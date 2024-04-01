@@ -70,7 +70,7 @@ const dummyTaskInstance: TaskInstance = {
           }
         ]
       },
-      fieldTypeName: "Judge's name",
+      fieldTypeName: 'Field Type 1',
       id: 'fieldId1'
     }
   ]
