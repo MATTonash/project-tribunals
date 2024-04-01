@@ -3,7 +3,11 @@ import DocumentList from './components/DocumentList'
 import HomeButtons from './components/HomeButtons'
 import SearchBar from './components/SearchBar'
 
+
 const Home = () => {
+
+
+
   return (
     <Flex
       as="main"
@@ -21,6 +25,7 @@ const Home = () => {
         </Heading>
         <SimpleGrid columns={2} spacing={15}>
           <HomeButtons />
+
           <Flex flexDirection="column" gap={1}>
             <SearchBar
               placeholder={'Search your documents'}
