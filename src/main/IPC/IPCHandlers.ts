@@ -6,7 +6,7 @@ import {
   removeAnnotatedDocument
 } from '../databases/annotatedDocsDB'
 import { getTaskInstance, putTaskInstance, removeTaskInstance } from '../databases/taskInstancesDB'
-import { getTask, putTask, removeTask } from '../databases/tasksDB'
+import { getTask, getTasks, putTask, removeTask } from '../databases/tasksDB'
 
 const handlePing = async (_event: IpcMainEvent) => {
   console.log('Pong! The IPC is functioning correctly: ', new Date())
@@ -43,6 +43,10 @@ const ipcHandlers = [
   {
     event: IPC_ACTIONS.TASKS.GET,
     callback: generateHandler(getTask)
+  },
+  {
+    event: IPC_ACTIONS.TASKS.GET_MANY,
+    callback: generateHandler(getTasks)
   },
   {
     event: IPC_ACTIONS.TASKS.REMOVE,

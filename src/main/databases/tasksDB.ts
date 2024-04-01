@@ -63,4 +63,4 @@ function removeTask(task: Task & RevTag): Promise<void> {
     })
 }
 
-export { putTask, getTask, removeTask }
+export { putTask, getTask, getTasks, removeTask }

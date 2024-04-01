@@ -8,6 +8,7 @@ const ipc: IPCAPI = {
   ping: () => ipcRenderer.invoke(IPC_ACTIONS.TEST.PING),
   putTask: (task: Task) => ipcRenderer.invoke(IPC_ACTIONS.TASKS.PUT, task),
   getTask: (taskId: string) => ipcRenderer.invoke(IPC_ACTIONS.TASKS.GET, taskId),
+  getTasks: (taskIds: string[]) => ipcRenderer.invoke(IPC_ACTIONS.TASKS.GET_MANY, taskIds),
   removeTask: (task: Task & RevTag) => ipcRenderer.invoke(IPC_ACTIONS.TASKS.REMOVE, task),
   putAnnotatedDocument: (annotatedDoc: AnnotatedDocument) =>
     ipcRenderer.invoke(IPC_ACTIONS.ANNOTATED_DOCS.PUT, annotatedDoc),
@@ -18,9 +19,9 @@ const ipc: IPCAPI = {
   putTaskInstance: (taskInstance: TaskInstance) =>
     ipcRenderer.invoke(IPC_ACTIONS.TASK_INSTANCES.PUT, taskInstance),
   getTaskInstance: (taskInstanceId: string) =>
-    ipcRenderer.invoke(IPC_ACTIONS.TASK_INSTANCES.PUT, taskInstanceId),
+    ipcRenderer.invoke(IPC_ACTIONS.TASK_INSTANCES.GET, taskInstanceId),
   removeTaskInstance: (taskInstance: TaskInstance & RevTag) =>
-    ipcRenderer.invoke(IPC_ACTIONS.TASK_INSTANCES.PUT, taskInstance)
+    ipcRenderer.invoke(IPC_ACTIONS.TASK_INSTANCES.REMOVE, taskInstance)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -10,7 +10,8 @@ export const IPC_ACTIONS = {
   TASKS: {
     PUT: 'TASKS_PUT',
     GET: 'TASKS_GET',
-    REMOVE: 'TASKS_REMOVE'
+    REMOVE: 'TASKS_REMOVE',
+    GET_MANY: 'TASKS_GET_MANY'
   },
   TASK_INSTANCES: {
     PUT: 'TI_PUT',
