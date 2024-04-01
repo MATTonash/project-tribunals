@@ -1,44 +1,23 @@
-import { Button, ToastId, useToast } from '@chakra-ui/react'
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { RevTag, Task } from 'src/common/types'
+import { useAnnotatorUtils } from '../context/AnnotatorContext'
 import TaskItem from './TaskItem'
 import TaskListHeader from './TaskListHeader'
-import { useAnnotatorUtils } from '../context/AnnotatorContext'
-import { RevTag, Task } from 'src/common/types'
 
 const TaskList = () => {
-  const { document } = useAnnotatorUtils()
+  const { document, saveDocument } = useAnnotatorUtils()
   const [selectedTasks, setSelectedTasks] = useState<Array<string>>([])
   const [tasks, setTasks] = useState<Array<Task & RevTag>>([])
 
-  useEffect(() => {
+  const fetchTasks = () => {
     window.ipc.getTasks(Object.keys(document.tasks)).then((newTasks) => {
       setTasks(newTasks)
     })
-  }, [])
-
-  const toast = useToast()
-  const toastIdRef = useRef<ToastId | null>(null)
-
-  const resetToast = () => {
-    if (toastIdRef.current) {
-      toast.close(toastIdRef.current)
-      toastIdRef.current = null
-    }
   }
 
   useEffect(() => {
-    if (selectedTasks.length > 0 && !toastIdRef.current) {
-      toastIdRef.current = toast({
-        position: 'bottom-left',
-        duration: null,
-        render: () => <Button>Start tasks</Button>
-      })
-    } else if (selectedTasks.length === 0) {
-      resetToast()
-    }
-  }, [selectedTasks])
-
-  useEffect(() => resetToast, [])
+    fetchTasks()
+  }, [])
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, taskId: string) => {
     setSelectedTasks(
@@ -53,10 +32,12 @@ const TaskList = () => {
       <TaskListHeader
         addTask={() => {}}
         deleteTasks={() => {
-          // selectedTasks.forEach((taskId) => {
-          //   delete documentsDb[documentId].tasks[taskId]
-          // })
-          // setSelectedTasks([])
+          selectedTasks.forEach((taskId) => {
+            delete document.tasks[taskId]
+          })
+          saveDocument()
+          setSelectedTasks([])
+          fetchTasks()
         }}
       />
       {tasks.map((task, index) => (

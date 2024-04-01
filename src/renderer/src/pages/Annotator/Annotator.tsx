@@ -3,14 +3,7 @@ import { Flex } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import { GhostHighlight, PdfHighlighterUtils } from 'react-pdf-highlighter-extended'
 import { useParams } from 'react-router-dom'
-import {
-  AnnotatedDocument,
-  FieldValue,
-  RevTag,
-  Task,
-  TaskHighlight,
-  TaskInstance
-} from 'src/common/types'
+import { AnnotatedDocument, RevTag, Task, TaskHighlight, TaskInstance } from 'src/common/types'
 import ResizableSidebar from '../../components/ResizableSidebar'
 import PdfViewer from './components/PdfViewer'
 import TaskForm from './components/TaskForm'
@@ -90,25 +83,26 @@ const Annotator = () => {
       highlights.concat({
         ...highlight,
         fieldTypeName: task!.fieldTypes[fieldTypeId].name,
-        id: taskFormRef.current!.values[fieldTypeId][index!].fieldId
+        id: taskFormRef.current!.values[fieldTypeId][index!]._id
       })
     )
   }
 
   const removeHighlight = (fieldId: string) => {
+    console.log('removing', fieldId)
     setHighlights(highlights.filter((highlight) => highlight.id != fieldId))
   }
 
-  const saveForm = (values: { [fieldTypeId: string]: FieldValue[] }) => {
-    Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
-      taskInstance!.inputFields[fieldTypeId] = fieldArray
-    })
-
-    console.log(JSON.stringify(values, null, 2))
-
+  const saveTaskInstance = () => {
     taskInstance!.highlights = highlights
     window.ipc.putTaskInstance(taskInstance!).then(() => {
       fetchTask()
+    })
+  }
+
+  const saveDocument = () => {
+    window.ipc.putAnnotatedDocument(document!).then(() => {
+      fetchDocument()
     })
   }
 
@@ -124,7 +118,8 @@ const Annotator = () => {
             pdfHighlighterUtilsRef,
             highlightPicker,
             setHighlightPicker,
-            saveForm,
+            saveTaskInstance,
+            saveDocument,
             document,
             task,
             taskInstance

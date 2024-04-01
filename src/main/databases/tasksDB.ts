@@ -52,6 +52,18 @@ function getTasks(taskIds: string[]): Promise<Array<Task & RevTag>> {
   })
 }
 
+function getAllTasks(): Promise<Array<Task & RevTag>> {
+  return tasks
+    .allDocs({ include_docs: true })
+    .then((response) => {
+      return response.rows.map((row) => row.doc)
+    })
+    .catch((error) => {
+      console.error('Error getting all documents!')
+      throw error
+    }) as Promise<Array<Task & RevTag>>
+}
+
 function removeTask(task: Task & RevTag): Promise<void> {
   return tasks
     .remove(task)
@@ -63,4 +75,4 @@ function removeTask(task: Task & RevTag): Promise<void> {
     })
 }
 
-export { putTask, getTask, getTasks, removeTask }
+export { putTask, getTask, getTasks, getAllTasks, removeTask }

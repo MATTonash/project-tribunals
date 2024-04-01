@@ -1,12 +1,18 @@
 import { IpcMainEvent, ipcMain } from 'electron'
 import { IPC_ACTIONS } from './IPCActions'
 import {
+  getAllDocuments,
   getAnnotatedDocument,
   putAnnotatedDocument,
   removeAnnotatedDocument
 } from '../databases/annotatedDocsDB'
-import { getTaskInstance, putTaskInstance, removeTaskInstance } from '../databases/taskInstancesDB'
-import { getTask, getTasks, putTask, removeTask } from '../databases/tasksDB'
+import {
+  getAllTaskInstances,
+  getTaskInstance,
+  putTaskInstance,
+  removeTaskInstance
+} from '../databases/taskInstancesDB'
+import { getAllTasks, getTask, getTasks, putTask, removeTask } from '../databases/tasksDB'
 
 const handlePing = async (_event: IpcMainEvent) => {
   console.log('Pong! The IPC is functioning correctly: ', new Date())
@@ -33,6 +39,10 @@ const ipcHandlers = [
     callback: generateHandler(getAnnotatedDocument)
   },
   {
+    event: IPC_ACTIONS.ANNOTATED_DOCS.GET_ALL,
+    callback: generateHandler(getAllDocuments)
+  },
+  {
     event: IPC_ACTIONS.ANNOTATED_DOCS.REMOVE,
     callback: generateHandler(removeAnnotatedDocument)
   },
@@ -49,6 +59,10 @@ const ipcHandlers = [
     callback: generateHandler(getTasks)
   },
   {
+    event: IPC_ACTIONS.TASKS.GET_ALL,
+    callback: generateHandler(getAllTasks)
+  },
+  {
     event: IPC_ACTIONS.TASKS.REMOVE,
     callback: generateHandler(removeTask)
   },
@@ -59,6 +73,10 @@ const ipcHandlers = [
   {
     event: IPC_ACTIONS.TASK_INSTANCES.GET,
     callback: generateHandler(getTaskInstance)
+  },
+  {
+    event: IPC_ACTIONS.TASK_INSTANCES.GET_ALL,
+    callback: generateHandler(getAllTaskInstances)
   },
   {
     event: IPC_ACTIONS.TASK_INSTANCES.REMOVE,

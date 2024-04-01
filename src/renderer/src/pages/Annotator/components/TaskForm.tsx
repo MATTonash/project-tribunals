@@ -10,7 +10,7 @@ import {
   useToast
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldProps, Form, Formik } from 'formik'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useAnnotatorUtils } from '../context/AnnotatorContext'
 import TaskFormHeader from './TaskFormHeader'
 
@@ -22,19 +22,18 @@ const TaskForm = () => {
     highlightPicker,
     setHighlightPicker,
     pdfHighlighterUtilsRef,
-    saveForm,
-    document,
+    saveTaskInstance,
     task,
     taskInstance
   } = useAnnotatorUtils()
 
+  let inputFields = taskInstance?.inputFields
+  const toast = useToast()
+  const toastIdRef = useRef<ToastId | null>(null)
+
   if (!taskInstance || !task) {
     return <div>Something fucked up</div>
   }
-
-  let inputFields = taskInstance.inputFields
-  const toast = useToast()
-  const toastIdRef = useRef<ToastId | null>(null)
 
   return (
     <>
@@ -42,10 +41,15 @@ const TaskForm = () => {
       <VStack alignItems={'unset'} p={2}>
         <Text> {task.description}</Text>
         <Formik
-          initialValues={inputFields}
+          initialValues={inputFields!}
           onSubmit={(values, actions) => {
             setTimeout(() => {
-              saveForm(values)
+              Object.entries(values).forEach(([fieldTypeId, fieldArray]) => {
+                taskInstance!.inputFields[fieldTypeId] = fieldArray
+              })
+              console.log(JSON.stringify(values, null, 2))
+
+              saveTaskInstance()
               actions.setSubmitting(false)
               toastIdRef.current = toast({
                 title: 'Saved!',
@@ -54,11 +58,10 @@ const TaskForm = () => {
                 duration: 1000,
                 isClosable: true
               })
-            }, 1000)
+            }, 200)
           }}
         >
           {(props) => {
-            props.values['fieldTypeId1'].length
             taskFormRef.current = {
               values: props.values,
               setFieldValue: props.setFieldValue
@@ -127,7 +130,7 @@ const TaskForm = () => {
                           onClick={() => {
                             arrayHelpers.insert(props.values[fieldTypeId].length, {
                               value: '',
-                              fieldId: 'fieldIdExtra'
+                              _id: Math.random().toString(16).slice(2)
                             })
                           }}
                         >
