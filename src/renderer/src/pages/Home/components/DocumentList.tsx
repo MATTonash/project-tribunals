@@ -2,16 +2,16 @@ import { Button, Flex, Spacer, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { AiOutlineFileText } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
-import { AnnotatedDocument } from 'src/common/types'
+import { AnnotatedDocument, RevTag } from '../../../../../common/types'
 
 const DocumentList = () => {
   const [documents, setDocuments] = useState<AnnotatedDocument[]>([])
 
   useEffect(() => {
-    const newPromise = window.ipc.getAnnotatedDocument('dummyDocument')
+    const documentPromises: Promise<(AnnotatedDocument & RevTag)[]> = window.ipc.getAllDocuments()
 
-    newPromise.then((value) => {
-      setDocuments([value])
+    documentPromises.then((values: (AnnotatedDocument & RevTag)[]) => {
+      setDocuments(values)
     })
   }, [])
 

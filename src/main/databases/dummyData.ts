@@ -87,7 +87,18 @@ export function insertDummyData() {
     tasks: { task1: '12345' }
   }
 
+  const dummyDocument2: AnnotatedDocument = {
+    _id: 'Awesome Doc',
+    pdfPath: 'https://arxiv.org/pdf/1708.08021.pdf',
+    name: 'JOSEPH :)',
+    caseId: 'EA23/24/36',
+    createdDate: new Date(2023, 4, 2),
+    editedDate: new Date(),
+    tasks: { task1: 'awesome task' }
+  }
+
   putTask(dummyTask)
   putTaskInstance(dummyTaskInstance)
   putAnnotatedDocument(dummyDocument)
+  putAnnotatedDocument(dummyDocument2)
 }

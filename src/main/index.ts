@@ -56,6 +56,8 @@ app.whenReady().then(() => {
 
   createWindow()
   registerIpcHandlers()
+
+  // This will error as there is duplicate data
   insertDummyData()
 
   app.on('activate', function () {
