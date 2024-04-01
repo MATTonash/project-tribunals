@@ -4,6 +4,8 @@ import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 import { registerIpcHandlers } from './IPC/IPCHandlers'
 import { insertDummyData } from './databases/dummyData'
+import { putAnnotatedDocument } from './databases/annotatedDocsDB'
+import { AnnotatedDocument } from '../common/types'
 
 function createWindow(): void {
   // Create the browser window.
@@ -54,7 +56,7 @@ app.whenReady().then(() => {
 
   createWindow()
   registerIpcHandlers()
-  // insertDummyData()
+  insertDummyData()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

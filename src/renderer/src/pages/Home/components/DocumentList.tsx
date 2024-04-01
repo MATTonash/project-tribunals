@@ -1,30 +1,42 @@
 import { Button, Flex, Spacer, Text } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 import { AiOutlineFileText } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
+import { AnnotatedDocument } from 'src/common/types'
 
 const DocumentList = () => {
+  const [documents, setDocuments] = useState<AnnotatedDocument[]>([])
+
+  useEffect(() => {
+    const newPromise = window.ipc.getAnnotatedDocument('dummyDocument')
+
+    newPromise.then((value) => {
+      setDocuments([value])
+    })
+  }, [])
+
   return (
     <>
       <Text fontWeight={600}>Your documents</Text>
       {/* Use a flex and not ButtonGroup as ButtonGroup doesn't take up width of parent */}
       <Flex flexDirection="column">
-        {/* {Object.keys(documentsDb).map((documentId) => {
+        {documents.map((document) => {
           return (
             <Button
               variant="ghost"
               size="md"
               justifyContent="left"
-              key={documentId}
+              key={document._id}
               leftIcon={<AiOutlineFileText />}
               as={Link}
-              to={`annotator/${documentId}`}
+              to={`annotator/${document._id}`}
             >
-              <Text>{documentsDb[documentId].name}</Text>
+              <Text>{document.name}</Text>
               <Spacer />
-              <Text fontWeight={400}>{documentsDb[documentId].name}</Text>
             </Button>
-          );
-        })} */}
+          )
+        })}
+
         <Button
           variant="ghost"
           size="md"
@@ -34,9 +46,8 @@ const DocumentList = () => {
           as={Link}
           to={`annotator/dummyDocument`}
         >
-          <Text>Dummy Document</Text>
+          <Text>Dummy Document 2</Text>
           <Spacer />
-          <Text fontWeight={400}>Shit</Text>
         </Button>
       </Flex>
     </>

@@ -76,17 +76,17 @@ const dummyTaskInstance: TaskInstance = {
   ]
 }
 
-const dummyDocument: AnnotatedDocument = {
-  _id: 'dummyDocument',
-  pdfPath: 'https://arxiv.org/pdf/1708.08021.pdf',
-  name: 'Daniel v Monash',
-  caseId: 'EA23/24/35',
-  createdDate: new Date(2023, 12, 7),
-  editedDate: new Date(),
-  tasks: { task1: '12345' }
-}
-
 export function insertDummyData() {
+  const dummyDocument: AnnotatedDocument = {
+    _id: 'dummyDocument',
+    pdfPath: 'https://arxiv.org/pdf/1708.08021.pdf',
+    name: 'Daniel v Monash',
+    caseId: 'EA23/24/35',
+    createdDate: new Date(2023, 12, 7),
+    editedDate: new Date(),
+    tasks: { task1: '12345' }
+  }
+
   putTask(dummyTask)
   putTaskInstance(dummyTaskInstance)
   putAnnotatedDocument(dummyDocument)
