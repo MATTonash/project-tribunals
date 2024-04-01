@@ -31,6 +31,7 @@ const DocumentList = () => {
           >
             <Text opacity={0.9}>{document.name}</Text>
             <Spacer />
+            <Text opacity={0.9}>{document.editedDate.toString().slice(0, 10)}</Text>
           </Button>
         )
       })}
